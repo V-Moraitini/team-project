@@ -2,7 +2,7 @@ package GUI;
 
 import javax.swing.*;
 
-public class GUI_Office_Manager {
+public class GUI_OfficeManager {
     private JButton accessBlankStockButton;
     private JButton assignBlankStockButton;
     private JButton generateReportButton;
