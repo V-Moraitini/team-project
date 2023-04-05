@@ -22,7 +22,7 @@ public class GUIOfficeManager extends JDialog {
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(true);
+       // setVisible(true);
 
     }
 
