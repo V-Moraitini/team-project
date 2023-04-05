@@ -11,7 +11,8 @@ public class GUILogin extends JDialog {
     private JButton loginButton;
     private JPasswordField tfpassWord;
 
-        public GUILogin(JFrame parent) {
+
+    public GUILogin(JFrame parent) {
         super(parent);
         setTitle("Login");
         setContentPane(mainPanel);
@@ -20,14 +21,14 @@ public class GUILogin extends JDialog {
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
-   /* loginButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String userName = tfuserName.getText();
-            String passWord = String.valueOf(tfpassWord.getPassword());
-        }
-    });*/
-}
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String userName = tfuserName.getText();
+                String passWord = String.valueOf(tfpassWord.getPassword());
+            }
+        });
+    }
 
     public static void main(String[] args) {
         GUILogin login = new GUILogin(null);
