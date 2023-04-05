@@ -2,7 +2,7 @@ package GUI;
 
 import javax.swing.*;
 
-public class GUI_OM_AssignBlankStock {
+public class GUIOMAssignBlankStock {
     private JPanel panel1;
     private JButton reassignBlanksButton;
     private JButton accessBlankStockButton;

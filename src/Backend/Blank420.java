@@ -1,9 +1,9 @@
-package airvita.nexus.persistanceLayer;
+package Backend;
 
-class Blank201 extends Blank {
+class Blank420 extends Blank {
     private FlightCoupon[] flightCoupons;
 
-    public Blank201(String number) {
+    public Blank420(String number) {
         super(number);
         this.flightCoupons = new FlightCoupon[2];
     }
@@ -17,6 +17,6 @@ class Blank201 extends Blank {
     }
 
     public String getType() {
-        return "201";
+        return "420";
     }
 }

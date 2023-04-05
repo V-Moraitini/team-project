@@ -1,4 +1,4 @@
-package airvita.nexus.persistanceLayer;
+package Backend;
 
 class Blank101 extends Blank {
     private FlightCoupon flightCoupon;

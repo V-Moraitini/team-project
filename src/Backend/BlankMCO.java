@@ -1,4 +1,4 @@
-package airvita.nexus.persistanceLayer;
+/*package airvita.nexus.persistanceLayer;
 
 class BlankMCO extends Blank {
 private MCOType type;
@@ -29,3 +29,4 @@ enum MCOType {
     EXCESS_LUGGAGE,
     OTHER_MISC
 }
+*/

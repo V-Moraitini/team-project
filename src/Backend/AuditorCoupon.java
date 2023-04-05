@@ -1,4 +1,4 @@
-package airvita.nexus.persistanceLayer;
+package Backend;
 
 class AuditorCoupon {
     private String description;
