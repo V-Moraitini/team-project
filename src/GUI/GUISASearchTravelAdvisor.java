@@ -2,7 +2,7 @@ package GUI;
 
 import javax.swing.*;
 
-public class GUI_SA_SearchTravelAdvisor {
+public class GUISASearchTravelAdvisor {
     private JPanel panel1;
     private JButton searchTravelAdvisorIDButton;
     private JTextField textField1;

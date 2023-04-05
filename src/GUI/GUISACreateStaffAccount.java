@@ -2,7 +2,7 @@ package GUI;
 
 import javax.swing.*;
 
-public class GUI_SA_CreateStaffAccount {
+public class GUISACreateStaffAccount {
     private JPanel panel1;
     private JTextField textField1;
     private JTextField textField2;

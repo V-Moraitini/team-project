@@ -2,7 +2,7 @@ package GUI;
 
 import javax.swing.*;
 
-public class GUI_SA_AccessCommission {
+public class GUISAAccessCommission {
     private JPanel panel1;
     private JComboBox comboBox1;
     private JTextField textField1;

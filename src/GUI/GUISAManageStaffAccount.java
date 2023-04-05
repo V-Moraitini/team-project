@@ -2,12 +2,11 @@ package GUI;
 
 import javax.swing.*;
 
-public class GUI_SA_DeleteStaffAccount {
+public class GUISAManageStaffAccount {
     private JPanel panel1;
-    private JList list1;
-    private JList list2;
+    private JButton searchTravelAdvisorButton;
+    private JButton createNewStaffAccountButton;
     private JButton deleteStaffAccountButton;
-    private JButton archivedButton;
     private JButton logoutButton;
     private JButton backButton;
 }
