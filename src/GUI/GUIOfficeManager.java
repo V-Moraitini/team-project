@@ -7,10 +7,11 @@ import java.awt.event.ActionListener;
 
 public class GUIOfficeManager extends JDialog {
     private JPanel mainPanel;
-    private JButton accessBlankStockButton;
-    private JButton assignBlankStockButton;
-    private JButton generateReportButton;
-    private JButton setDiscountPlanButton;
+    private JButton BtnGenRep;
+    private JButton BtnSeDisPlan;
+    private JButton btnAccessBStock;
+    private JButton btnAssBStock;
+    private JButton btnLogOut;
 
 
     public GUIOfficeManager(JFrame parent) {
