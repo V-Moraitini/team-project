@@ -6,9 +6,9 @@ import java.awt.*;
 public class GUIOMCreateReport extends JDialog{
     private JPanel mainPanel;
     private JButton accessIndividualReportsButton;
-    private JButton createGlobalDomesticReportButton;
     private JButton createGlobalInterlineReportButton;
-    private JButton logoutButton;
+    private JButton createGlobalDomesticReportButton;
+    private JButton logOutButton;
     private JButton backButton;
 
 
@@ -17,7 +17,7 @@ public class GUIOMCreateReport extends JDialog{
         super(parent);
         setTitle("Create Report");
         setContentPane(mainPanel);
-        setMinimumSize(new Dimension(450, 274));
+        setMinimumSize(new Dimension(450, 500));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

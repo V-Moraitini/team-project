@@ -5,8 +5,8 @@ import java.awt.*;
 
 public class GUIOMAssignBlankStock extends JDialog {
     private JPanel panel1;
-    private JButton reassignBlanksButton;
-    private JButton accessBlankStockButton;
+    private JButton reassignBlankButton;
+    private JButton assignBlankButton;
     private JButton logoutButton;
     private JButton backButton;
 
