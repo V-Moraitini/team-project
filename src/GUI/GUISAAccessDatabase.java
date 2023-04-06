@@ -3,19 +3,17 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUIOMAssignBlankStock extends JDialog {
+public class GUISAAccessDatabase extends JDialog {
     private JPanel panel1;
-    private JButton reassignBlanksButton;
-    private JButton accessBlankStockButton;
-    private JButton logoutButton;
+    private JButton backupDatabaseButton;
+    private JButton restoreDatabaseButton;
     private JButton backButton;
+    private JButton logoutButton;
 
-
-
-    public GUIOMAssignBlankStock(JFrame parent) {
+    public GUISAAccessDatabase(JFrame parent) {
 
         super(parent);
-        setTitle("Assign Blank Stock");
+        setTitle("Access Database");
         setContentPane(panel1);
         setMinimumSize(new Dimension(450, 274));
         setModal(true);
@@ -26,6 +24,6 @@ public class GUIOMAssignBlankStock extends JDialog {
     }
 
     public static void main(String[] args) {
-        GUIOMAssignBlankStock panel = new GUIOMAssignBlankStock(null);
+        GUISAAccessDatabase panel = new GUISAAccessDatabase(null);
     }
 }

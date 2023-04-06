@@ -3,19 +3,18 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUIOMAssignBlankStock extends JDialog {
+public class GUISAManageStaffAccount extends JDialog {
     private JPanel panel1;
-    private JButton reassignBlanksButton;
-    private JButton accessBlankStockButton;
+    private JButton searchTravelAdvisorButton;
+    private JButton createNewStaffAccountButton;
+    private JButton deleteStaffAccountButton;
     private JButton logoutButton;
     private JButton backButton;
 
-
-
-    public GUIOMAssignBlankStock(JFrame parent) {
+    public GUISAManageStaffAccount(JFrame parent) {
 
         super(parent);
-        setTitle("Assign Blank Stock");
+        setTitle("Manage Staff Account");
         setContentPane(panel1);
         setMinimumSize(new Dimension(450, 274));
         setModal(true);
@@ -26,6 +25,6 @@ public class GUIOMAssignBlankStock extends JDialog {
     }
 
     public static void main(String[] args) {
-        GUIOMAssignBlankStock panel = new GUIOMAssignBlankStock(null);
+        GUISAManageStaffAccount panel = new GUISAManageStaffAccount(null);
     }
 }

@@ -3,19 +3,19 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUIOMAssignBlankStock extends JDialog {
+public class GUISAAddNewBlank extends JDialog{
     private JPanel panel1;
-    private JButton reassignBlanksButton;
-    private JButton accessBlankStockButton;
-    private JButton logoutButton;
+    private JComboBox comboBox1;
+    private JComboBox comboBox2;
+    private JTextField xxXxXxTextField;
+    private JButton saveButton;
     private JButton backButton;
+    private JButton logoutButton;
 
-
-
-    public GUIOMAssignBlankStock(JFrame parent) {
+    public GUISAAddNewBlank(JFrame parent) {
 
         super(parent);
-        setTitle("Assign Blank Stock");
+        setTitle("Add New Blank");
         setContentPane(panel1);
         setMinimumSize(new Dimension(450, 274));
         setModal(true);
@@ -26,6 +26,6 @@ public class GUIOMAssignBlankStock extends JDialog {
     }
 
     public static void main(String[] args) {
-        GUIOMAssignBlankStock panel = new GUIOMAssignBlankStock(null);
+        GUISAAddNewBlank panel = new GUISAAddNewBlank(null);
     }
 }

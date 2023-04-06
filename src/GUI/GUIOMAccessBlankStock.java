@@ -17,7 +17,7 @@ public class GUIOMAccessBlankStock extends JDialog {
         public GUIOMAccessBlankStock(JFrame parent) {
 
             super(parent);
-            setTitle("OfficeManager");
+            setTitle("Access Blank Stock");
             setContentPane(mainPanel);
             setMinimumSize(new Dimension(450, 274));
             setModal(true);

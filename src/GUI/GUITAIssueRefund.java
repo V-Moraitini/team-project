@@ -21,7 +21,7 @@ public class GUITAIssueRefund extends JDialog{
         super(parent);
         setTitle("Issue Refund");
         setContentPane(panel1);
-        setMinimumSize(new Dimension(450, 274));
+        setMinimumSize(new Dimension(800, 274));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

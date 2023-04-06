@@ -3,22 +3,22 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUITAUpdateCustomerAccount extends JDialog{
+public class GUISAAccessBlankStock extends JDialog{
     private JPanel panel1;
     private JTextField textField1;
+    private JTextField textField3;
+    private JComboBox comboBox1;
+    private JButton saveButton;
     private JButton searchButton;
-    private JButton button1;
     private JButton logoutButton;
-    private JList list1;
-    private JList list2;
-    private JList list3;
+    private JButton backButton;
 
-    public GUITAUpdateCustomerAccount(JFrame parent) {
+    public GUISAAccessBlankStock(JFrame parent) {
 
         super(parent);
-        setTitle("Update Customer Account");
+        setTitle("Access Blank Stock");
         setContentPane(panel1);
-        setMinimumSize(new Dimension(600, 274));
+        setMinimumSize(new Dimension(450, 274));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -27,7 +27,6 @@ public class GUITAUpdateCustomerAccount extends JDialog{
     }
 
     public static void main(String[] args) {
-        GUITAUpdateCustomerAccount login = new GUITAUpdateCustomerAccount(null);
+        GUISAAccessBlankStock panel = new GUISAAccessBlankStock(null);
     }
 }
-

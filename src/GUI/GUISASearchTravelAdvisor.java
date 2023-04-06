@@ -3,22 +3,24 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUITAUpdateCustomerAccount extends JDialog{
+public class GUISASearchTravelAdvisor extends JDialog {
     private JPanel panel1;
+    private JButton searchTravelAdvisorIDButton;
     private JTextField textField1;
     private JButton searchButton;
-    private JButton button1;
-    private JButton logoutButton;
     private JList list1;
     private JList list2;
     private JList list3;
+    private JButton backButton;
+    private JButton editSelectedAccountButton;
+    private JButton logoutButton;
 
-    public GUITAUpdateCustomerAccount(JFrame parent) {
+    public GUISASearchTravelAdvisor(JFrame parent) {
 
         super(parent);
-        setTitle("Update Customer Account");
+        setTitle("Search Travel Advisor");
         setContentPane(panel1);
-        setMinimumSize(new Dimension(600, 274));
+        setMinimumSize(new Dimension(500, 274));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -27,7 +29,6 @@ public class GUITAUpdateCustomerAccount extends JDialog{
     }
 
     public static void main(String[] args) {
-        GUITAUpdateCustomerAccount login = new GUITAUpdateCustomerAccount(null);
+        GUISASearchTravelAdvisor panel = new GUISASearchTravelAdvisor(null);
     }
 }
-

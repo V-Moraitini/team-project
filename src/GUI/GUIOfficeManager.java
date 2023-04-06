@@ -16,13 +16,13 @@ public class GUIOfficeManager extends JDialog {
     public GUIOfficeManager(JFrame parent) {
 
         super(parent);
-        setTitle("OfficeManager");
+        setTitle("Office Manager");
         setContentPane(mainPanel);
         setMinimumSize(new Dimension(450, 274));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-       // setVisible(true);
+        setVisible(true);
 
     }
 
