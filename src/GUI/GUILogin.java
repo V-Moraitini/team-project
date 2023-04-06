@@ -1,5 +1,4 @@
 package GUI;
-import Backend.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,8 +6,10 @@ import java.awt.event.ActionListener;
 
 public class GUILogin extends JDialog {
     private JPanel mainPanel;
+    private JPasswordField tfPassword;
+    private JTextField tfEmail;
     private JTextField tfuserName;
-    private JButton loginButton;
+    private JButton btnLogin;
     private JPasswordField tfpassWord;
 
 
@@ -21,7 +22,7 @@ public class GUILogin extends JDialog {
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
-        loginButton.addActionListener(new ActionListener() {
+        btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String userName = tfuserName.getText();
