@@ -5,24 +5,23 @@ import java.awt.*;
 
 public class GUITACreateTicket2 extends JDialog{
     private JPanel panel1;
+    private JButton logOutButton;
     private JTextField textField1;
-    private JButton searchButton;
+    private JComboBox comboBox1;
+    private JCheckBox yesCheckBox;
+    private JCheckBox noCheckBox;
     private JTextField textField2;
-    private JTextField textField3;
-    private JButton logoutButton;
-    private JButton proceedWithPaymentButton;
+    private JCheckBox cashCheckBox;
+    private JCheckBox cardCheckBox;
+    private JButton proceedToPaymentButton;
     private JButton backButton;
-    private JRadioButton yesRadioButton;
-    private JRadioButton noRadioButton;
-    private JRadioButton cashRadioButton;
-    private JRadioButton cardRadioButton;
 
     public GUITACreateTicket2(JFrame parent) {
 
         super(parent);
         setTitle("Create Ticket 2");
         setContentPane(panel1);
-        setMinimumSize(new Dimension(450, 274));
+        setMinimumSize(new Dimension(450, 400));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
