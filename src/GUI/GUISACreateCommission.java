@@ -5,10 +5,10 @@ import java.awt.*;
 
 public class GUISACreateCommission extends JDialog {
     private JPanel panel1;
+    private JButton logInButton;
     private JComboBox comboBox1;
     private JTextField textField1;
-    private JButton createCommissionRateButton;
-    private JButton logoutButton;
+    private JButton createButton;
     private JButton backButton;
 
     public GUISACreateCommission(JFrame parent) {
