@@ -1,21 +1,21 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class GUISADeleteStaffAccount extends JDialog {
     private JPanel panel1;
-    private JList list1;
-    private JList list2;
-    private JButton deleteStaffAccountButton;
-    private JButton archivedButton;
-    private JButton logoutButton;
+    private JTable table1;
+    private JButton archiveButton;
     private JButton backButton;
+    private JButton logOutButton;
 
     public GUISADeleteStaffAccount(JFrame parent) {
 
         super(parent);
         setTitle("Delete Staff Account");
+        createTable();
         setContentPane(panel1);
         setMinimumSize(new Dimension(450, 274));
         setModal(true);
@@ -24,6 +24,12 @@ public class GUISADeleteStaffAccount extends JDialog {
         setVisible(true);
 
     }
+
+    private void createTable(){
+        table1.setModel(new DefaultTableModel(
+                null,
+                new String [] {"First Name", "Last Name", "ID"}
+        ));}
 
     public static void main(String[] args) {
         GUISADeleteStaffAccount panel = new GUISADeleteStaffAccount(null);
