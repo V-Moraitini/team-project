@@ -1,22 +1,22 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class GUISAAccessBlankStock extends JDialog{
     private JPanel panel1;
-    private JTextField textField1;
-    private JTextField textField3;
-    private JComboBox comboBox1;
-    private JButton saveButton;
-    private JButton searchButton;
-    private JButton logoutButton;
     private JButton backButton;
+    private JButton logOutButton;
+    private JTable table1;
+
+
 
     public GUISAAccessBlankStock(JFrame parent) {
 
         super(parent);
         setTitle("Access Blank Stock");
+        createTable();
         setContentPane(panel1);
         setMinimumSize(new Dimension(450, 274));
         setModal(true);
@@ -25,6 +25,12 @@ public class GUISAAccessBlankStock extends JDialog{
         setVisible(true);
 
     }
+
+    private void createTable(){
+        table1.setModel(new DefaultTableModel(
+                null,
+                new String [] {"Available Blanks", "Blank ID"}
+        ));}
 
     public static void main(String[] args) {
         GUISAAccessBlankStock panel = new GUISAAccessBlankStock(null);

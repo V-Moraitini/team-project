@@ -5,12 +5,11 @@ import java.awt.*;
 
 public class GUIOMReassignBlank extends JDialog {
     private JPanel panel1;
-    private JComboBox comboBox1;
+    private JButton logOutButton;
     private JTextField textField1;
-    private JButton button1;
-    private JButton logoutButton;
+    private JComboBox comboBox1;
     private JTextField textField2;
-    private JButton button2;
+    private JButton saveButton;
     private JButton backButton;
 
     public GUIOMReassignBlank(JFrame parent) {
@@ -18,7 +17,7 @@ public class GUIOMReassignBlank extends JDialog {
         super(parent);
         setTitle("Reassign Blank");
         setContentPane(panel1);
-        setMinimumSize(new Dimension(450, 274));
+        setMinimumSize(new Dimension(500, 300));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

@@ -7,7 +7,7 @@ import java.awt.*;
 public class GUIOMAccessBlankStock extends JDialog {
 
     private JPanel panel1;
-    private JTable table1;
+    private JTable table2;
     private JButton logOutButton;
     private JButton backButton;
     private JButton addBlankButton;
@@ -26,16 +26,11 @@ public class GUIOMAccessBlankStock extends JDialog {
         setVisible(true);
 
     }
-
         private void createTable(){
-        table1.setModel(new DefaultTableModel(
+        table2.setModel(new DefaultTableModel(
                 null,
                 new String [] {"Available Blanks", "Blank ID"}
         ));
-
-
-
-
 
     }
 
