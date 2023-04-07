@@ -5,19 +5,19 @@ import java.awt.*;
 
 public class GUITravelAdvisor extends JDialog{
     private JPanel panel1;
+    private JButton logOutButton;
     private JButton createCustomerButton;
-    private JButton updateCustomerAccountButton;
+    private JButton editCustomerAccountButton;
     private JButton createTicketButton;
     private JButton issueRefundButton;
-    private JButton createReportButton;
-    private JButton logoutButton;
+    private JButton backButton;
 
     public GUITravelAdvisor(JFrame parent) {
 
         super(parent);
         setTitle("Travel Advisor");
         setContentPane(panel1);
-        setMinimumSize(new Dimension(450, 274));
+        setMinimumSize(new Dimension(450, 400));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
