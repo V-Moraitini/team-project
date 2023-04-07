@@ -9,7 +9,8 @@ public class GUISAAccessBlankStock extends JDialog{
     private JButton backButton;
     private JButton logOutButton;
     private JTable table1;
-
+    private JButton addBlankButton;
+    private JButton archiveBlankButton;
 
 
     public GUISAAccessBlankStock(JFrame parent) {

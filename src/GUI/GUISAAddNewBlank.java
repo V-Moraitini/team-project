@@ -5,12 +5,11 @@ import java.awt.*;
 
 public class GUISAAddNewBlank extends JDialog{
     private JPanel panel1;
+    private JButton logOutButton;
     private JComboBox comboBox1;
     private JComboBox comboBox2;
-    private JTextField xxXxXxTextField;
-    private JButton saveButton;
     private JButton backButton;
-    private JButton logoutButton;
+    private JButton confirmButton;
 
     public GUISAAddNewBlank(JFrame parent) {
 

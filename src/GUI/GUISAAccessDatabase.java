@@ -5,10 +5,10 @@ import java.awt.*;
 
 public class GUISAAccessDatabase extends JDialog {
     private JPanel panel1;
-    private JButton backupDatabaseButton;
+    private JButton logOutButton;
     private JButton restoreDatabaseButton;
+    private JButton backupDatabaseButton;
     private JButton backButton;
-    private JButton logoutButton;
 
     public GUISAAccessDatabase(JFrame parent) {
 
