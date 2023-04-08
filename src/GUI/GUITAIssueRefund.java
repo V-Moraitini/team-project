@@ -3,6 +3,8 @@ package GUI;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUITAIssueRefund extends JDialog{
     private JPanel panel1;
@@ -21,6 +23,16 @@ public class GUITAIssueRefund extends JDialog{
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new GUITravelAdvisor(null).setVisible(false);
+                panel1.setVisible(false);
+            }
+        });
+
         setVisible(true);
 
     }
