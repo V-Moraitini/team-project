@@ -1,35 +1,50 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class GUIOMAccessBlankStock extends JDialog {
-    private JPanel mainPanel;
-    private JTextField textField1;
-    private JComboBox comboBox1;
-    private JTextField textField2;
-    private JButton saveButton;
+
+    private JPanel panel1;
+    private JTable table2;
+    private JButton logOutButton;
     private JButton backButton;
-    private JButton searchButton;
-    private JButton logoutButton;
+    private JButton addBlankButton;
+    private JButton archiveBlankButton;
 
+    public GUIOMAccessBlankStock(JFrame parent) {
 
-        public GUIOMAccessBlankStock(JFrame parent) {
+        super(parent);
+        setTitle("Access Blank Stock");
+        setContentPane(panel1);
+        setMinimumSize(new Dimension(700, 600));
+        setModal(true);
+        setLocationRelativeTo(parent);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        createTable();
+        setVisible(true);
 
-            super(parent);
-            setTitle("OfficeManager");
-            setContentPane(mainPanel);
-            setMinimumSize(new Dimension(450, 274));
-            setModal(true);
-            setLocationRelativeTo(parent);
-            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            setVisible(true);
-
-        }
-
-        public static void main(String[] args) {
-            GUI.GUIOMAccessBlankStock panel = new GUI.GUIOMAccessBlankStock(null);
-        }
     }
+
+
+    public void close(){
+        panel1.setVisible(false);
+    }
+
+
+        private void createTable(){
+        table2.setModel(new DefaultTableModel(
+                null,
+                new String [] {"Available Blanks", "Blank ID"}
+        ));
+
+    }
+
+    public static void main(String[] args) {
+
+        GUIOMAccessBlankStock  panel1 = new GUIOMAccessBlankStock(null);
+    }
+}
 
 

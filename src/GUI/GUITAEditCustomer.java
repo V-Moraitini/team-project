@@ -5,21 +5,23 @@ import java.awt.*;
 
 public class GUITAEditCustomer extends JDialog{
     private JPanel panel1;
-    private JTextField textField1;
     private JTextField textField2;
+    private JComboBox comboBox1;
+    private JTextField textField1;
     private JTextField textField3;
     private JTextField textField4;
-    private JRadioButton regularRadioButton;
-    private JRadioButton valuedRadioButton;
+    private JCheckBox regularCheckBox;
+    private JCheckBox valuedCheckBox;
+    private JButton updateButton;
+    private JButton logOutButton;
     private JButton backButton;
-    private JButton logoutButton;
 
     public GUITAEditCustomer(JFrame parent) {
 
         super(parent);
         setTitle("Edit Customer");
         setContentPane(panel1);
-        setMinimumSize(new Dimension(450, 274));
+        setMinimumSize(new Dimension(450, 400));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

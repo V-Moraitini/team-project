@@ -4,16 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GUITACreateReport extends JDialog {
-    private JPanel panel1;
+    private JPanel panel;
+    private JButton logOutButton;
     private JButton createIndividualDomesticReportButton;
     private JButton createIndividualInterlineReportButton;
     private JButton backButton;
-    private JButton logoutButton;
+
     public GUITACreateReport(JFrame parent) {
 
         super(parent);
         setTitle("Create Report");
-        setContentPane(panel1);
+        setContentPane(panel);
         setMinimumSize(new Dimension(450, 274));
         setModal(true);
         setLocationRelativeTo(parent);

@@ -5,11 +5,10 @@ import java.awt.*;
 
 public class GUITACreateReport2 extends JDialog{
     private JPanel panel1;
-    private JTextField xxXxXxTextField;
-    private JTextField xxXxXxTextField1;
-    private JButton createReportButton;
     private JButton backButton;
-    private JButton logoutButton;
+    private JButton createButton;
+    private JButton logOutButton;
+    private JTextField textField1;
 
     public GUITACreateReport2(JFrame parent) {
 

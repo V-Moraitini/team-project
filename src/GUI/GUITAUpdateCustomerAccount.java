@@ -18,7 +18,7 @@ public class GUITAUpdateCustomerAccount extends JDialog{
         super(parent);
         setTitle("Update Customer Account");
         setContentPane(panel1);
-        setMinimumSize(new Dimension(450, 274));
+        setMinimumSize(new Dimension(600, 274));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
