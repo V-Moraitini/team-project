@@ -64,14 +64,7 @@ public class GUISystemAdmin extends JDialog {
             }
         });
 
-        createCommissionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                new GUISACreateCommission(null).setVisible(false);
-                panel1.setVisible(false);
-            }
-        });
+       
 
         logOutButton.addActionListener(new ActionListener() {
             @Override
