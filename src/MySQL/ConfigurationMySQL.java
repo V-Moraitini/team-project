@@ -31,6 +31,12 @@ public class ConfigurationMySQL {
             stmt.setString(3, email);
             stmt.setString(4, password);
             stmt.setString(5, type);
+
+            //if the user is a travel advisor, make their stock as well
+            if (type.equals("Travel Advisor")) {
+                createStock(id);
+            }
+
             con.setAutoCommit(false);
             stmt.executeUpdate();
             con.commit();
@@ -311,6 +317,134 @@ public class ConfigurationMySQL {
     }
 
     /*-------------------------FLIGHT COUPON QUERIES END-------------------------*/
+
+    /*-------------------------AGENCY BATCH QUERIES START-------------------------*/
+    public void createBatch(int day, int month, int year) {
+        int date = year*10000 + month*100 + day;
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "INSERT INTO flightCoupon " +
+                            "(batchAgencyTravelCode, batchDate)" +
+                            "VALUES (?, ?)");
+            //Statement.RETURN_GENERATED_KEYS for auto generated keys
+            stmt.setInt(1, 1); //"Terrific Travel" Travel Agent
+            stmt.setInt(2, date);
+
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getBatches() {
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM agencyBatch");
+            while( rs.next() )
+                //batchID, batchAgencyTravelCode, batchDate
+                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getInt(3)+"\n");
+            //when objects have been made, use object constructor to make them?
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getBatchById(int id) {
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM agencyBatch WHERE batchID = ?");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while( rs.next() )
+                //batchID, batchAgencyTravelCode, batchDate
+                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getInt(3)+"\n");
+            //when objects have been made, use object constructor to make them?
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void updateBatchById(int id, int day, int month, int year) {
+        int date = year*10000 + month*100 + day;
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "UPDATE agencyBatch SET batchDate=? WHERE batchID = ?");
+            stmt.setInt(1, date);
+            stmt.setInt(2, id);
+
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    /*-------------------------AGENCY BATCH QUERIES END-------------------------*/
+
+    /*-------------------------ADVISOR STOCK QUERIES START-------------------------*/
+    public void createStock(int advisorId) {
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "INSERT INTO advisorStock " +
+                            "(stockAdvisorUserID)" +
+                            "VALUES (?)");
+            //Statement.RETURN_GENERATED_KEYS for auto generated keys
+            stmt.setInt(1, advisorId);
+
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getStocks() {
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM advisorStock");
+            while( rs.next() )
+                //stockID, stockAdvisorUserID
+                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"\n");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getStockById(int id) {
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM advisorStock WHERE stockID = ?");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while( rs.next() )
+                //stockID, stockAdvisorUserID
+                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"\n");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getStockByAdvisorId(int advisorId) {
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM advisorStock WHERE stockAdvisorUserID = ?");
+            stmt.setInt(1, advisorId);
+            ResultSet rs = stmt.executeQuery();
+            while( rs.next() )
+                //stockID, stockAdvisorUserID
+                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"\n");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    /*-------------------------ADVISOR STOCK QUERIES END-------------------------*/
 
     public static void main(String args[]) throws SQLException {
         ConfigurationMySQL a = new ConfigurationMySQL();
