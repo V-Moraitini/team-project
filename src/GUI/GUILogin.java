@@ -26,18 +26,35 @@ public class GUILogin extends JDialog {
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setVisible(true);
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (comboBox1.equals("System Administrator")){
+                System.out.println("sdfghn");
+                if (comboBox1.getSelectedItem().equals("System Administrator")) {
                     // Direct user to System Admin screen
+                    dispose();
+                    new GUISystemAdmin(null).setVisible(false);
+                    mainPanel.setVisible(false);
+                } else if (comboBox1.getSelectedItem().equals("Office Manager")){
+                    //Direct user to Office Manager page
+                    dispose();
+                    new GUIOfficeManager(null).setVisible(false);
+                    mainPanel.setVisible(false);
+                } else if (comboBox1.getSelectedItem().equals("Travel Advisor")){
+                    //Direct user to Travel Advisor page
+                    dispose();
+                    new GUITravelAdvisor(null).setVisible(false);
+                    mainPanel.setVisible(false);
+                } else {  JOptionPane.showMessageDialog(GUILogin.this, "Invalid Credentials");
 
                 }
-
-
             }
         });
+
+        setVisible(true);
+
+
+
     }
 
 
