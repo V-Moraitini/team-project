@@ -21,15 +21,16 @@ public class ConfigurationMySQL {
 
     /*-------------------------USER QUERIES START-------------------------*/
     //Create user (with ID)
-    public void createUser(int id, String name, String password, String type) {
+    public void createUser(int id, String name, String email, String password, String type) {
         try {
             PreparedStatement stmt = con.prepareStatement(
-                    "INSERT INTO userAccount VALUES (?, 1, ?, ?, ?, 0)");
+                    "INSERT INTO userAccount VALUES (?, 1, ?, ?, ?, ?, 0)");
             //Statement.RETURN_GENERATED_KEYS for auto generated keys
             stmt.setInt(1, id);
             stmt.setString(2, name);
-            stmt.setString(3, password);
-            stmt.setString(4, type);
+            stmt.setString(3, email);
+            stmt.setString(4, password);
+            stmt.setString(5, type);
             con.setAutoCommit(false);
             stmt.executeUpdate();
             con.commit();
@@ -45,9 +46,9 @@ public class ConfigurationMySQL {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM userAccount WHERE userIsArchived = 0");
             while( rs.next() )
-                //userID, userAgencyTravelCode, userName, userPassword, userType, userIsArchived
+                //userID, userAgencyTravelCode, userName, userEmail, userPassword, userType, userIsArchived
                 System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "
-                        +rs.getString(5)+"  "+rs.getInt(6)+"\n");
+                        +rs.getString(5)+"  "+rs.getString(6)+"  "+rs.getInt(6)+"\n");
                 //when objects have been made, use object constructor to make them?
 
         } catch (Exception e) { System.out.println(e); }
@@ -59,9 +60,9 @@ public class ConfigurationMySQL {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM userAccount");
             while( rs.next() )
-                //userID, userAgencyTravelCode, userName, userPassword, userType, userIsArchived
+                //userID, userAgencyTravelCode, userName, userEmail userPassword, userType, userIsArchived
                 System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "
-                        +rs.getString(5)+"  "+rs.getInt(6)+"\n");
+                        +rs.getString(5)+"  "+rs.getString(6)+"  "+rs.getInt(6)+"\n");
                 //when objects have been made, use object constructor to make them?
 
         } catch (Exception e) { System.out.println(e); }
@@ -73,23 +74,24 @@ public class ConfigurationMySQL {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             while( rs.next() )
-                //userID, userAgencyTravelCode, userName, userPassword, userType, userIsArchived
+                //userID, userAgencyTravelCode, userName, userEmail, userPassword, userType, userIsArchived
                 System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "
-                        +rs.getString(5)+"  "+rs.getInt(6)+"\n");
+                        +rs.getString(5)+"  "+rs.getString(6)+"  "+rs.getInt(6)+"\n");
             //when objects have been made, use object constructor to make them?
 
         } catch (Exception e) { System.out.println(e); }
     }
 
-    public void updateUserById(int id, String name, String password, String type) {
+    public void updateUserById(int id, String name, String email, String password, String type) {
         try {
             PreparedStatement stmt = con.prepareStatement(
-                    "UPDATE userAccount SET userName=?, userPassword=?, userType=? " +
+                    "UPDATE userAccount SET userName=?, userEmail=?, userPassword=?, userType=? " +
                     "WHERE userID = ?");
             stmt.setString(1, name);
-            stmt.setString(2, password);
-            stmt.setString(3, type);
-            stmt.setInt(4, id);
+            stmt.setString(2, email);
+            stmt.setString(3, password);
+            stmt.setString(4, type);
+            stmt.setInt(5, id);
             con.setAutoCommit(false);
             stmt.executeUpdate();
             con.commit();
@@ -147,6 +149,30 @@ public class ConfigurationMySQL {
             stmt.setString(3, email);
             stmt.setInt(4, phone);
             stmt.setBoolean(5, isValued);
+
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void createCustomer(String name, String alias, String email, int phone, Boolean isValued, double fixedDiscount) {
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "INSERT INTO customer " +
+                            "(customerName, customerAlias, customerEmail, customerPhone, customerIsValued, customerFixedDiscountPercentage)" +
+                            "VALUES (?, ?, ?, ?, ?, ?)");
+            //Statement.RETURN_GENERATED_KEYS for auto generated keys
+            stmt.setString(1, name);
+            stmt.setString(2, alias);
+            stmt.setString(3, email);
+            stmt.setInt(4, phone);
+            stmt.setBoolean(5, isValued);
+            stmt.setDouble(6, fixedDiscount);
             con.setAutoCommit(false);
             stmt.executeUpdate();
             /*int affectedRows = stmt.executeUpdate();
@@ -199,8 +225,7 @@ public class ConfigurationMySQL {
         try {
             PreparedStatement stmt = con.prepareStatement(
                     "UPDATE customer SET customerName=?, customerAlias=?, customerEmail=?, " +
-                            "customerPhone=?, customerIsValued=?" +
-                            "WHERE customerID = ?");
+                            "customerPhone=?, customerIsValued=? WHERE customerID = ?");
             stmt.setString(1, name);
             stmt.setString(2, alias);
             stmt.setString(3, email);
@@ -218,6 +243,75 @@ public class ConfigurationMySQL {
 
     /*-------------------------CUSTOMER QUERIES END-------------------------*/
 
+    /*-------------------------FLIGHT COUPON QUERIES START-------------------------*/
+    public void createCoupon(String fromAirport, String toAirport, Boolean isInterline) {
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "INSERT INTO flightCoupon " +
+                            "(couponFromAirport, couponToAirport, couponIsInterline)" +
+                            "VALUES (?, ?, ?)");
+            //Statement.RETURN_GENERATED_KEYS for auto generated keys
+            stmt.setString(1, fromAirport);
+            stmt.setString(2, toAirport);
+            stmt.setBoolean(3, isInterline);
+
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getCoupons() {
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM flightCoupon");
+            while( rs.next() )
+                //couponID, couponFromAirport, couponToAirport, couponIsInterline
+                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3)+"  "+rs.getBoolean(4)+"\n");
+            //when objects have been made, use object constructor to make them?
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getCouponById(int id) {
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM flightCoupon WHERE couponID = ?");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while( rs.next() )
+                //couponID, couponFromAirport, couponToAirport, couponIsInterline
+                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3)+"  "+rs.getBoolean(4)+"\n");
+            //when objects have been made, use object constructor to make them?
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void updateCouponById(int id, String fromAirport, String toAirport, Boolean isInterline) {
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "UPDATE flightCoupon SET couponFromAirport=?, couponToAirport=?, couponIsInterline=? WHERE couponID = ?");
+            stmt.setString(1,fromAirport);
+            stmt.setString(2, toAirport);
+            stmt.setBoolean(3, isInterline);
+            stmt.setInt(4, id);
+
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    /*-------------------------FLIGHT COUPON QUERIES END-------------------------*/
+
     public static void main(String args[]) throws SQLException {
         ConfigurationMySQL a = new ConfigurationMySQL();
         try {
@@ -225,8 +319,7 @@ public class ConfigurationMySQL {
             //a.getUserById(1);
             //a.updateUserById(1, "Todd Jenkins", "tod123", "Office Manager");
             //a.archiveUser(1);
-            //a.createCustomer("Chris Smart", "Chris", "chris.smart@email.com", 7888111, true);
-            a.getCustomers();
+            a.getCouponById(4);
         } catch (Exception e) {
             System.out.println(e);
         } finally {
