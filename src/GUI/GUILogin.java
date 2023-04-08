@@ -48,7 +48,6 @@ public class GUILogin extends JDialog {
                 } else {  JOptionPane.showMessageDialog(GUILogin.this, "Invalid Credentials");
 
                 }
-
             }
         });
 

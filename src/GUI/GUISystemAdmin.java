@@ -1,6 +1,7 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ public class GUISystemAdmin extends JDialog {
     private JButton accessCommissionButton;
     private JButton createCommissionButton;
     private JButton backButton;
+    private DefaultTableModel model1;
 
     public GUISystemAdmin(JFrame parent) {
 
@@ -25,7 +27,7 @@ public class GUISystemAdmin extends JDialog {
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        accessBlankStockButton.addActionListener(new ActionListener() {
+      accessBlankStockButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -71,9 +73,6 @@ public class GUISystemAdmin extends JDialog {
             }
         });
 
-
-        setVisible(true);
-
         logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -82,6 +81,10 @@ public class GUISystemAdmin extends JDialog {
                 panel1.setVisible(false);
             }
         });
+
+        setVisible(true);
+
+
     }
 
     public static void main(String[] args) {

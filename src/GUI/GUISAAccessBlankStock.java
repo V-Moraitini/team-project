@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 
 public class GUISAAccessBlankStock extends JDialog{
     private JPanel panel1;
-    private JButton backButton;
     private JButton logOutButton;
+    private JButton backButton;
     private JTable table1;
     private JButton addBlankButton;
     private JButton archiveBlankButton;
@@ -25,15 +25,8 @@ public class GUISAAccessBlankStock extends JDialog{
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
         backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                new GUISystemAdmin(null).setVisible(false);
-                panel1.setVisible(false);
-            }
-        });
-        logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -41,8 +34,31 @@ public class GUISAAccessBlankStock extends JDialog{
                 panel1.setVisible(false);
             }
         });
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new GUISystemAdmin(null).setVisible(false);
+                panel1.setVisible(false);
+            }
+        });
+        addBlankButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new GUISAAddNewBlank(null).setVisible(false);
+                panel1.setVisible(false);
+            }
+        });
 
-
+        archiveBlankButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new GUISAArchiveBlank(null).setVisible(false);
+                panel1.setVisible(false);
+            }
+        });
 
         setVisible(true);
 
