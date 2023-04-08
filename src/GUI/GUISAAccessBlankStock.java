@@ -6,16 +6,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class GUISAAccessBlankStock extends JDialog {
     private JPanel panel1;
-    private JButton logOutButton;
-    private JButton backButton;
+    private JButton backBtn;
     private JTable table1;
     private JButton addBlankButton;
     private JButton archiveBlankButton;
@@ -23,6 +20,8 @@ public class GUISAAccessBlankStock extends JDialog {
     private JTextField qtytf;
     private JTextField blankTypetf;
     private JTextField datetf;
+    private JLabel dateLBL;
+    private JButton logOutBtn;
     private DefaultTableModel model;
     DateFormat dateFormat = new SimpleDateFormat("dd/MM/YY");
     Date date = new Date();
@@ -41,7 +40,7 @@ public class GUISAAccessBlankStock extends JDialog {
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        backButton.addActionListener(new ActionListener() {
+        logOutBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -49,7 +48,8 @@ public class GUISAAccessBlankStock extends JDialog {
                 panel1.setVisible(false);
             }
         });
-        logOutButton.addActionListener(new ActionListener() {
+
+        backBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -57,6 +57,8 @@ public class GUISAAccessBlankStock extends JDialog {
                 panel1.setVisible(false);
             }
         });
+
+
         addBlankButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,7 +100,7 @@ public class GUISAAccessBlankStock extends JDialog {
 
 
         ));
-        DefaultTableModel model = (DefaultTableModel) table1.getModel();
+
     }
 
 
