@@ -8,6 +8,7 @@ public class GUITACreateReport2 extends JDialog{
     private JButton backButton;
     private JButton createButton;
     private JButton logOutButton;
+    private JTextField textField1;
 
     public GUITACreateReport2(JFrame parent) {
 

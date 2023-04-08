@@ -10,6 +10,7 @@ public class GUISAAddNewBlank extends JDialog{
     private JComboBox comboBox2;
     private JButton backButton;
     private JButton confirmButton;
+    private JTextField textField1;
 
     public GUISAAddNewBlank(JFrame parent) {
 

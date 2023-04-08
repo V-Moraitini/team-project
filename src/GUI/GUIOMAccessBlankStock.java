@@ -19,7 +19,7 @@ public class GUIOMAccessBlankStock extends JDialog {
         setTitle("Access Blank Stock");
         createTable();
         setContentPane(panel1);
-        setMinimumSize(new Dimension(450, 600));
+        setMinimumSize(new Dimension(700, 600));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
