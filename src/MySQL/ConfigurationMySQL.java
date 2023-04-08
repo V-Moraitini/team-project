@@ -181,6 +181,41 @@ public class ConfigurationMySQL {
         } catch (Exception e) { System.out.println(e); }
     }
 
+    public void getCustomerById(int id) {
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM customer WHERE userID = ?");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while( rs.next() )
+                //customerID, customerName, customerAlias, customerEmail, customerPhone, customerIsValued, customerFixedDiscountPercentage
+                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "
+                        +rs.getInt(5)+"  "+rs.getBoolean(6)+"  "+rs.getDouble(7)+"\n");
+            //when objects have been made, use object constructor to make them?
+
+        } catch (Exception e) { System.out.println(e); }
+    }
+
+    public void updateCustomerById(int id, String name, String alias, String email, int phone, Boolean isValued) {
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "UPDATE customer SET customerName=?, customerAlias=?, customerEmail=?, " +
+                            "customerPhone=?, customerIsValued=?" +
+                            "WHERE customerID = ?");
+            stmt.setString(1, name);
+            stmt.setString(2, alias);
+            stmt.setString(3, email);
+            stmt.setInt(4, phone);
+            stmt.setBoolean(5, isValued);
+            stmt.setInt(6, id);
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     /*-------------------------CUSTOMER QUERIES END-------------------------*/
 
     public static void main(String args[]) throws SQLException {
