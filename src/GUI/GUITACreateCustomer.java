@@ -22,6 +22,59 @@ public class GUITACreateCustomer extends JDialog {
     public GUITACreateCustomer(JFrame parent) {
 
         super(parent);
+
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource()==backButton){ //when you click on the button another frame appears
+                    dispose();
+                    GUITravelAdvisor gc = new GUITravelAdvisor(null);
+                    gc.setVisible(false);
+                    //close();
+                    panel1.setVisible(false);
+
+
+
+                }
+
+
+            }
+        });
+
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource()==logOutButton){ //when you click on the button another frame appears
+                    dispose();
+                    GUILogin gc = new GUILogin(null);
+                    gc.setVisible(false);
+                    //close();
+                    panel1.setVisible(false);
+
+
+
+                }
+
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource()==backButton){ //when you click on the button another frame appears
+                    dispose();
+                    GUITravelAdvisor gc = new GUITravelAdvisor(null);
+                    gc.setVisible(false);
+                    //close();
+                    panel1.setVisible(false);
+
+
+
+                }
+
+            }
+        });
         setTitle("Create Customer");
         setContentPane(panel1);
         setMinimumSize(new Dimension(450, 450));
@@ -29,6 +82,8 @@ public class GUITACreateCustomer extends JDialog {
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
+
+
 
     }
 

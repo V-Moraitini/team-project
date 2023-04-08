@@ -1,6 +1,6 @@
 package GUI;
 
-import org.jdatepicker.JDatePicker;
+//import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +18,7 @@ public class GUISAAddNewBlank extends JDialog{
     private JLabel blankTypeLBL;
     private JTextField blankQty;
     private JLabel quantity;
-    private JDatePicker date;
+   // private JDatePicker date;
 
     public GUISAAddNewBlank(JFrame parent) {
 

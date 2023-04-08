@@ -50,6 +50,14 @@ public class GUIOMSetDiscountPlan extends JDialog {
             }
         });
 
+        confirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              //  JOptionPane.showMessageDialog(GUIOMSetDiscountPlan.this,"enter digits");
+
+            }
+        });
+
         setTitle("Set Discount Plan");
         setContentPane(panel1);
         setMinimumSize(new Dimension(700, 350));
