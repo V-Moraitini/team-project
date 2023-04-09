@@ -2,6 +2,8 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUITAEditCustomer extends JDialog{
     private JPanel panel1;
@@ -25,6 +27,16 @@ public class GUITAEditCustomer extends JDialog{
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new GUITravelAdvisor(null).setVisible(false);
+                panel1.setVisible(false);
+            }
+        });
+
         setVisible(true);
 
     }
