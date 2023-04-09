@@ -60,6 +60,20 @@ public class ConfigurationMySQL {
         } catch (Exception e) { System.out.println(e); }
     }
 
+    //Getting archived users only
+    public void getArchivedUsers() {
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM userAccount WHERE userIsArchived = 1");
+            while( rs.next() )
+                //userID, userAgencyTravelCode, userName, userEmail, userPassword, userType, userIsArchived
+                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "
+                        +rs.getString(5)+"  "+rs.getString(6)+"  "+rs.getInt(6)+"\n");
+            //when objects have been made, use object constructor to make them?
+
+        } catch (Exception e) { System.out.println(e); }
+    }
+
     //Getting users regardless of whether they are archived or not
     public void getAllUsers() {
         try {
@@ -446,6 +460,286 @@ public class ConfigurationMySQL {
 
     /*-------------------------ADVISOR STOCK QUERIES END-------------------------*/
 
+    /*-------------------------COMMISSION RATE QUERIES START-------------------------*/
+    public void createCommission(double percentage, int type, int day, int month, int year) {
+        int date = year*10000 + month*100 + day;
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "INSERT INTO commissionRate " +
+                            "(commissionAgencyTravelCode, commissionPercentage, commissionTicketType, commissionDate, commissionIsArchived)" +
+                            "VALUES (?, ?, ?, ?, 0)");
+            //Statement.RETURN_GENERATED_KEYS for auto generated keys
+            stmt.setInt(1, 1); //"Terrific Travel" Travel Agency
+            stmt.setDouble(2, percentage);
+            stmt.setInt(3, type);
+            stmt.setInt(4, date);
+
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getActiveCommissions() {
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM commissionRate WHERE commissionIsArchived = 0");
+            while( rs.next() )
+                //commissionID, commissionAgencyTravelCode, commissionPercentage, commissionTicketType, commissionDate, commissionIsArchived
+                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getDouble(3)+
+                        "  "+rs.getInt(4)+"  "+rs.getInt(5)+"  "+rs.getBoolean(6)+"\n");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getArchivedCommissions() {
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM commissionRate WHERE commissionIsArchived = 1");
+            while( rs.next() )
+                //commissionID, commissionAgencyTravelCode, commissionPercentage, commissionTicketType, commissionDate, commissionIsArchived
+                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getDouble(3)+
+                        "  "+rs.getInt(4)+"  "+rs.getInt(5)+"  "+rs.getBoolean(6)+"\n");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getAllCommissions() {
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM commissionRate");
+            while( rs.next() )
+                //commissionID, commissionAgencyTravelCode, commissionPercentage, commissionTicketType, commissionDate, commissionIsArchived
+                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getDouble(3)+
+                        "  "+rs.getInt(4)+"  "+rs.getInt(5)+"  "+rs.getBoolean(6)+"\n");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getCommissionById(int id) {
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM commissionRate WHERE commissionID = ?");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while( rs.next() )
+                //commissionID, commissionAgencyTravelCode, commissionPercentage, commissionTicketType, commissionDate, commissionIsArchived
+                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getDouble(3)+
+                        "  "+rs.getInt(4)+"  "+rs.getInt(5)+"  "+rs.getBoolean(6)+"\n");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getActiveCommissionByTicketType(int type) {
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM commissionRate WHERE commissionTicketType = ? " +
+                    "AND commissionIsArchived = 0");
+            stmt.setInt(1, type);
+            ResultSet rs = stmt.executeQuery();
+            while( rs.next() )
+                //commissionID, commissionAgencyTravelCode, commissionPercentage, commissionTicketType, commissionDate, commissionIsArchived
+                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getDouble(3)+
+                        "  "+rs.getInt(4)+"  "+rs.getInt(5)+"  "+rs.getBoolean(6)+"\n");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void updateCommissionById(int id, double percentage, int type, int day, int month, int year) {
+        int date = year*10000 + month*100 + day;
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "UPDATE commissionRate SET commissionPercentage=?, commissionTicketType=?, " +
+                            "commissionDate=? WHERE commissionID = ?");
+            stmt.setDouble(1, percentage);
+            stmt.setInt(2, type);
+            stmt.setInt(3, date);
+            stmt.setInt(4, id);
+
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void archiveCommission(int id) {
+        try {
+            PreparedStatement isArchived = con.prepareStatement(
+                    "SELECT commissionIsArchived FROM commissionRate WHERE commissionID = ?");
+            isArchived.setInt(1, id);
+            ResultSet rsArchived = isArchived.executeQuery();
+            while (rsArchived.next()) {
+                if (rsArchived.getInt(1) == 0) {
+                    PreparedStatement stmt = con.prepareStatement(
+                            "UPDATE commissionRate SET commissionIsArchived = 1 WHERE commissionID = ?");
+                    stmt.setInt(1, id);
+                    con.setAutoCommit(false);
+                    stmt.executeUpdate();
+                    con.commit();
+                    con.setAutoCommit(true);
+                    System.out.println("Commission is now archived.");
+                } else {
+                    PreparedStatement stmt = con.prepareStatement(
+                            "UPDATE commissionRate SET commissionIsArchived = 0 WHERE commissionID = ?");
+                    stmt.setInt(1, id);
+                    con.setAutoCommit(false);
+                    stmt.executeUpdate();
+                    con.commit();
+                    con.setAutoCommit(true);
+                    System.out.println("Commission is no longer archived.");
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    /*-------------------------COMMISSION RATE QUERIES END-------------------------*/
+
+    /*-------------------------CONVERSION RATE QUERIES START-------------------------*/
+    public void createConversion(String currencyName, double rate, int day, int month, int year) {
+        int date = year*10000 + month*100 + day;
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "INSERT INTO conversionRate " +
+                            "(conversionCurrency, conversionRate, conversionDate)" +
+                            "VALUES (?, ?, ?)");
+            //Statement.RETURN_GENERATED_KEYS for auto generated keys
+            stmt.setString(1, currencyName);
+            stmt.setDouble(2, rate);
+            stmt.setInt(3, date);
+
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getConversions() {
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM conversionRate");
+            while( rs.next() )
+                //conversionID, conversionCurrency, conversionRate, conversionDate
+                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getDouble(3)+
+                        "  "+rs.getInt(4)+"\n");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void getConversionById(int id) {
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM conversionRate WHERE conversionID = ?");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while( rs.next() )
+                //conversionID, conversionCurrency, conversionRate, conversionDate
+                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getDouble(3)+
+                        "  "+rs.getInt(4)+"\n");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void updateConversionById(int id, String currencyName, double rate, int day, int month, int year) {
+        int date = year*10000 + month*100 + day;
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "UPDATE conversionRate SET conversionCurrency=?, conversionRate=?, " +
+                            "conversionDate=? WHERE conversionID = ?");
+            stmt.setString(1, currencyName);
+            stmt.setDouble(2, rate);
+            stmt.setInt(3, date);
+            stmt.setInt(4, id);
+
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    /*-------------------------CONVERSION RATE QUERIES END-------------------------*/
+
+    /*-------------------------BLANK QUERIES START-------------------------*/
+    public void createBlank(int batchId, int type, int day, int month, int year) {
+        int date = year*10000 + month*100 + day;
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "INSERT INTO blank " +
+                            "(blankBatchID, blankType, blankDateReceived, " +
+                            "blankIsValid, blankIsSold, blankIsInterline)" +
+                            "VALUES (?, ?, ?, 1, 0, ?)");
+            //Statement.RETURN_GENERATED_KEYS for auto generated keys
+            stmt.setInt(1, batchId);
+            stmt.setInt(2, type);
+            stmt.setInt(3, date);
+            if (type == 444 || type == 440 || type == 420) {
+                stmt.setBoolean(4, true);
+            } else if (type == 201 || type == 101)
+                stmt.setBoolean(4,false);
+            else {
+                stmt.setBoolean(4, false);
+            }
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void createBlankBatch(int count, int batchId, int type, int day, int month, int year) {
+        int date = year*10000 + month*100 + day;
+        Boolean isInterline;
+        if (type == 444 || type == 440 || type == 420) {
+            isInterline = true;
+        } else if (type == 201 || type == 101)
+            isInterline = false;
+        else {
+            isInterline = false;
+        }
+        //createBatch(day, month, year);
+        //then probably retrieve the id of the object class?
+        String SQL = "INSERT INTO blank " +
+                "(blankBatchID, blankType, blankDateReceived, " +
+                "blankIsValid, blankIsSold, blankIsInterline)" +
+                "VALUES (" +batchId+", "+type+","+date+", 1, 0,"+isInterline+")";
+        try {
+            con.setAutoCommit(false);
+            Statement stmt = con.createStatement();
+            for(int i = 0; i <= count; i++) {
+                stmt.addBatch(SQL);
+            }
+            stmt.executeBatch();
+
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    /*-------------------------BLANK QUERIES END-------------------------*/
+
+    /*-------------------------MAIN START-------------------------*/
     public static void main(String args[]) throws SQLException {
         ConfigurationMySQL a = new ConfigurationMySQL();
         try {
@@ -453,7 +747,8 @@ public class ConfigurationMySQL {
             //a.getUserById(1);
             //a.updateUserById(1, "Todd Jenkins", "tod123", "Office Manager");
             //a.archiveUser(1);
-            a.getCouponById(4);
+
+            a.getActiveCommissions();
         } catch (Exception e) {
             System.out.println(e);
         } finally {
@@ -461,4 +756,5 @@ public class ConfigurationMySQL {
         }
 
     }
+    /*-------------------------MAIN END-------------------------*/
 }
