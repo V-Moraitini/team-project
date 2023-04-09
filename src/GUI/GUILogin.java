@@ -58,7 +58,9 @@ public class GUILogin extends JDialog {
     }
 
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         GUILogin login = new GUILogin(null);
     }
+
+    */
 }
