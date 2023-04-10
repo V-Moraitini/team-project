@@ -2,20 +2,23 @@ package Backend.persistenceLayer;
 
 public class User {
 
-    private int id;
+    private int Id;
     private String name;
     private String password;
     private String email;
+    private String address;
     private int userAgencyTravelCode;
-    private enum userType{TravelAdvisor, OfficeManager, SystemAdmin};
-    private Boolean userArchived;
+    private UserType userType;
+    private int userArchived;
 
 
-    public User(String username, String password, String email, int userAgencyTravelCode, Boolean userArchived) {
-        this.name = username;
+    public User(String name, String password, String email, String address, int userAgencyTravelCode, UserType userType, int userArchived) {
+        this.name = name;
         this.password = password;
         this.email = email;
+        this.address = address;
         this.userAgencyTravelCode = userAgencyTravelCode;
+        this.userType = userType;
         this.userArchived = userArchived;
     }
 
@@ -23,24 +26,32 @@ public class User {
         return name;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getUserAgencyTravelCode() {
@@ -51,26 +62,36 @@ public class User {
         this.userAgencyTravelCode = userAgencyTravelCode;
     }
 
-    public Boolean getUserArchived() {
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
+    public int getUserArchived() {
         return userArchived;
     }
 
-    public void setUserArchived(Boolean userArchived) {
+    public void setUserArchived(int userArchived) {
         this.userArchived = userArchived;
     }
 
     public int getId() {
-        return id;
+        return Id;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "Id=" + id +
+                "Id=" + Id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
                 ", userAgencyTravelCode=" + userAgencyTravelCode +
+                ", userType=" + userType +
                 ", userArchived=" + userArchived +
                 '}';
     }
