@@ -14,11 +14,10 @@ public class UserSL {
     public boolean login(String email, String password, UserType userType) {
 
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM userAccount WHERE userEmail = ? and userPassword = ? and userType = ?");
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next())
-                //userID, userAgencyTravelCode, userName, userEmail, userPassword, userType, userIsArchived
+           PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM userAccount WHERE userEmail = ? and userPassword = ? and userType = ?");
+            stmt.setInt(1, id);ResultSet rs = stmt.executeQuery();
+           while (rs.next())
+                userID, userAgencyTravelCode, userName, userEmail, userPassword, userType, userIsArchived
                 System.out.println(rs.getInt(1) + "  " + rs.getInt(2) + "  " + rs.getString(3) + "  " + rs.getString(4) + "  "
                         + rs.getString(5) + "  " + rs.getString(6) + "  " + rs.getInt(7) + "\n");
             //when objects have been made, use object constructor to make them?
