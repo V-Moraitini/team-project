@@ -42,7 +42,17 @@ public class GUITACreateReport extends JDialog {
             }
         });
 
+        createIndividualInterlineReportButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new GUITACreateInterlineReport(null).setVisible(false);
+                panel.setVisible(false);
+            }
+        });
+
         setVisible(true);
+
 
     }
 

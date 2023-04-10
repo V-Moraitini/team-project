@@ -1,7 +1,5 @@
 package GUI;
 
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -31,6 +29,10 @@ public class GUITACreateDomReport extends JDialog{
     private JTextField tAmounttf;
     private JButton addButton;
     private JTable table1;
+    private JTextField datetf;
+    private JLabel datelbl;
+    private JTextField comRatetf;
+    private JLabel comRatelbl;
 
     public GUITACreateDomReport(JFrame parent) {
 
@@ -66,12 +68,12 @@ public class GUITACreateDomReport extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 if (advisorNametf.getText().equals("") ||advisorIDtf.getText().equals("")||blankNumbertf.getText().equals("")
                         || saleAmounttf.getText().equals("") || paymentTypetf.getText().equals("")
-                        || taxestf.getText().equals("")|| tAmounttf.getText().equals("")) {
+                        || taxestf.getText().equals("")|| comRatetf.getText().equals("") || tAmounttf.getText().equals("") || datetf.getText().equals("")) {
                     JOptionPane.showMessageDialog(GUITACreateDomReport.this,"Please enter all data!");
                 } else{
                     DefaultTableModel model = (DefaultTableModel) table1.getModel();
                     model.addRow(new Object[]{advisorNametf.getText(),advisorIDtf.getText(),blankNumbertf.getText(),saleAmounttf.getText(),
-                            paymentTypetf.getText(),taxestf.getText(),tAmounttf.getText()});
+                            paymentTypetf.getText(),taxestf.getText(),comRatetf.getText(), tAmounttf.getText(), datetf.getText()});
                     JOptionPane.showMessageDialog(GUITACreateDomReport.this,"Sale recorded");
                 } }
         });
@@ -93,7 +95,7 @@ public class GUITACreateDomReport extends JDialog{
     private void createTable() {
         table1.setModel(new DefaultTableModel(
                 null,
-                new String[]{"Advisor Name", "Advisor ID", "Blank Number", "Sale Amount", "Payment Type", "Taxes", "Total Amount"}
+                new String[]{"Advisor Name", "Advisor ID", "Blank Number", "Sale Amount", "Payment Type", "Taxes", "Commission Rate", "Total Amount","Date"}
 
 
         ));
@@ -114,6 +116,7 @@ public class GUITACreateDomReport extends JDialog{
                     //create a new array to store data in each row
                     row[j] = model.getValueAt(i, j).toString();
                     //add the value that is in the cell to the row array
+
                 }
 
                 // add the row array to the data ArrayList
@@ -141,6 +144,12 @@ public class GUITACreateDomReport extends JDialog{
                         XSSFCell cell = row3.createCell(o);
                         cell.setCellValue(rowData[o]);
                     }
+
+                    //Auto size the columns
+                    for (int k = 0; k< model.getColumnCount(); k++){
+                        sheet.autoSizeColumn(k);
+                    }
+
                 }
 
                 // Write the workbook to a file
@@ -164,7 +173,7 @@ public class GUITACreateDomReport extends JDialog{
                     File output = saveFile.getSelectedFile();
                     try (FileOutputStream out = new FileOutputStream(output)) {
                         workbook.write(out);
-                        out.close();
+
                     } catch (IOException ex) {
                         Logger.getLogger(GUITACreateDomReport.class.getName()).log(Level.SEVERE, null, ex);
                     }
