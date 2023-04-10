@@ -35,7 +35,7 @@ public class ConfigurationMySQL {
             //a.getUserById(1);
             //a.updateUserById(1, "Todd Jenkins", "tod123", "Office Manager");
             //a.archiveUser(1);
-
+            //a.getStocks();
             //a.getActiveCommissions();
         } catch (Exception e) {
             System.out.println(e);

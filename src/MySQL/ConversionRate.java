@@ -62,8 +62,8 @@ public class ConversionRate {
             System.out.println(e);
         } finally {
             config.getCon().close();
-            return rates;
         }
+        return rates;
     }
 
     public void getConversionById(int id) {
@@ -80,15 +80,15 @@ public class ConversionRate {
         }
     }
 
-    public void updateConversionById(int id, String currencyName, double rate, int day, int month, int year) {
-        int date = year*10000 + month*100 + day;
+    public void updateConversionById(persistenceLayer.ConversionRate conversionRate, int id) {
+        //int date = year*10000 + month*100 + day;
         try {
             PreparedStatement stmt = config.getCon().prepareStatement(
                     "UPDATE conversionRate SET conversionCurrency=?, conversionRate=?, " +
                             "conversionDate=? WHERE conversionID = ?");
-            stmt.setString(1, currencyName);
-            stmt.setDouble(2, rate);
-            stmt.setInt(3, date);
+            stmt.setString(1, conversionRate.getConversionCurrency());
+            stmt.setDouble(2, conversionRate.getConversionRate());
+            stmt.setInt(3, conversionRate.getConversionDate());
             stmt.setInt(4, id);
 
             config.getCon().setAutoCommit(false);

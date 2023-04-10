@@ -9,6 +9,11 @@ public class AdvisorStock {
         this.stockAdvisorUserId = stockAdvisorUserId;
     }
 
+    public AdvisorStock(int stockId, int stockAdvisorUserId) {
+        this.stockId = stockId;
+        this.stockAdvisorUserId = stockAdvisorUserId;
+    }
+
     public int getStockAdvisorUserId() {
         return stockAdvisorUserId;
     }

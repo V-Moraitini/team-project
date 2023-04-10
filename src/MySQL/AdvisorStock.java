@@ -6,40 +6,40 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class AdvisorStock {
-    ConfigurationMySQL config;
+public class AdvisorStock extends ConfigurationMySQL {
+    //ConfigurationMySQL config;
 
     public AdvisorStock() {
-        this.config = new ConfigurationMySQL();
+        //this.config = new ConfigurationMySQL();
     }
 
     /*-------------------------ADVISOR STOCK QUERIES START-------------------------*/
     public void createStock(persistenceLayer.AdvisorStock advisorStock) {
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement(
+            PreparedStatement stmt = con.prepareStatement(
                     "INSERT INTO advisorStock " +
-                            "(stockAdvisorUserID)" +
+                            "(stockAdvisorUserId)" +
                             "VALUES (?)", Statement.RETURN_GENERATED_KEYS);
             //Statement.RETURN_GENERATED_KEYS for auto generated keys
             stmt.setInt(1, advisorStock.getStockAdvisorUserId()); //when do we set the id in the object?
 
-            config.getCon().setAutoCommit(false);
+            con.setAutoCommit(false);
             stmt.executeUpdate();
 
-            config.getCon().commit();
-            config.getCon().setAutoCommit(true);
+            con.commit();
+            con.setAutoCommit(true);
 
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-            config.closeConnection();
+            closeConnection();
         }
     }
 
     public ArrayList<persistenceLayer.AdvisorStock> getStocks() {
         ArrayList<persistenceLayer.AdvisorStock> stocks = new ArrayList<persistenceLayer.AdvisorStock>();
         try {
-            Statement stmt = config.getCon().createStatement();
+            Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM advisorStock");
 
             int stockId = 0;
@@ -47,24 +47,23 @@ public class AdvisorStock {
             while( rs.next() )
                 stockId = rs.getInt(1);
                 stockAdvisorUserId = rs.getInt(2);
-                stocks.add(new persistenceLayer.AdvisorStock(stockAdvisorUserId)); //id where aaa
+                stocks.add(new persistenceLayer.AdvisorStock(stockId, stockAdvisorUserId)); //id where aaa
                 //stockID, stockAdvisorUserID
                 //System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"\n");
         } catch (SQLException e) {
-            System.out.println(e);
+            e.printStackTrace();
         } finally {
-            config.closeConnection();
-            return stocks;
+            closeConnection();
         }
+        return stocks;
     }
 
     public persistenceLayer.AdvisorStock getStockById(int stockId) {
         persistenceLayer.AdvisorStock stock = new persistenceLayer.AdvisorStock(0);
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM advisorStock WHERE stockID = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM advisorStock WHERE stockId = ?");
             stmt.setInt(1, stockId);
             ResultSet rs = stmt.executeQuery();
-            ArrayList<persistenceLayer.AdvisorStock> stocks = new ArrayList<persistenceLayer.AdvisorStock>();
             int stockAdvisorUserId = 0;
             while( rs.next() ) {
                 //stockID, stockAdvisorUserID
@@ -74,17 +73,17 @@ public class AdvisorStock {
                 //System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"\n");
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            e.printStackTrace();
         } finally {
-            config.closeConnection();
-            return stock;
+            closeConnection();
         }
+        return stock;
     }
 
     public persistenceLayer.AdvisorStock getStockByAdvisorId(int advisorId) {
         persistenceLayer.AdvisorStock stock = new persistenceLayer.AdvisorStock(0);
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM advisorStock WHERE stockAdvisorUserID = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM advisorStock WHERE stockAdvisorUserId = ?");
             stmt.setInt(1, advisorId);
             ResultSet rs = stmt.executeQuery();
             ArrayList<persistenceLayer.AdvisorStock> stocks = new ArrayList<persistenceLayer.AdvisorStock>();
@@ -98,10 +97,21 @@ public class AdvisorStock {
         } catch (Exception e) {
             System.out.println(e);
         } finally {
-            config.closeConnection();
-            return stock;
+            closeConnection();
         }
+        return stock;
     }
 
     /*-------------------------ADVISOR STOCK QUERIES END-------------------------*/
+
+    public static void main(String[] args) {
+        AdvisorStock a = new AdvisorStock();
+        try {
+            a.getStocks();
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            a.closeConnection();
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package persistenceLayer;
+package Backend.persistenceLayer;
 
 public class AdvisorStock {
 
@@ -6,6 +6,11 @@ public class AdvisorStock {
     private int stockAdvisorUserId;
 
     public AdvisorStock(int stockAdvisorUserId) {
+        this.stockAdvisorUserId = stockAdvisorUserId;
+    }
+
+    public AdvisorStock(int stockId, int stockAdvisorUserId) {
+        this.stockId = stockId;
         this.stockAdvisorUserId = stockAdvisorUserId;
     }
 
