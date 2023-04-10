@@ -2,6 +2,8 @@ package MySQL;
 
 import java.sql.*;
 
+
+
 public class ConfigurationMySQL {
     Connection con;
 
@@ -30,8 +32,9 @@ public class ConfigurationMySQL {
     /*-------------------------MAIN START-------------------------*/
     public static void main(String args[]) throws SQLException {
         ConfigurationMySQL a = new ConfigurationMySQL();
+        UserAccount userAccount = new UserAccount();
         try {
-            //a.getUsers();
+            userAccount.getUserById(1);
             //a.getUserById(1);
             //a.updateUserById(1, "Todd Jenkins", "tod123", "Office Manager");
             //a.archiveUser(1);

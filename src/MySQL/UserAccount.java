@@ -88,7 +88,7 @@ public class UserAccount {
             while( rs.next() )
                 //userID, userAgencyTravelCode, userName, userEmail, userPassword, userType, userIsArchived
                 System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "
-                        +rs.getString(5)+"  "+rs.getString(6)+"  "+rs.getInt(6)+"\n");
+                        +rs.getString(5)+"  "+rs.getString(6)+"  "+rs.getInt(7)+"\n");
             //when objects have been made, use object constructor to make them?
 
         } catch (Exception e) { System.out.println(e); }
