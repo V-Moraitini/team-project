@@ -1,7 +1,7 @@
 package Backend.serviceLayer;
 
 
-
+/*
 import Backend.persistenceLayer.UserType;
 
 import java.sql.Connection;
@@ -28,7 +28,7 @@ public class UserSL {
         }
     }
 }
-
+*/
 //        private static final String INSERT_USER_SQL = "INSERT INTO users" +
 //                " (username, password, email, address, agency_code, user_type)" +
 //                " VALUES (?, ?, ?, ?, ?, ?)";
