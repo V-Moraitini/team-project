@@ -49,11 +49,11 @@ public class CommissionRate {
         this.commissionDate = commissionDate;
     }
 
-    public int getCommissionIsarchived() {
+    public int getCommissionIsArchived() {
         return commissionIsArchived;
     }
 
-    public void setCommissionIsarchived(int commissionIsarchived) {
+    public void setCommissionIsArchived(int commissionIsArchived) {
         this.commissionIsArchived = commissionIsarchived;
     }
 
@@ -69,7 +69,7 @@ public class CommissionRate {
                 ", commissionPercentage=" + commissionPercentage +
                 ", commissionTicketType=" + commissionTicketType +
                 ", commissionDate=" + commissionDate +
-                ", commissionIsarchived=" + commissionIsArchived +
+                ", commissionIsArchived=" + commissionIsArchived +
                 '}';
     }
 }
