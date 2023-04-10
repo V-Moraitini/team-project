@@ -1,4 +1,4 @@
-package persistenceLayer;
+package Backend.persistenceLayer;
 
 public class TravelAgency {
 

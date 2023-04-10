@@ -1,4 +1,4 @@
-package persistenceLayer;
+package Backend.persistenceLayer;
 
 public class CommissionRate {
 
@@ -7,14 +7,14 @@ public class CommissionRate {
     private int commissionPercentage;
     private int commissionTicketType;
     private int commissionDate;
-    private int commissionIsarchived;
+    private int commissionIsArchived;
 
     public CommissionRate(int commissionAgencyTravelCode, int commissionPercentage, int commissionTicketType, int commissionDate, int commissionIsarchived) {
         this.commissionAgencyTravelCode = commissionAgencyTravelCode;
         this.commissionPercentage = commissionPercentage;
         this.commissionTicketType = commissionTicketType;
         this.commissionDate = commissionDate;
-        this.commissionIsarchived = commissionIsarchived;
+        this.commissionIsArchived = commissionIsarchived;
     }
 
     public int getCommissionAgencyTravelCode() {
@@ -49,12 +49,12 @@ public class CommissionRate {
         this.commissionDate = commissionDate;
     }
 
-    public int getCommissionIsarchived() {
-        return commissionIsarchived;
+    public int getCommissionIsArchived() {
+        return commissionIsArchived;
     }
 
-    public void setCommissionIsarchived(int commissionIsarchived) {
-        this.commissionIsarchived = commissionIsarchived;
+    public void setCommissionIsArchived(int commissionIsArchived) {
+        this.commissionIsArchived = commissionIsArchived;
     }
 
     public int getCommissionId() {
@@ -69,7 +69,7 @@ public class CommissionRate {
                 ", commissionPercentage=" + commissionPercentage +
                 ", commissionTicketType=" + commissionTicketType +
                 ", commissionDate=" + commissionDate +
-                ", commissionIsarchived=" + commissionIsarchived +
+                ", commissionIsArchived=" + commissionIsArchived +
                 '}';
     }
 }

@@ -1,19 +1,19 @@
-package persistenceLayer;
+package Backend.persistenceLayer;
 
 public class User {
 
-        private int Id;
-        private String username;
-        private String password;
-        private String email;
-        private String address;
-        private int userAgencyTravelCode;
-        private enum userType{TravelAdvisor, OfficeManager, SystemAdmin};
-        private int userArchived;
+    private int Id;
+    private String name;
+    private String password;
+    private String email;
+    private String address;
+    private int userAgencyTravelCode;
+    private enum userType{TravelAdvisor, OfficeManager, SystemAdmin};
+    private int userArchived;
 
 
     public User(String username, String password, String email, String address, int userAgencyTravelCode, int userArchived) {
-        this.username = username;
+        this.name = username;
         this.password = password;
         this.email = email;
         this.address = address;
@@ -21,8 +21,8 @@ public class User {
         this.userArchived = userArchived;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
     public String getPassword() {
@@ -37,8 +37,8 @@ public class User {
         return address;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPassword(String password) {
@@ -77,7 +77,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "Id=" + Id +
-                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +

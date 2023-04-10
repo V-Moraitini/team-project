@@ -1,6 +1,6 @@
-package persistenceLayer;
+package Backend.persistenceLayer;
 
-public class blank {
+public class Blank {
 
     private int blankId;
     private int blankBatchId;
@@ -12,7 +12,7 @@ public class blank {
     private int blankIsSold;
     private int blankIsArchived;
 
-    public blank(int blankBatchId, int blankStockId, int blankStockAdvisorUserId, int blankType, int blankDateReceived, int blankIsValid, int blankIsSold, int blankIsArchived) {
+    public Blank(int blankBatchId, int blankStockId, int blankStockAdvisorUserId, int blankType, int blankDateReceived, int blankIsValid, int blankIsSold, int blankIsArchived) {
         this.blankBatchId = blankBatchId;
         this.blankStockId = blankStockId;
         this.blankStockAdvisorUserId = blankStockAdvisorUserId;

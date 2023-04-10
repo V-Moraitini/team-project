@@ -1,6 +1,6 @@
-package serviceLayer;
+package Backend.serviceLayer;
 
-import persistenceLayer.Customer;
+import Backend.persistenceLayer.Customer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

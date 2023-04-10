@@ -1,6 +1,6 @@
-package serviceLayer;
+package Backend.serviceLayer;
 
-import persistenceLayer.blank;
+import Backend.persistenceLayer.Blank;
 
 import java.sql.*;
 
@@ -15,7 +15,7 @@ public class blankSL {
         connection.close();
     }
 
-    public void addBlank(blank blank) throws SQLException {
+    public void addBlank(Blank blank) throws SQLException {
         String query = "INSERT INTO Blanks (BlankID, BatchID, StockID, StockAdvisorUserID, Type, DateReceived, IsValid, IsSold) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = connection.prepareStatement(query);
@@ -31,7 +31,7 @@ public class blankSL {
         statement.executeUpdate();
     }
 
-    public void updateBlank(blank blank) throws SQLException {
+    public void updateBlank(Blank blank) throws SQLException {
         String query = "UPDATE Blanks SET BatchID=?, StockID=?, StockAdvisorUserID=?, Type=?, DateReceived=?, IsValid=?, IsSold=? WHERE BlankID=?";
 
         PreparedStatement statement = connection.prepareStatement(query);
@@ -56,7 +56,7 @@ public class blankSL {
         statement.executeUpdate();
     }
 
-    public blank getBlankById(int blankId) throws SQLException {
+    public Blank getBlankById(int blankId) throws SQLException {
         String query = "SELECT * FROM Blanks WHERE BlankID=?";
 
         PreparedStatement statement = connection.prepareStatement(query);
@@ -73,7 +73,7 @@ public class blankSL {
             int isValid = rs.getInt("IsValid");
             int isSold = rs.getInt("IsSold");
 
-            blank blank = new blank(blankId, batchId, stockId, stockAdvisorUserId, type, dateReceived, isValid, isSold);
+            Blank blank = new Blank(blankId, batchId, stockId, stockAdvisorUserId, type, dateReceived, isValid, isSold);
 
             return blank;
         }

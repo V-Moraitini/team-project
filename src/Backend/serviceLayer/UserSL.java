@@ -1,6 +1,6 @@
-package serviceLayer;
+package Backend.serviceLayer;
 
-import persistenceLayer.User;
+import Backend.persistenceLayer.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +12,7 @@ public class UserSL {
 
     public class UserDAO {
 
-        // SQL statements
+
         private static final String INSERT_USER_SQL = "INSERT INTO users" +
                 " (username, password, email, address, agency_code, user_type)" +
                 " VALUES (?, ?, ?, ?, ?, ?)";
@@ -26,7 +26,7 @@ public class UserSL {
             try (Connection conn = DriverManager.getConnection("jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2018g07","in2018g07_d","6KV8dzpF");
                  PreparedStatement pstmt = conn.prepareStatement(INSERT_USER_SQL)) {
 
-                pstmt.setString(1, user.getUsername());
+                pstmt.setString(1, user.getName());
                 pstmt.setString(2, user.getPassword());
                 pstmt.setString(3, user.getEmail());
                 pstmt.setString(4, user.getAddress());
@@ -44,7 +44,7 @@ public class UserSL {
             try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase", "root", "password");
                  PreparedStatement pstmt = conn.prepareStatement(UPDATE_USER_SQL)) {
 
-                pstmt.setString(1, user.getUsername());
+                pstmt.setString(1, user.getName());
                 pstmt.setString(2, user.getPassword());
                 pstmt.setString(3, user.getEmail());
                 pstmt.setString(4, user.getAddress());

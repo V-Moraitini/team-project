@@ -1,13 +1,13 @@
-package persistenceLayer;
+package Backend.persistenceLayer;
 
-public class flightCoupon {
+public class FlightCoupon {
 
     private int couponId;
     private String couponFromAirport;
     private String couponToAirport;
     private int couponIsInterline;
 
-    public flightCoupon(String couponFromAirport, String couponToAirport, int couponIsInterline) {
+    public FlightCoupon(String couponFromAirport, String couponToAirport, int couponIsInterline) {
         this.couponFromAirport = couponFromAirport;
         this.couponToAirport = couponToAirport;
         this.couponIsInterline = couponIsInterline;

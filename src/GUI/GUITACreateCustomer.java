@@ -8,16 +8,20 @@ import java.awt.event.ActionListener;
 public class GUITACreateCustomer extends JDialog {
     private JPanel panel1;
     private JButton logOutButton;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField5;
+    private JTextField fNametf;
+    private JTextField lNametf;
+    private JTextField aliastf;
+    private JTextField phonetf;
+    private JTextField emailtf;
     private JRadioButton regularRadioButton;
     private JRadioButton valuedRadioButton;
     private JButton createButton;
+    private JButton updateButton;
+    private JButton archiveButton;
     private JButton backButton;
-    private JTextField textField6;
+    private JTextField idtf;
+    private JTextField cusTypetf;
+    private JTable table1;
 
     public GUITACreateCustomer(JFrame parent) {
 

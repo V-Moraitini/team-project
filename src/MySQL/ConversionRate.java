@@ -14,7 +14,7 @@ public class ConversionRate {
     }
 
     /*-------------------------CONVERSION RATE QUERIES START-------------------------*/
-    public void createConversion(persistenceLayer.ConversionRate conversionRate, String currencyName, double rate, int day, int month, int year) {
+    public void createConversion(Backend.persistenceLayer.ConversionRate conversionRate, String currencyName, double rate, int day, int month, int year) {
         //int date = year*10000 + month*100 + day;
         try {
             PreparedStatement stmt = config.getCon().prepareStatement(
@@ -36,8 +36,8 @@ public class ConversionRate {
         }
     }
 
-    public ArrayList<persistenceLayer.ConversionRate> getConversions() throws SQLException {
-        ArrayList<persistenceLayer.ConversionRate> rates = new ArrayList<persistenceLayer.ConversionRate>();
+    public ArrayList<Backend.persistenceLayer.ConversionRate> getConversions() throws SQLException {
+        ArrayList<Backend.persistenceLayer.ConversionRate> rates = new ArrayList<Backend.persistenceLayer.ConversionRate>();
         try {
             Statement stmt = config.getCon().createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM conversionRate");
@@ -53,7 +53,7 @@ public class ConversionRate {
                 rate = rs.getInt(3);
                 date = rs.getInt(4);
 
-                rates.add(new persistenceLayer.ConversionRate(currencyName,rate,date)); //id???
+                rates.add(new Backend.persistenceLayer.ConversionRate(currencyName,rate,date)); //id???
                 //conversionID, conversionCurrency, conversionRate, conversionDate
                 /*System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getDouble(3)+
                         "  "+rs.getInt(4)+"\n");*/
@@ -80,7 +80,7 @@ public class ConversionRate {
         }
     }
 
-    public void updateConversionById(persistenceLayer.ConversionRate conversionRate, int id) {
+    public void updateConversionById(Backend.persistenceLayer.ConversionRate conversionRate, int id) {
         //int date = year*10000 + month*100 + day;
         try {
             PreparedStatement stmt = config.getCon().prepareStatement(

@@ -12,7 +12,7 @@ public class CommissionRate {
     }
 
     /*-------------------------COMMISSION RATE QUERIES START-------------------------*/
-    public void createCommission(persistenceLayer.CommissionRate commissionRate) {
+    public void createCommission(Backend.persistenceLayer.CommissionRate commissionRate) {
         //int date = year*10000 + month*100 + day;
         try {
             PreparedStatement stmt = config.getCon().prepareStatement(
@@ -103,7 +103,7 @@ public class CommissionRate {
         }
     }
 
-    public void updateCommissionById(persistenceLayer.CommissionRate commissionRate) {
+    public void updateCommissionById(Backend.persistenceLayer.CommissionRate commissionRate) {
         //int date = year*10000 + month*100 + day;
         try {
             PreparedStatement stmt = config.getCon().prepareStatement(
