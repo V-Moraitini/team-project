@@ -6,13 +6,16 @@ public class ConfigurationMySQL {
     Connection con;
 
     public ConfigurationMySQL() {
+
+    }
+
+    public void getConnection() {
         try {
             this.con = DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2018g07", "in2018g07_d", "6KV8dzpF");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void closeConnection() {
