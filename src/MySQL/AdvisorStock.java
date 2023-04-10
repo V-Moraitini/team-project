@@ -58,37 +58,48 @@ public class AdvisorStock {
         }
     }
 
-    public void getStockById(int stockId) {
+    public persistenceLayer.AdvisorStock getStockById(int stockId) {
+        persistenceLayer.AdvisorStock stock = new persistenceLayer.AdvisorStock(0);
         try {
             PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM advisorStock WHERE stockID = ?");
             stmt.setInt(1, stockId);
             ResultSet rs = stmt.executeQuery();
             ArrayList<persistenceLayer.AdvisorStock> stocks = new ArrayList<persistenceLayer.AdvisorStock>();
             int stockAdvisorUserId = 0;
-            while( rs.next() )
+            while( rs.next() ) {
                 //stockID, stockAdvisorUserID
                 stockAdvisorUserId = rs.getInt(2);
-                stocks.add(new persistenceLayer.AdvisorStock(stockAdvisorUserId)); //id where aaa
+                stock.setStockAdvisorUserId(stockAdvisorUserId);
+                //stock = new persistenceLayer.AdvisorStock(stockAdvisorUserId); //id where aaa
                 //System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"\n");
+            }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            config.closeConnection();
+            return stock;
         }
     }
 
-    public void getStockByAdvisorId(int advisorId) {
+    public persistenceLayer.AdvisorStock getStockByAdvisorId(int advisorId) {
+        persistenceLayer.AdvisorStock stock = new persistenceLayer.AdvisorStock(0);
         try {
             PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM advisorStock WHERE stockAdvisorUserID = ?");
             stmt.setInt(1, advisorId);
             ResultSet rs = stmt.executeQuery();
             ArrayList<persistenceLayer.AdvisorStock> stocks = new ArrayList<persistenceLayer.AdvisorStock>();
             int stockId = 0;
-            while( rs.next() )
+            while( rs.next() ) {
                 //stockID, stockAdvisorUserID
                 stockId = rs.getInt(1);
                 stocks.add(new persistenceLayer.AdvisorStock(advisorId)); //id where aaa
                 //System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"\n");
+            }
         } catch (Exception e) {
             System.out.println(e);
+        } finally {
+            config.closeConnection();
+            return stock;
         }
     }
 
