@@ -4,7 +4,7 @@ public class ConversionRate {
 
     private int conversionId;
     private String conversionCurrency;
-    private int conversionRate;
+    private double conversionRate;
     private int conversionDate;
 
     public ConversionRate(String conversionCurrency, int conversionRate, int conversionDate) {
@@ -21,7 +21,7 @@ public class ConversionRate {
         this.conversionCurrency = conversionCurrency;
     }
 
-    public int getConversionRate() {
+    public double getConversionRate() {
         return conversionRate;
     }
 
