@@ -8,16 +8,17 @@ public class User {
     private String email;
     private String address;
     private int userAgencyTravelCode;
-    private enum userType{TravelAdvisor, OfficeManager, SystemAdmin};
+    private UserType userType;
     private int userArchived;
 
 
-    public User(String username, String password, String email, String address, int userAgencyTravelCode, int userArchived) {
-        this.name = username;
+    public User(String name, String password, String email, String address, int userAgencyTravelCode, UserType userType, int userArchived) {
+        this.name = name;
         this.password = password;
         this.email = email;
         this.address = address;
         this.userAgencyTravelCode = userAgencyTravelCode;
+        this.userType = userType;
         this.userArchived = userArchived;
     }
 
@@ -25,28 +26,28 @@ public class User {
         return name;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public void setAddress(String address) {
@@ -59,6 +60,14 @@ public class User {
 
     public void setUserAgencyTravelCode(int userAgencyTravelCode) {
         this.userAgencyTravelCode = userAgencyTravelCode;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 
     public int getUserArchived() {
@@ -82,6 +91,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 ", userAgencyTravelCode=" + userAgencyTravelCode +
+                ", userType=" + userType +
                 ", userArchived=" + userArchived +
                 '}';
     }
