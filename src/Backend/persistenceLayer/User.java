@@ -2,21 +2,19 @@ package Backend.persistenceLayer;
 
 public class User {
 
-    private int Id;
+    private int id;
     private String name;
     private String password;
     private String email;
-    private String address;
     private int userAgencyTravelCode;
     private enum userType{TravelAdvisor, OfficeManager, SystemAdmin};
-    private int userArchived;
+    private Boolean userArchived;
 
 
-    public User(String username, String password, String email, String address, int userAgencyTravelCode, int userArchived) {
+    public User(String username, String password, String email, int userAgencyTravelCode, Boolean userArchived) {
         this.name = username;
         this.password = password;
         this.email = email;
-        this.address = address;
         this.userAgencyTravelCode = userAgencyTravelCode;
         this.userArchived = userArchived;
     }
@@ -33,10 +31,6 @@ public class User {
         return email;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -49,10 +43,6 @@ public class User {
         this.email = email;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public int getUserAgencyTravelCode() {
         return userAgencyTravelCode;
     }
@@ -61,26 +51,25 @@ public class User {
         this.userAgencyTravelCode = userAgencyTravelCode;
     }
 
-    public int getUserArchived() {
+    public Boolean getUserArchived() {
         return userArchived;
     }
 
-    public void setUserArchived(int userArchived) {
+    public void setUserArchived(Boolean userArchived) {
         this.userArchived = userArchived;
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "Id=" + Id +
+                "Id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
                 ", userAgencyTravelCode=" + userAgencyTravelCode +
                 ", userArchived=" + userArchived +
                 '}';

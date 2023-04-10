@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class CommissionRate extends ConfigurationMySQL {
-    ConfigurationMySQL config;
 
     public CommissionRate() { }
 
@@ -26,11 +25,11 @@ public class CommissionRate extends ConfigurationMySQL {
             stmt.setInt(3, commissionRate.getCommissionTicketType());
             stmt.setInt(4, commissionRate.getCommissionDate());
 
-            config.getCon().setAutoCommit(false);
+            con.setAutoCommit(false);
             stmt.executeUpdate();
 
-            config.getCon().commit();
-            config.getCon().setAutoCommit(true);
+            con.commit();
+            con.setAutoCommit(true);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -133,7 +132,7 @@ public class CommissionRate extends ConfigurationMySQL {
         getConnection();
         Backend.persistenceLayer.CommissionRate rate = new Backend.persistenceLayer.CommissionRate(0,0,0,0,false);
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM commissionRate WHERE commissionId = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM commissionRate WHERE commissionId = ?");
             stmt.setInt(1, commissionId);
             ResultSet rs = stmt.executeQuery();
 
@@ -214,34 +213,25 @@ public class CommissionRate extends ConfigurationMySQL {
     }
 
     public void archiveCommission(int id) {
+        Boolean isArchived = getCommissionById(id).getCommissionIsArchived();
+        String sql;
+        String message;
         getConnection();
         try {
-            PreparedStatement isArchived = con.prepareStatement(
-                    "SELECT commissionIsArchived FROM commissionRate WHERE commissionId = ?");
-            isArchived.setInt(1, id);
-            ResultSet rsArchived = isArchived.executeQuery();
-            while (rsArchived.next()) {
-                if (rsArchived.getInt(1) == 0) {
-                    PreparedStatement stmt = con.prepareStatement(
-                            "UPDATE commissionRate SET commissionIsArchived = 1 WHERE commissionId = ?");
-                    stmt.setInt(1, id);
-                    con.setAutoCommit(false);
-                    stmt.executeUpdate();
-                    con.commit();
-                    con.setAutoCommit(true);
-                    System.out.println("Commission is now archived.");
-                } else {
-                    PreparedStatement stmt = con.prepareStatement(
-                            "UPDATE commissionRate SET commissionIsArchived = 0 WHERE commissionId = ?");
-                    stmt.setInt(1, id);
-                    con.setAutoCommit(false);
-                    stmt.executeUpdate();
-                    con.commit();
-                    con.setAutoCommit(true);
-                    System.out.println("Commission is no longer archived.");
-                }
+            if (!isArchived) {
+                sql = "UPDATE commissionRate SET commissionIsArchived = 1 WHERE commissionId = ?";
+                message = "Commission is now archived.";
+            } else {
+                sql = "UPDATE commissionRate SET commissionIsArchived = 0 WHERE commissionId = ?";
+                message = "Commission is no longer archived.";
             }
-
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, id);
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+            con.commit();
+            con.setAutoCommit(true);
+            System.out.println(message);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -249,4 +239,9 @@ public class CommissionRate extends ConfigurationMySQL {
         }
     }
     /*-------------------------COMMISSION RATE QUERIES END-------------------------*/
+
+    public static void main(String[] args) {
+        CommissionRate cr = new CommissionRate();
+        //cr.archiveCommission(1);
+    }
 }
