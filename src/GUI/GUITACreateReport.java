@@ -32,6 +32,16 @@ public class GUITACreateReport extends JDialog {
             }
         });
 
+
+        createIndividualDomesticReportButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new GUITACreateDomReport(null).setVisible(false);
+                panel.setVisible(false);
+            }
+        });
+
         setVisible(true);
 
     }

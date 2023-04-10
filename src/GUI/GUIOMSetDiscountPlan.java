@@ -2,6 +2,8 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUIOMSetDiscountPlan extends JDialog {
     private JPanel panel1;
@@ -23,6 +25,26 @@ public class GUIOMSetDiscountPlan extends JDialog {
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        confirmButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Get user inputs
+                double price = Double.parseDouble(textField1.getText());
+                int quantity = Integer.parseInt(textField2.getText());
+                double discountRate = Double.parseDouble(textField3.getText());
+
+                // Calculate the discount
+                double discount = 0.0;
+                if (fixedRadioButton.isSelected()) {
+                    discount = discountRate;
+                } else if (flexibleRadioButton.isSelected()) {
+                    discount = price * quantity * discountRate / 100.0;
+                }
+
+                // Display the discount
+                JOptionPane.showMessageDialog(panel1, "The discount is: $" + discount);
+            }
+        });
         setVisible(true);
 
     }
