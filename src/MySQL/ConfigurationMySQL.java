@@ -15,8 +15,13 @@ public class ConfigurationMySQL {
 
     }
 
-    public void closeConnection() throws SQLException {
-        con.close();
+    public void closeConnection() {
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public Connection getCon() {return con;}

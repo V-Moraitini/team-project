@@ -14,7 +14,7 @@ public class AdvisorStock {
     }
 
     /*-------------------------ADVISOR STOCK QUERIES START-------------------------*/
-    public void createStock(persistenceLayer.AdvisorStock advisorStock) throws SQLException {
+    public void createStock(persistenceLayer.AdvisorStock advisorStock) {
         try {
             PreparedStatement stmt = config.getCon().prepareStatement(
                     "INSERT INTO advisorStock " +
@@ -32,15 +32,16 @@ public class AdvisorStock {
         } catch (Exception e) {
             System.out.println(e);
         } finally {
-            config.getCon().close();
+            config.closeConnection();
         }
     }
 
-    public void getStocks() {
+    public ArrayList<persistenceLayer.AdvisorStock> getStocks() {
+        ArrayList<persistenceLayer.AdvisorStock> stocks = new ArrayList<persistenceLayer.AdvisorStock>();
         try {
             Statement stmt = config.getCon().createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM advisorStock");
-            ArrayList<persistenceLayer.AdvisorStock> stocks = new ArrayList<persistenceLayer.AdvisorStock>();
+
             int stockId = 0;
             int stockAdvisorUserId = 0;
             while( rs.next() )
@@ -51,6 +52,9 @@ public class AdvisorStock {
                 //System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"\n");
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            config.closeConnection();
+            return stocks;
         }
     }
 

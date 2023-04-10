@@ -12,18 +12,18 @@ public class CommissionRate {
     }
 
     /*-------------------------COMMISSION RATE QUERIES START-------------------------*/
-    public void createCommission(double percentage, int type, int day, int month, int year) {
-        int date = year*10000 + month*100 + day;
+    public void createCommission(persistenceLayer.CommissionRate commissionRate) {
+        //int date = year*10000 + month*100 + day;
         try {
             PreparedStatement stmt = config.getCon().prepareStatement(
                     "INSERT INTO commissionRate " +
                             "(commissionAgencyTravelCode, commissionPercentage, commissionTicketType, commissionDate, commissionIsArchived)" +
-                            "VALUES (?, ?, ?, ?, 0)");
+                            "VALUES (?, ?, ?, ?, 0)", Statement.RETURN_GENERATED_KEYS);
             //Statement.RETURN_GENERATED_KEYS for auto generated keys
             stmt.setInt(1, 1); //"Terrific Travel" Travel Agency
-            stmt.setDouble(2, percentage);
-            stmt.setInt(3, type);
-            stmt.setInt(4, date);
+            stmt.setDouble(2, commissionRate.getCommissionPercentage());
+            stmt.setInt(3, commissionRate.getCommissionTicketType());
+            stmt.setInt(4, commissionRate.getCommissionDate());
 
             config.getCon().setAutoCommit(false);
             stmt.executeUpdate();
@@ -103,16 +103,16 @@ public class CommissionRate {
         }
     }
 
-    public void updateCommissionById(int id, double percentage, int type, int day, int month, int year) {
-        int date = year*10000 + month*100 + day;
+    public void updateCommissionById(persistenceLayer.CommissionRate commissionRate) {
+        //int date = year*10000 + month*100 + day;
         try {
             PreparedStatement stmt = config.getCon().prepareStatement(
                     "UPDATE commissionRate SET commissionPercentage=?, commissionTicketType=?, " +
                             "commissionDate=? WHERE commissionID = ?");
-            stmt.setDouble(1, percentage);
-            stmt.setInt(2, type);
-            stmt.setInt(3, date);
-            stmt.setInt(4, id);
+            stmt.setDouble(1, commissionRate.getCommissionPercentage());
+            stmt.setInt(2, commissionRate.getCommissionTicketType());
+            stmt.setInt(3, commissionRate.getCommissionDate());
+            stmt.setInt(4, commissionRate.getCommissionId());
 
             config.getCon().setAutoCommit(false);
             stmt.executeUpdate();
