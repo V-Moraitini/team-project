@@ -6,17 +6,15 @@ public class User {
     private String name;
     private String password;
     private String email;
-    private String address;
     private int userAgencyTravelCode;
     private UserType userType;
     private int userArchived;
 
 
-    public User(String name, String password, String email, String address, int userAgencyTravelCode, UserType userType, int userArchived) {
+    public User(String name, String password, String email, int userAgencyTravelCode, UserType userType, int userArchived) {
         this.name = name;
         this.password = password;
         this.email = email;
-        this.address = address;
         this.userAgencyTravelCode = userAgencyTravelCode;
         this.userType = userType;
         this.userArchived = userArchived;
@@ -44,14 +42,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public int getUserAgencyTravelCode() {
@@ -89,7 +79,6 @@ public class User {
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
                 ", userAgencyTravelCode=" + userAgencyTravelCode +
                 ", userType=" + userType +
                 ", userArchived=" + userArchived +

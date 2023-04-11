@@ -17,6 +17,7 @@ public class UserAccount extends ConfigurationMySQL {
     /*-------------------------USER QUERIES START-------------------------*/
     //Create user
     public void createUser(User user) {
+        getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement(
                     "INSERT INTO userAccount VALUES (?, 1, ?, ?, ?, ?, 0)");
@@ -46,6 +47,7 @@ public class UserAccount extends ConfigurationMySQL {
     //Getting active non-archived users only
     public ArrayList<User> getActiveUsers() {
         ArrayList<User> users = new ArrayList<>();
+        getConnection();
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM userAccount WHERE isArchived = 0");
@@ -66,7 +68,7 @@ public class UserAccount extends ConfigurationMySQL {
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
                 isArchived = rs.getInt(7);
-                        users.add(new User(name, password, email, "", agencyTravelCode, type, isArchived));
+                        users.add(new User(name, password, email, agencyTravelCode, type, isArchived));
 
             }
         } catch (SQLException e) {
@@ -100,7 +102,7 @@ public class UserAccount extends ConfigurationMySQL {
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
                 isArchived = rs.getInt(7);
-                users.add(new User(name, password, email, "", agencyTravelCode, type, isArchived));
+                users.add(new User(name, password, email, agencyTravelCode, type, isArchived));
 
             }
         } catch (SQLException e) {
@@ -114,6 +116,7 @@ public class UserAccount extends ConfigurationMySQL {
     //Getting users regardless of whether they are archived or not
     public ArrayList<User> getAllUsers() {
         ArrayList<User> users = new ArrayList<>();
+        getConnection();
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM userAccount");
@@ -134,7 +137,7 @@ public class UserAccount extends ConfigurationMySQL {
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
                 isArchived = rs.getInt(7);
-                users.add(new User(name, password, email, "", agencyTravelCode, type, isArchived));
+                users.add(new User(name, password, email, agencyTravelCode, type, isArchived));
 
             }
         } catch (SQLException e) {
@@ -147,7 +150,7 @@ public class UserAccount extends ConfigurationMySQL {
 
     public Backend.persistenceLayer.User getUserById(int id) {
         getConnection();
-        Backend.persistenceLayer.User user = new User("", "", "", "", 0, UserType.TravelAdvisor, 0);
+        Backend.persistenceLayer.User user = new User("", "", "", 0, UserType.TravelAdvisor, 0);
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM userAccount WHERE userId = ?");
             stmt.setInt(1, id);
@@ -167,7 +170,7 @@ public class UserAccount extends ConfigurationMySQL {
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
                 isArchived = rs.getInt(7);
-                user = new User(name, password, email, "", agencyTravelCode, type, isArchived);
+                user = new User(name, password, email, agencyTravelCode, type, isArchived);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -179,7 +182,7 @@ public class UserAccount extends ConfigurationMySQL {
 
     public Backend.persistenceLayer.User getUserByEmail(String email) {
         getConnection();
-        Backend.persistenceLayer.User user = new User("", "", "", "", 0, UserType.TravelAdvisor, 0);
+        Backend.persistenceLayer.User user = new User("", "", "", 0, UserType.TravelAdvisor, 0);
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM userAccount WHERE email = ?");
             stmt.setString(1, email);
@@ -197,7 +200,7 @@ public class UserAccount extends ConfigurationMySQL {
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
                 isArchived = rs.getInt(7);
-                user = new User(name, password, email, "", agencyTravelCode, type, isArchived);
+                user = new User(name, password, email, agencyTravelCode, type, isArchived);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -208,6 +211,7 @@ public class UserAccount extends ConfigurationMySQL {
     }
 
     public void updateUserById(User user) {
+        getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement(
                     "UPDATE userAccount SET username=?, email=?, password=?, type=? " +

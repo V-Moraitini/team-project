@@ -2,42 +2,44 @@ package MySQL;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-public class Customer {
-    ConfigurationMySQL config;
+public class Customer extends ConfigurationMySQL {
 
-    public Customer() {
-        this.config = new ConfigurationMySQL();
-    }
+    public Customer() { }
 
     /*-------------------------CUSTOMER QUERIES START-------------------------*/
-    public void createCustomer(String name, String alias, String email, int phone, Boolean isValued) {
+    public void createCustomer(Backend.persistenceLayer.Customer customer) {
+        getConnection();
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement(
+            PreparedStatement stmt = con.prepareStatement(
                     "INSERT INTO customer " +
                             "(customerName, customerAlias, customerEmail, customerPhone, customerIsValued, customerFixedDiscountPercentage)" +
                             "VALUES (?, ?, ?, ?, ?, NULL)");
             //Statement.RETURN_GENERATED_KEYS for auto generated keys
-            stmt.setString(1, name);
-            stmt.setString(2, alias);
-            stmt.setString(3, email);
-            stmt.setInt(4, phone);
-            stmt.setBoolean(5, isValued);
+            stmt.setString(1, customer.getCustomerName());
+            stmt.setString(2, customer.getCustomerAlias());
+            stmt.setString(3, customer.getCustomerEmail());
+            stmt.setInt(4, customer.getCustomerPhone());
+            stmt.setBoolean(5, customer.getCustomerIsValued());
 
-            config.getCon().setAutoCommit(false);
+            con.setAutoCommit(false);
             stmt.executeUpdate();
 
-            config.getCon().commit();
-            config.getCon().setAutoCommit(true);
-        } catch (Exception e) {
-            System.out.println(e);
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
-    public void createCustomer(String name, String alias, String email, int phone, Boolean isValued, double fixedDiscount) {
+    /*public void createCustomer(String name, String alias, String email, int phone, Boolean isValued, double fixedDiscount) {
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement(
+            PreparedStatement stmt = con.prepareStatement(
                     "INSERT INTO customer " +
                             "(customerName, customerAlias, customerEmail, customerPhone, customerIsValued, customerFixedDiscountPercentage)" +
                             "VALUES (?, ?, ?, ?, ?, ?)");
@@ -48,7 +50,7 @@ public class Customer {
             stmt.setInt(4, phone);
             stmt.setBoolean(5, isValued);
             stmt.setDouble(6, fixedDiscount);
-            config.getCon().setAutoCommit(false);
+            con.setAutoCommit(false);
             stmt.executeUpdate();
             /*int affectedRows = stmt.executeUpdate();
             // check the affected rows
@@ -61,58 +63,102 @@ public class Customer {
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
                 }
-            }*/
-            config.getCon().commit();
-            config.getCon().setAutoCommit(true);
-        } catch (Exception e) {
-            System.out.println(e);
+            }
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
-    }
+    }*/
 
-    public void getCustomers() {
+    public ArrayList<Backend.persistenceLayer.Customer> getCustomers() {
+        ArrayList<Backend.persistenceLayer.Customer> customers = new ArrayList<>();
+        getConnection();
         try {
-            Statement stmt = config.getCon().createStatement();
+            Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM customer");
-            while( rs.next() )
-                //customerID, customerName, customerAlias, customerEmail, customerPhone, customerIsValued, customerFixedDiscountPercentage
-                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "
-                        +rs.getInt(5)+"  "+rs.getBoolean(6)+"  "+rs.getDouble(7)+"\n");
-            //when objects have been made, use object constructor to make them?
 
-        } catch (Exception e) { System.out.println(e); }
+            int id;
+            String name;
+            String alias;
+            String email;
+            int phone;
+            Boolean isValued;
+            float fixedDiscount;
+            while( rs.next() ) {
+                //customerID, customerName, customerAlias, customerEmail, customerPhone, customerIsValued, customerFixedDiscountPercentage
+                id = rs.getInt(1);
+                name = rs.getString(2);
+                alias = rs.getString(3);
+                email = rs.getString(4);
+                phone = rs.getInt(5);
+                isValued = rs.getBoolean(6);
+                fixedDiscount = (float) rs.getDouble(7);
+                customers.add(new Backend.persistenceLayer.Customer(name, alias, email, phone, isValued, fixedDiscount));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return customers;
     }
 
-    public void getCustomerById(int id) {
+    public Backend.persistenceLayer.Customer getCustomerById(int id) {
+        Backend.persistenceLayer.Customer customer = new Backend.persistenceLayer.Customer("","","",0, false,0);
+        getConnection();
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM customer WHERE userID = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM customer WHERE userId = ?");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            while( rs.next() )
-                //customerID, customerName, customerAlias, customerEmail, customerPhone, customerIsValued, customerFixedDiscountPercentage
-                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "
-                        +rs.getInt(5)+"  "+rs.getBoolean(6)+"  "+rs.getDouble(7)+"\n");
-            //when objects have been made, use object constructor to make them?
 
-        } catch (Exception e) { System.out.println(e); }
+            String name;
+            String alias;
+            String email;
+            int phone;
+            Boolean isValued;
+            float fixedDiscount;
+            while( rs.next() ) {
+                //customerID, customerName, customerAlias, customerEmail, customerPhone, customerIsValued, customerFixedDiscountPercentage
+                name = rs.getString(2);
+                alias = rs.getString(3);
+                email = rs.getString(4);
+                phone = rs.getInt(5);
+                isValued = rs.getBoolean(6);
+                fixedDiscount = (float) rs.getDouble(7);
+                customer = new Backend.persistenceLayer.Customer(name, alias, email, phone, isValued, fixedDiscount);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return customer;
     }
 
-    public void updateCustomerById(int id, String name, String alias, String email, int phone, Boolean isValued) {
+    public void updateCustomerById(Backend.persistenceLayer.Customer customer) {
+        getConnection();
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement(
+            PreparedStatement stmt = con.prepareStatement(
                     "UPDATE customer SET customerName=?, customerAlias=?, customerEmail=?, " +
-                            "customerPhone=?, customerIsValued=? WHERE customerID = ?");
-            stmt.setString(1, name);
-            stmt.setString(2, alias);
-            stmt.setString(3, email);
-            stmt.setInt(4, phone);
-            stmt.setBoolean(5, isValued);
-            stmt.setInt(6, id);
-            config.getCon().setAutoCommit(false);
+                            "customerPhone=?, customerIsValued=? WHERE customerId = ?");
+            stmt.setString(1, customer.getCustomerName());
+            stmt.setString(2, customer.getCustomerAlias());
+            stmt.setString(3, customer.getCustomerEmail());
+            stmt.setInt(4, customer.getCustomerPhone());
+            stmt.setBoolean(5, customer.getCustomerIsValued());
+            stmt.setInt(6, customer.getCustomerID());
+
+            con.setAutoCommit(false);
             stmt.executeUpdate();
-            config.getCon().commit();
-            config.getCon().setAutoCommit(true);
-        } catch (Exception e) {
-            System.out.println(e);
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
