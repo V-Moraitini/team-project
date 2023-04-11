@@ -1,17 +1,19 @@
 package MySQL;
 
+import Backend.persistenceLayer.AgencyBatch;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class AgencyBatch extends ConfigurationMySQL {
+public class AgencyBatchController extends ConfigurationMySQL {
 
-    public AgencyBatch() { }
+    public AgencyBatchController() { }
 
     /*-------------------------AGENCY BATCH QUERIES START-------------------------*/
-    public void createBatch(Backend.persistenceLayer.AgencyBatch agencyBatch) {
+    public void createBatch(AgencyBatch agencyBatch) {
         getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement(
@@ -34,8 +36,8 @@ public class AgencyBatch extends ConfigurationMySQL {
 
     }
 
-    public ArrayList<Backend.persistenceLayer.AgencyBatch> getBatches() {
-        ArrayList<Backend.persistenceLayer.AgencyBatch> batches = new ArrayList<>();
+    public ArrayList<AgencyBatch> getBatches() {
+        ArrayList<AgencyBatch> batches = new ArrayList<>();
         getConnection();
         try {
             Statement stmt = con.createStatement();
@@ -49,7 +51,7 @@ public class AgencyBatch extends ConfigurationMySQL {
                 id = rs.getInt(1);
                 agencyTravelCode = rs.getInt(2);
                 date = rs.getInt(3);
-                batches.add(new Backend.persistenceLayer.AgencyBatch(id, agencyTravelCode, date));
+                batches.add(new AgencyBatch(id, agencyTravelCode, date));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,8 +61,8 @@ public class AgencyBatch extends ConfigurationMySQL {
         return batches;
     }
 
-    public Backend.persistenceLayer.AgencyBatch getBatchById(int batchId) {
-        Backend.persistenceLayer.AgencyBatch batch = new Backend.persistenceLayer.AgencyBatch(0,0);
+    public AgencyBatch getBatchById(int batchId) {
+        AgencyBatch batch = new AgencyBatch(0,0);
         getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM agencyBatch WHERE batchId = ?");
@@ -73,7 +75,7 @@ public class AgencyBatch extends ConfigurationMySQL {
                 //batchID, batchAgencyTravelCode, batchDate
                 travelCode = rs.getInt(2);
                 date = rs.getInt(3);
-                batch =  new Backend.persistenceLayer.AgencyBatch(batchId, travelCode, date);
+                batch =  new AgencyBatch(batchId, travelCode, date);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,7 +85,7 @@ public class AgencyBatch extends ConfigurationMySQL {
         return batch;
     }
 
-    public void updateBatchById(Backend.persistenceLayer.AgencyBatch batch) {
+    public void updateBatchById(AgencyBatch batch) {
         getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement(

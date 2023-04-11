@@ -1,16 +1,18 @@
 package MySQL;
 
+import Backend.persistenceLayer.Blank;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Blank extends ConfigurationMySQL {
+public class BlankController extends ConfigurationMySQL {
 
-    public Blank() { }
+    public BlankController() { }
 
     /*-------------------------BLANK QUERIES START-------------------------*/
-    public void createBlank(Backend.persistenceLayer.Blank blank, int batchId, int type, int day, int month, int year) {
+    public void createBlank(Blank blank, int batchId, int type, int day, int month, int year) {
         getConnection();
         //int date = year*10000 + month*100 + day;
         try {
