@@ -10,10 +10,18 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.*;
-public class UserSL extends ConfigurationMySQL{
 
-    public boolean login(String email, String password, UserType userType) {
-        getConnection();
+//public class UserSL extends ConfigurationMySQL{
+
+//    public boolean login(String email, String password, UserType userType) {
+//        getConnection();
+
+/*
+public class UserSL {
+
+   public boolean login(String email, String password, UserType userType) {
+
+>>>>>>> eaf65cabfd54dc3b334748c632ac0f04eeb4492d
         try {
            PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM userAccount WHERE userEmail = ? and userPassword = ? and userType = ?");
 
@@ -33,7 +41,11 @@ public class UserSL extends ConfigurationMySQL{
             System.out.println(e);
         }
     }
+<<<<<<< HEAD
 }
+
+=======
+}*/
 
 //        private static final String INSERT_USER_SQL = "INSERT INTO users" +
 //                " (username, password, email, address, agency_code, user_type)" +

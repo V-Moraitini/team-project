@@ -3,7 +3,7 @@ package Backend.persistenceLayer;
 public class User {
 
     private int id;
-    private String name;
+    private String username;
     private String password;
     private String email;
     private int userAgencyTravelCode;
@@ -11,8 +11,9 @@ public class User {
     private int userArchived;
 
 
-    public User(String name, String password, String email, int userAgencyTravelCode, UserType userType, int userArchived) {
-        this.name = name;
+    public User(int id, String username, String password, String email, int userAgencyTravelCode, UserType userType, int userArchived) {
+        this.id = id;
+        this.username = username;
         this.password = password;
         this.email = email;
         this.userAgencyTravelCode = userAgencyTravelCode;
@@ -20,12 +21,12 @@ public class User {
         this.userArchived = userArchived;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -68,15 +69,11 @@ public class User {
         this.userArchived = userArchived;
     }
 
-    public int getId() {
-        return id;
-    }
-
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", userAgencyTravelCode=" + userAgencyTravelCode +

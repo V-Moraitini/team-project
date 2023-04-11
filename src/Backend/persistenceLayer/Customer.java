@@ -4,13 +4,15 @@ public class Customer {
 
     private int customerID;
     private String customerName;
+    private String customerAlias;
     private String customerEmail;
     private int customerPhone;
-    private int customerIsValued;
+    private Boolean customerIsValued;
     private float customerFixedDiscountPercentage;
 
-    public Customer(String customerName, String customerEmail, int customerPhone, int customerIsValued, float customerFixedDiscountPercentage) {
+    public Customer(String customerName, String customerAlias, String customerEmail, int customerPhone, Boolean customerIsValued, float customerFixedDiscountPercentage) {
         this.customerName = customerName;
+        this.customerAlias = customerAlias;
         this.customerEmail = customerEmail;
         this.customerPhone = customerPhone;
         this.customerIsValued = customerIsValued;
@@ -23,6 +25,14 @@ public class Customer {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public String getCustomerAlias() {
+        return customerAlias;
+    }
+
+    public void setCustomerAlias(String customerAlias) {
+        this.customerAlias = customerAlias;
     }
 
     public String getCustomerEmail() {
@@ -41,11 +51,11 @@ public class Customer {
         this.customerPhone = customerPhone;
     }
 
-    public int getCustomerIsValued() {
+    public Boolean getCustomerIsValued() {
         return customerIsValued;
     }
 
-    public void setCustomerIsValued(int customerIsValued) {
+    public void setCustomerIsValued(Boolean customerIsValued) {
         this.customerIsValued = customerIsValued;
     }
 

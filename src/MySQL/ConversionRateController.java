@@ -1,17 +1,19 @@
 package MySQL;
 
+import Backend.persistenceLayer.ConversionRate;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class ConversionRate extends ConfigurationMySQL {
+public class ConversionRateController extends ConfigurationMySQL {
 
-    public ConversionRate() { }
+    public ConversionRateController() { }
 
     /*-------------------------CONVERSION RATE QUERIES START-------------------------*/
-    public void createConversion(Backend.persistenceLayer.ConversionRate conversionRate) {
+    public void createConversion(ConversionRate conversionRate) {
         getConnection();
         //int date = year*10000 + month*100 + day;
         try {
@@ -37,9 +39,9 @@ public class ConversionRate extends ConfigurationMySQL {
         }
     }
 
-    public ArrayList<Backend.persistenceLayer.ConversionRate> getConversions() {
+    public ArrayList<ConversionRate> getConversions() {
         getConnection();
-        ArrayList<Backend.persistenceLayer.ConversionRate> conversions = new ArrayList<Backend.persistenceLayer.ConversionRate>();
+        ArrayList<ConversionRate> conversions = new ArrayList<ConversionRate>();
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM conversionRate");
@@ -54,7 +56,7 @@ public class ConversionRate extends ConfigurationMySQL {
                 rate = rs.getDouble(3);
                 date = rs.getInt(4);
 
-                conversions.add(new Backend.persistenceLayer.ConversionRate(id, currencyName,rate,date)); //id???
+                conversions.add(new ConversionRate(id, currencyName,rate,date)); //id???
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,8 +66,8 @@ public class ConversionRate extends ConfigurationMySQL {
         return conversions;
     }
 
-    public Backend.persistenceLayer.ConversionRate getConversionById(int id) {
-        Backend.persistenceLayer.ConversionRate conversion = new Backend.persistenceLayer.ConversionRate("", 0, 0);
+    public ConversionRate getConversionById(int id) {
+        ConversionRate conversion = new ConversionRate("", 0, 0);
         getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM conversionRate WHERE conversionId = ?");
@@ -81,7 +83,7 @@ public class ConversionRate extends ConfigurationMySQL {
                 rate = rs.getDouble(3);
                 date = rs.getInt(4);
 
-                conversion = new Backend.persistenceLayer.ConversionRate(id, currencyName, rate, date);
+                conversion = new ConversionRate(id, currencyName, rate, date);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -91,7 +93,7 @@ public class ConversionRate extends ConfigurationMySQL {
         return conversion;
     }
 
-    public void updateConversionById(Backend.persistenceLayer.ConversionRate conversionRate, int id) {
+    public void updateConversionById(ConversionRate conversionRate, int id) {
         getConnection();
         //int date = year*10000 + month*100 + day;
         try {

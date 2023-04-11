@@ -1,17 +1,19 @@
 package MySQL;
 
+import Backend.persistenceLayer.CommissionRate;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class CommissionRate extends ConfigurationMySQL {
+public class CommissionRateController extends ConfigurationMySQL {
 
-    public CommissionRate() { }
+    public CommissionRateController() { }
 
     /*-------------------------COMMISSION RATE QUERIES START-------------------------*/
-    public void createCommission(Backend.persistenceLayer.CommissionRate commissionRate) {
+    public void createCommission(CommissionRate commissionRate) {
         getConnection();
         //int date = year*10000 + month*100 + day;
         try {
@@ -38,9 +40,9 @@ public class CommissionRate extends ConfigurationMySQL {
         }
     }
 
-    public ArrayList<Backend.persistenceLayer.CommissionRate> getActiveCommissions() {
+    public ArrayList<CommissionRate> getActiveCommissions() {
         getConnection();
-        ArrayList<Backend.persistenceLayer.CommissionRate> rates = new ArrayList<Backend.persistenceLayer.CommissionRate>();
+        ArrayList<CommissionRate> rates = new ArrayList<CommissionRate>();
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM commissionRate WHERE commissionIsArchived = 0");
@@ -58,7 +60,7 @@ public class CommissionRate extends ConfigurationMySQL {
                 type = rs.getInt(4);
                 date = rs.getInt(5);
                 isArchived = rs.getBoolean(6);
-                rates.add(new Backend.persistenceLayer.CommissionRate(id, agencyCode, percentage, type, date, isArchived));
+                rates.add(new CommissionRate(id, agencyCode, percentage, type, date, isArchived));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,9 +70,9 @@ public class CommissionRate extends ConfigurationMySQL {
         return rates;
     }
 
-    public ArrayList<Backend.persistenceLayer.CommissionRate> getArchivedCommissions() {
+    public ArrayList<CommissionRate> getArchivedCommissions() {
         getConnection();
-        ArrayList<Backend.persistenceLayer.CommissionRate> rates = new ArrayList<Backend.persistenceLayer.CommissionRate>();
+        ArrayList<CommissionRate> rates = new ArrayList<CommissionRate>();
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM commissionRate WHERE commissionIsArchived = 1");
@@ -88,7 +90,7 @@ public class CommissionRate extends ConfigurationMySQL {
                 type = rs.getInt(4);
                 date = rs.getInt(5);
                 isArchived = rs.getBoolean(6);
-                rates.add(new Backend.persistenceLayer.CommissionRate(id, agencyCode, percentage, type, date, isArchived));
+                rates.add(new CommissionRate(id, agencyCode, percentage, type, date, isArchived));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,9 +100,9 @@ public class CommissionRate extends ConfigurationMySQL {
         return rates;
     }
 
-    public ArrayList<Backend.persistenceLayer.CommissionRate> getAllCommissions() {
+    public ArrayList<CommissionRate> getAllCommissions() {
         getConnection();
-        ArrayList<Backend.persistenceLayer.CommissionRate> rates = new ArrayList<Backend.persistenceLayer.CommissionRate>();
+        ArrayList<CommissionRate> rates = new ArrayList<CommissionRate>();
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM commissionRate");
@@ -118,7 +120,7 @@ public class CommissionRate extends ConfigurationMySQL {
                 type = rs.getInt(4);
                 date = rs.getInt(5);
                 isArchived = rs.getBoolean(6);
-                rates.add(new Backend.persistenceLayer.CommissionRate(id, agencyCode, percentage, type, date, isArchived));
+                rates.add(new CommissionRate(id, agencyCode, percentage, type, date, isArchived));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -128,9 +130,9 @@ public class CommissionRate extends ConfigurationMySQL {
         return rates;
     }
 
-    public Backend.persistenceLayer.CommissionRate getCommissionById(int commissionId) {
+    public CommissionRate getCommissionById(int commissionId) {
         getConnection();
-        Backend.persistenceLayer.CommissionRate rate = new Backend.persistenceLayer.CommissionRate(0,0,0,0,false);
+        CommissionRate rate = new CommissionRate(0,0,0,0,false);
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM commissionRate WHERE commissionId = ?");
             stmt.setInt(1, commissionId);
@@ -148,7 +150,7 @@ public class CommissionRate extends ConfigurationMySQL {
                 type = rs.getInt(4);
                 date = rs.getInt(5);
                 isArchived = rs.getBoolean(6);
-                rate = new Backend.persistenceLayer.CommissionRate(commissionId, agencyCode, percentage, type, date, isArchived);
+                rate = new CommissionRate(commissionId, agencyCode, percentage, type, date, isArchived);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -158,9 +160,9 @@ public class CommissionRate extends ConfigurationMySQL {
         return rate;
     }
 
-    public Backend.persistenceLayer.CommissionRate getActiveCommissionsByTicketType(int type) {
+    public CommissionRate getActiveCommissionsByTicketType(int type) {
         getConnection();
-        Backend.persistenceLayer.CommissionRate rate = new Backend.persistenceLayer.CommissionRate(0,0,type,0,false);
+        CommissionRate rate = new CommissionRate(0,0,type,0,false);
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM commissionRate WHERE commissionTicketType = ? " +
                     "AND commissionIsArchived = 0");
@@ -179,7 +181,7 @@ public class CommissionRate extends ConfigurationMySQL {
                 //type = rs.getInt(4);
                 date = rs.getInt(5);
                 isArchived = rs.getBoolean(6);
-                rate = new Backend.persistenceLayer.CommissionRate(id, agencyCode, percentage, type, date, isArchived);
+                rate = new CommissionRate(id, agencyCode, percentage, type, date, isArchived);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -189,7 +191,7 @@ public class CommissionRate extends ConfigurationMySQL {
         return rate;
     }
 
-    public void updateCommissionById(Backend.persistenceLayer.CommissionRate commissionRate) {
+    public void updateCommissionById(CommissionRate commissionRate) {
         getConnection();
         //int date = year*10000 + month*100 + day;
         try {
@@ -241,7 +243,7 @@ public class CommissionRate extends ConfigurationMySQL {
     /*-------------------------COMMISSION RATE QUERIES END-------------------------*/
 
     public static void main(String[] args) {
-        CommissionRate cr = new CommissionRate();
+        CommissionRateController cr = new CommissionRateController();
         //cr.archiveCommission(1);
     }
 }
