@@ -3,8 +3,8 @@ package Backend.persistenceLayer;
 public class OfficeManger extends User {
 
 
-    public OfficeManger(String username, String password, String email, String address, int userAgencyTravelCode, int userArchived) {
-        super(username, password, email, address, userAgencyTravelCode, userArchived);
+    public OfficeManger(String name, String password, String email, int userAgencyTravelCode, UserType userType, int userArchived) {
+        super(name, password, email, userAgencyTravelCode, userType, userArchived);
     }
 
     @Override

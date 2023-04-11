@@ -1,23 +1,30 @@
 package Backend.serviceLayer;
 
 
-/*
+
 import Backend.persistenceLayer.UserType;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.*;
-public class UserSL {
+public class UserSL extends ConfigurationMySQL{
 
     public boolean login(String email, String password, UserType userType) {
-
+        getConnection();
         try {
            PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM userAccount WHERE userEmail = ? and userPassword = ? and userType = ?");
-            stmt.setInt(1, id);ResultSet rs = stmt.executeQuery();
-           while (rs.next())
-                userID, userAgencyTravelCode, userName, userEmail, userPassword, userType, userIsArchived
+
+           stmt.setString(1, email);
+           stmt.setString(2,password);
+           stmt.setString(3, String.valueOf(userType));
+
+           ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+                //userID, userAgencyTravelCode, userName, userEmail, userPassword, userType, userIsArchived
                 System.out.println(rs.getInt(1) + "  " + rs.getInt(2) + "  " + rs.getString(3) + "  " + rs.getString(4) + "  "
                         + rs.getString(5) + "  " + rs.getString(6) + "  " + rs.getInt(7) + "\n");
             //when objects have been made, use object constructor to make them?
@@ -27,7 +34,7 @@ public class UserSL {
         }
     }
 }
-*/
+
 //        private static final String INSERT_USER_SQL = "INSERT INTO users" +
 //                " (username, password, email, address, agency_code, user_type)" +
 //                " VALUES (?, ?, ?, ?, ?, ?)";

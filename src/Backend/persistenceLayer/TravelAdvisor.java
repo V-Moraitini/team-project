@@ -2,8 +2,9 @@ package Backend.persistenceLayer;
 
 public class TravelAdvisor extends User {
 
-    public TravelAdvisor(String username, String password, String email, String address, int userAgencyTravelCode, int userArchived) {
-        super(username, password, email, address, userAgencyTravelCode, userArchived);
+
+    public TravelAdvisor(String name, String password, String email, int userAgencyTravelCode, UserType userType, int userArchived) {
+        super(name, password, email, userAgencyTravelCode, userType, userArchived);
     }
 
     @Override
