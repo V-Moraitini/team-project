@@ -2,11 +2,17 @@ package Backend.persistenceLayer;
 
 public class AgencyBatch {
 
-    private int batchID;
+    private int batchId;
     private int batchAgencyTravelCode;
     private int batchDate;
 
     public AgencyBatch(int batchAgencyTravelCode, int batchDate) {
+        this.batchAgencyTravelCode = batchAgencyTravelCode;
+        this.batchDate = batchDate;
+    }
+
+    public AgencyBatch(int batchId, int batchAgencyTravelCode, int batchDate) {
+        this.batchId = batchId;
         this.batchAgencyTravelCode = batchAgencyTravelCode;
         this.batchDate = batchDate;
     }
@@ -27,14 +33,14 @@ public class AgencyBatch {
         this.batchDate = batchDate;
     }
 
-    public int getBatchID() {
-        return batchID;
+    public int getBatchId() {
+        return batchId;
     }
 
     @Override
     public String toString() {
         return "AgencyBatch{" +
-                "batchID=" + batchID +
+                "batchID=" + batchId +
                 ", batchAgencyTravelCode=" + batchAgencyTravelCode +
                 ", batchDate=" + batchDate +
                 '}';

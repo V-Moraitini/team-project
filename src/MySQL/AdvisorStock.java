@@ -65,6 +65,7 @@ public class AdvisorStock extends ConfigurationMySQL {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM advisorStock WHERE stockId = ?");
             stmt.setInt(1, stockId);
             ResultSet rs = stmt.executeQuery();
+
             int stockAdvisorUserId;
             while( rs.next() ) {
                 //stockID, stockAdvisorUserID

@@ -2,7 +2,7 @@ package Backend.persistenceLayer;
 
 public class User {
 
-    private int Id;
+    private int id;
     private String name;
     private String password;
     private String email;
@@ -69,13 +69,13 @@ public class User {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "Id=" + Id +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +

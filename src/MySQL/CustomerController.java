@@ -1,17 +1,19 @@
 package MySQL;
 
+import Backend.persistenceLayer.Customer;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class Customer extends ConfigurationMySQL {
+public class CustomerController extends ConfigurationMySQL {
 
-    public Customer() { }
+    public CustomerController() { }
 
     /*-------------------------CUSTOMER QUERIES START-------------------------*/
-    public void createCustomer(Backend.persistenceLayer.Customer customer) {
+    public void createCustomer(Customer customer) {
         getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement(
@@ -73,8 +75,8 @@ public class Customer extends ConfigurationMySQL {
         }
     }*/
 
-    public ArrayList<Backend.persistenceLayer.Customer> getCustomers() {
-        ArrayList<Backend.persistenceLayer.Customer> customers = new ArrayList<>();
+    public ArrayList<Customer> getCustomers() {
+        ArrayList<Customer> customers = new ArrayList<>();
         getConnection();
         try {
             Statement stmt = con.createStatement();
@@ -96,7 +98,7 @@ public class Customer extends ConfigurationMySQL {
                 phone = rs.getInt(5);
                 isValued = rs.getBoolean(6);
                 fixedDiscount = (float) rs.getDouble(7);
-                customers.add(new Backend.persistenceLayer.Customer(name, alias, email, phone, isValued, fixedDiscount));
+                customers.add(new Customer(name, alias, email, phone, isValued, fixedDiscount));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,8 +108,8 @@ public class Customer extends ConfigurationMySQL {
         return customers;
     }
 
-    public Backend.persistenceLayer.Customer getCustomerById(int id) {
-        Backend.persistenceLayer.Customer customer = new Backend.persistenceLayer.Customer("","","",0, false,0);
+    public Customer getCustomerById(int id) {
+        Customer customer = new Customer("","","",0, false,0);
         getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM customer WHERE userId = ?");
@@ -128,7 +130,7 @@ public class Customer extends ConfigurationMySQL {
                 phone = rs.getInt(5);
                 isValued = rs.getBoolean(6);
                 fixedDiscount = (float) rs.getDouble(7);
-                customer = new Backend.persistenceLayer.Customer(name, alias, email, phone, isValued, fixedDiscount);
+                customer = new Customer(name, alias, email, phone, isValued, fixedDiscount);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -138,7 +140,7 @@ public class Customer extends ConfigurationMySQL {
         return customer;
     }
 
-    public void updateCustomerById(Backend.persistenceLayer.Customer customer) {
+    public void updateCustomerById(Customer customer) {
         getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement(

@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class UserAccount extends ConfigurationMySQL {
+public class UserController extends ConfigurationMySQL {
 
-    public UserAccount() {
+    public UserController() {
     }
 
     /*-------------------------USER QUERIES START-------------------------*/

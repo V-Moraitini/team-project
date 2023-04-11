@@ -2,77 +2,103 @@ package MySQL;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-public class AgencyBatch {
-    ConfigurationMySQL config;
+public class AgencyBatch extends ConfigurationMySQL {
 
-    public AgencyBatch() {
-        this.config = new ConfigurationMySQL();
-    }
+    public AgencyBatch() { }
 
     /*-------------------------AGENCY BATCH QUERIES START-------------------------*/
-    public void createBatch(int day, int month, int year) {
-        int date = year*10000 + month*100 + day;
+    public void createBatch(Backend.persistenceLayer.AgencyBatch agencyBatch) {
+        getConnection();
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement(
+            PreparedStatement stmt = con.prepareStatement(
                     "INSERT INTO agencyBatch (batchAgencyTravelCode, batchDate)" +
                             "VALUES (?, ?)");
             //Statement.RETURN_GENERATED_KEYS for auto generated keys
-            stmt.setInt(1, 1); //"Terrific Travel" Travel Agent
-            stmt.setInt(2, date);
+            stmt.setInt(1, agencyBatch.getBatchAgencyTravelCode()); //"Terrific Travel" Travel Agent id:1
+            stmt.setInt(2, agencyBatch.getBatchDate());
 
-            config.getCon().setAutoCommit(false);
+            con.setAutoCommit(false);
             stmt.executeUpdate();
 
-            config.getCon().commit();
-            config.getCon().setAutoCommit(true);
-        } catch (Exception e) {
-            System.out.println(e);
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
+
     }
 
-    public void getBatches() {
+    public ArrayList<Backend.persistenceLayer.AgencyBatch> getBatches() {
+        ArrayList<Backend.persistenceLayer.AgencyBatch> batches = new ArrayList<>();
+        getConnection();
         try {
-            Statement stmt = config.getCon().createStatement();
+            Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM agencyBatch");
-            while( rs.next() )
+
+            int id;
+            int agencyTravelCode = 1;
+            int date;
+            while( rs.next() ) {
                 //batchID, batchAgencyTravelCode, batchDate
-                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getInt(3)+"\n");
-            //when objects have been made, use object constructor to make them?
-        } catch (Exception e) {
-            System.out.println(e);
+                id = rs.getInt(1);
+                agencyTravelCode = rs.getInt(2);
+                date = rs.getInt(3);
+                batches.add(new Backend.persistenceLayer.AgencyBatch(id, agencyTravelCode, date));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
+        return batches;
     }
 
-    public void getBatchById(int id) {
+    public Backend.persistenceLayer.AgencyBatch getBatchById(int batchId) {
+        Backend.persistenceLayer.AgencyBatch batch = new Backend.persistenceLayer.AgencyBatch(0,0);
+        getConnection();
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM agencyBatch WHERE batchID = ?");
-            stmt.setInt(1, id);
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM agencyBatch WHERE batchId = ?");
+            stmt.setInt(1, batchId);
             ResultSet rs = stmt.executeQuery();
-            while( rs.next() )
+
+            int travelCode;
+            int date;
+            while( rs.next() ) {
                 //batchID, batchAgencyTravelCode, batchDate
-                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getInt(3)+"\n");
-            //when objects have been made, use object constructor to make them?
-        } catch (Exception e) {
-            System.out.println(e);
+                travelCode = rs.getInt(2);
+                date = rs.getInt(3);
+                batch =  new Backend.persistenceLayer.AgencyBatch(batchId, travelCode, date);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
+        return batch;
     }
 
-    public void updateBatchById(int id, int day, int month, int year) {
-        int date = year*10000 + month*100 + day;
+    public void updateBatchById(Backend.persistenceLayer.AgencyBatch batch) {
+        getConnection();
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement(
-                    "UPDATE agencyBatch SET batchDate=? WHERE batchID = ?");
-            stmt.setInt(1, date);
-            stmt.setInt(2, id);
+            PreparedStatement stmt = con.prepareStatement(
+                    "UPDATE agencyBatch SET batchDate=? WHERE batchId = ?");
+            stmt.setInt(1, batch.getBatchDate());
+            stmt.setInt(2, batch.getBatchId());
 
-            config.getCon().setAutoCommit(false);
+            con.setAutoCommit(false);
             stmt.executeUpdate();
-            config.getCon().commit();
-            config.getCon().setAutoCommit(true);
-        } catch (Exception e) {
-            System.out.println(e);
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 

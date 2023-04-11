@@ -35,9 +35,9 @@ public class ConfigurationMySQL {
     /*-------------------------MAIN START-------------------------*/
     public static void main(String args[]) throws SQLException {
         ConfigurationMySQL a = new ConfigurationMySQL();
-        UserAccount userAccount = new UserAccount();
+        UserController userController = new UserController();
         try {
-            userAccount.getUserById(1);
+            userController.getUserById(1);
             //a.getUserById(1);
             //a.updateUserById(1, "Todd Jenkins", "tod123", "Office Manager");
             //a.archiveUser(1);
