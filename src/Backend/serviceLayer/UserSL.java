@@ -1,7 +1,6 @@
 package Backend.serviceLayer;
 
 
-/*
 import Backend.persistenceLayer.UserType;
 
 import java.sql.Connection;
@@ -9,9 +8,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.*;
+/*
 public class UserSL {
 
-    public boolean login(String email, String password, UserType userType) {
+   public boolean login(String email, String password, UserType userType) {
 
         try {
            PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM userAccount WHERE userEmail = ? and userPassword = ? and userType = ?");
@@ -26,8 +26,7 @@ public class UserSL {
             System.out.println(e);
         }
     }
-}
-*/
+}*/
 //        private static final String INSERT_USER_SQL = "INSERT INTO users" +
 //                " (username, password, email, address, agency_code, user_type)" +
 //                " VALUES (?, ?, ?, ?, ?, ?)";

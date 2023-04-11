@@ -37,6 +37,8 @@ public class AgencyBatch {
         return batchId;
     }
 
+    public void setBatchId(int batchId) { this.batchId = batchId; }
+
     @Override
     public String toString() {
         return "AgencyBatch{" +

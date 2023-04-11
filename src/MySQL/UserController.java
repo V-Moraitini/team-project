@@ -1,5 +1,6 @@
 package MySQL;
 
+import Backend.persistenceLayer.AdvisorStock;
 import Backend.persistenceLayer.User;
 import Backend.persistenceLayer.UserType;
 
@@ -20,17 +21,18 @@ public class UserController extends ConfigurationMySQL {
         getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement(
-                    "INSERT INTO userAccount VALUES (?, 1, ?, ?, ?, ?, 0)");
+                    "INSERT INTO userAccount VALUES (1, ?, ?, ?, ?, 0)");
             //Statement.RETURN_GENERATED_KEYS for auto generated keys
-            stmt.setInt(1, user.getId());
-            stmt.setString(2, user.getName());
-            stmt.setString(3, user.getEmail());
-            stmt.setString(4, user.getPassword());
-            stmt.setString(5, user.getUserType().toString());
+            //stmt.setInt(1, user.getId());
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+            stmt.setString(4, user.getUserType().toString());
 
             //if the user is a travel advisor, make their stock as well
             if (user.getUserType().toString().equals("TravelAdvisor")) {
-                //createStock(user.getId());
+                AdvisorStockController advisorStockController = new AdvisorStockController();
+                advisorStockController.createStock(new AdvisorStock(user.getId()));
             }
 
             con.setAutoCommit(false);
@@ -68,7 +70,7 @@ public class UserController extends ConfigurationMySQL {
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
                 isArchived = rs.getInt(7);
-                        users.add(new User(name, password, email, agencyTravelCode, type, isArchived));
+                        users.add(new User(id, name, password, email, agencyTravelCode, type, isArchived));
 
             }
         } catch (SQLException e) {
@@ -102,7 +104,7 @@ public class UserController extends ConfigurationMySQL {
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
                 isArchived = rs.getInt(7);
-                users.add(new User(name, password, email, agencyTravelCode, type, isArchived));
+                users.add(new User(id, name, password, email, agencyTravelCode, type, isArchived));
 
             }
         } catch (SQLException e) {
@@ -137,7 +139,7 @@ public class UserController extends ConfigurationMySQL {
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
                 isArchived = rs.getInt(7);
-                users.add(new User(name, password, email, agencyTravelCode, type, isArchived));
+                users.add(new User(id, name, password, email, agencyTravelCode, type, isArchived));
 
             }
         } catch (SQLException e) {
@@ -170,7 +172,7 @@ public class UserController extends ConfigurationMySQL {
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
                 isArchived = rs.getInt(7);
-                user = new User(name, password, email, agencyTravelCode, type, isArchived);
+                user = new User(id, name, password, email, agencyTravelCode, type, isArchived);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -188,6 +190,7 @@ public class UserController extends ConfigurationMySQL {
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
 
+            int id;
             int agencyTravelCode = 1;
             String name;
             String password;
@@ -195,12 +198,13 @@ public class UserController extends ConfigurationMySQL {
             int isArchived; //change into Boolean later
             while( rs.next() ) {
                 //userId userAgencyTravelCode, username, email, password, type, isArchived
+                id = rs.getInt(1);
                 agencyTravelCode = rs.getInt(2);
                 name = rs.getString(3);
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
                 isArchived = rs.getInt(7);
-                user = new User(name, password, email, agencyTravelCode, type, isArchived);
+                user = new User(id, name, password, email, agencyTravelCode, type, isArchived);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -18,13 +18,20 @@ public class AgencyBatchController extends ConfigurationMySQL {
         try {
             PreparedStatement stmt = con.prepareStatement(
                     "INSERT INTO agencyBatch (batchAgencyTravelCode, batchDate)" +
-                            "VALUES (?, ?)");
+                            "VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
             //Statement.RETURN_GENERATED_KEYS for auto generated keys
+
             stmt.setInt(1, agencyBatch.getBatchAgencyTravelCode()); //"Terrific Travel" Travel Agent id:1
             stmt.setInt(2, agencyBatch.getBatchDate());
 
             con.setAutoCommit(false);
             stmt.executeUpdate();
+
+            //getting auto-generated key back and inserting it into the object
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                agencyBatch.setBatchId(rs.getInt(1));
+            }
 
             con.commit();
             con.setAutoCommit(true);
