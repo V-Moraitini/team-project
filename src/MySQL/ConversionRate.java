@@ -6,97 +6,111 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class ConversionRate {
-    ConfigurationMySQL config;
+public class ConversionRate extends ConfigurationMySQL {
 
-    public ConversionRate() {
-        this.config = new ConfigurationMySQL();
-    }
+    public ConversionRate() { }
 
     /*-------------------------CONVERSION RATE QUERIES START-------------------------*/
-    public void createConversion(Backend.persistenceLayer.ConversionRate conversionRate, String currencyName, double rate, int day, int month, int year) {
+    public void createConversion(Backend.persistenceLayer.ConversionRate conversionRate) {
+        getConnection();
         //int date = year*10000 + month*100 + day;
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement(
+            PreparedStatement stmt = con.prepareStatement(
                     "INSERT INTO conversionRate " +
                             "(conversionCurrency, conversionRate, conversionDate)" +
-                            "VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                            "VALUES (?, ?, ?)");
             //Statement.RETURN_GENERATED_KEYS for auto generated keys
             stmt.setString(1, conversionRate.getConversionCurrency());
             stmt.setDouble(2, conversionRate.getConversionRate());
             stmt.setInt(3, conversionRate.getConversionDate());
 
-            config.getCon().setAutoCommit(false);
+            con.setAutoCommit(false);
             stmt.executeUpdate();
 
-            config.getCon().commit();
-            config.getCon().setAutoCommit(true);
-        } catch (Exception e) {
-            System.out.println(e);
+            con.commit();
+            con.setAutoCommit(true);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
-    public ArrayList<Backend.persistenceLayer.ConversionRate> getConversions() throws SQLException {
-        ArrayList<Backend.persistenceLayer.ConversionRate> rates = new ArrayList<Backend.persistenceLayer.ConversionRate>();
+    public ArrayList<Backend.persistenceLayer.ConversionRate> getConversions() {
+        getConnection();
+        ArrayList<Backend.persistenceLayer.ConversionRate> conversions = new ArrayList<Backend.persistenceLayer.ConversionRate>();
         try {
-            Statement stmt = config.getCon().createStatement();
+            Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM conversionRate");
-            int id = 0;
-            String currencyName = "";
-            //double rate = 0;
-            int rate = 0;
-            int date = 0;
+            int id;
+            String currencyName;
+            double rate;
+            int date;
             while( rs.next() ) {
+                //conversionID, conversionCurrency, conversionRate, conversionDate
                 id = rs.getInt(1);
                 currencyName = rs.getString(2);
-                //rate = rs.getDouble(3);
-                rate = rs.getInt(3);
+                rate = rs.getDouble(3);
                 date = rs.getInt(4);
 
-                rates.add(new Backend.persistenceLayer.ConversionRate(currencyName,rate,date)); //id???
-                //conversionID, conversionCurrency, conversionRate, conversionDate
-                /*System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getDouble(3)+
-                        "  "+rs.getInt(4)+"\n");*/
+                conversions.add(new Backend.persistenceLayer.ConversionRate(id, currencyName,rate,date)); //id???
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-            config.getCon().close();
+            closeConnection();
         }
-        return rates;
+        return conversions;
     }
 
-    public void getConversionById(int id) {
+    public Backend.persistenceLayer.ConversionRate getConversionById(int id) {
+        Backend.persistenceLayer.ConversionRate conversion = new Backend.persistenceLayer.ConversionRate("", 0, 0);
+        getConnection();
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM conversionRate WHERE conversionID = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM conversionRate WHERE conversionId = ?");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            while( rs.next() )
+
+            String currencyName;
+            double rate;
+            int date;
+            while( rs.next() ) {
                 //conversionID, conversionCurrency, conversionRate, conversionDate
-                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getDouble(3)+
-                        "  "+rs.getInt(4)+"\n");
-        } catch (Exception e) {
-            System.out.println(e);
+                currencyName = rs.getString(2);
+                rate = rs.getDouble(3);
+                date = rs.getInt(4);
+
+                conversion = new Backend.persistenceLayer.ConversionRate(id, currencyName, rate, date);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
+        return conversion;
     }
 
     public void updateConversionById(Backend.persistenceLayer.ConversionRate conversionRate, int id) {
+        getConnection();
         //int date = year*10000 + month*100 + day;
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement(
+            PreparedStatement stmt = con.prepareStatement(
                     "UPDATE conversionRate SET conversionCurrency=?, conversionRate=?, " +
-                            "conversionDate=? WHERE conversionID = ?");
+                            "conversionDate=? WHERE conversionId = ?");
             stmt.setString(1, conversionRate.getConversionCurrency());
             stmt.setDouble(2, conversionRate.getConversionRate());
             stmt.setInt(3, conversionRate.getConversionDate());
             stmt.setInt(4, id);
 
-            config.getCon().setAutoCommit(false);
+            con.setAutoCommit(false);
             stmt.executeUpdate();
-            config.getCon().commit();
-            config.getCon().setAutoCommit(true);
-        } catch (Exception e) {
-            System.out.println(e);
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
     /*-------------------------CONVERSION RATE QUERIES END-------------------------*/

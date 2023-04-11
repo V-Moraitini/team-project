@@ -19,7 +19,7 @@ public class CommissionRateSL {
                 + "VALUES (?, ?, ?, ?)";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, commissionRate.getCommissionAgencyTravelCode());
-        statement.setInt(2, commissionRate.getCommissionPercentage());
+        statement.setDouble(2, commissionRate.getCommissionPercentage());
         statement.setInt(3, commissionRate.getCommissionTicketType());
         statement.setInt(4, commissionRate.getCommissionDate());
         statement.executeUpdate();
@@ -31,7 +31,7 @@ public class CommissionRateSL {
                 + "commissionTicketType = ?, commissionDate = ? WHERE commissionId = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, commissionRate.getCommissionAgencyTravelCode());
-        statement.setInt(2, commissionRate.getCommissionPercentage());
+        statement.setDouble(2, commissionRate.getCommissionPercentage());
         statement.setInt(3, commissionRate.getCommissionTicketType());
         statement.setInt(4, commissionRate.getCommissionDate());
         statement.setInt(5, commissionRate.getCommissionId());

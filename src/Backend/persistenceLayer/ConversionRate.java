@@ -7,7 +7,14 @@ public class ConversionRate {
     private double conversionRate;
     private int conversionDate;
 
-    public ConversionRate(String conversionCurrency, int conversionRate, int conversionDate) {
+    public ConversionRate(String conversionCurrency, double conversionRate, int conversionDate) {
+        this.conversionCurrency = conversionCurrency;
+        this.conversionRate = conversionRate;
+        this.conversionDate = conversionDate;
+    }
+
+    public ConversionRate(int conversionId, String conversionCurrency, double conversionRate, int conversionDate) {
+        this.conversionId = conversionId;
         this.conversionCurrency = conversionCurrency;
         this.conversionRate = conversionRate;
         this.conversionDate = conversionDate;
@@ -25,7 +32,7 @@ public class ConversionRate {
         return conversionRate;
     }
 
-    public void setConversionRate(int conversionRate) {
+    public void setConversionRate(double conversionRate) {
         this.conversionRate = conversionRate;
     }
 

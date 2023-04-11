@@ -2,20 +2,20 @@ package MySQL;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-public class CommissionRate {
-    ConfigurationMySQL config;
+public class CommissionRate extends ConfigurationMySQL {
 
-    public CommissionRate() {
-        this.config = new ConfigurationMySQL();
-    }
+    public CommissionRate() { }
 
     /*-------------------------COMMISSION RATE QUERIES START-------------------------*/
     public void createCommission(Backend.persistenceLayer.CommissionRate commissionRate) {
+        getConnection();
         //int date = year*10000 + month*100 + day;
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement(
+            PreparedStatement stmt = con.prepareStatement(
                     "INSERT INTO commissionRate " +
                             "(commissionAgencyTravelCode, commissionPercentage, commissionTicketType, commissionDate, commissionIsArchived)" +
                             "VALUES (?, ?, ?, ?, 0)", Statement.RETURN_GENERATED_KEYS);
@@ -25,135 +25,223 @@ public class CommissionRate {
             stmt.setInt(3, commissionRate.getCommissionTicketType());
             stmt.setInt(4, commissionRate.getCommissionDate());
 
-            config.getCon().setAutoCommit(false);
+            con.setAutoCommit(false);
             stmt.executeUpdate();
 
-            config.getCon().commit();
-            config.getCon().setAutoCommit(true);
-        } catch (Exception e) {
-            System.out.println(e);
+            con.commit();
+            con.setAutoCommit(true);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
-    public void getActiveCommissions() {
+    public ArrayList<Backend.persistenceLayer.CommissionRate> getActiveCommissions() {
+        getConnection();
+        ArrayList<Backend.persistenceLayer.CommissionRate> rates = new ArrayList<Backend.persistenceLayer.CommissionRate>();
         try {
-            Statement stmt = config.getCon().createStatement();
+            Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM commissionRate WHERE commissionIsArchived = 0");
-            while( rs.next() )
+            int id = 0;
+            int agencyCode = 0;
+            double percentage = 0;
+            int type = 0;
+            int date = 0;
+            boolean isArchived = false;
+            while( rs.next() ) {
                 //commissionID, commissionAgencyTravelCode, commissionPercentage, commissionTicketType, commissionDate, commissionIsArchived
-                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getDouble(3)+
-                        "  "+rs.getInt(4)+"  "+rs.getInt(5)+"  "+rs.getBoolean(6)+"\n");
-        } catch (Exception e) {
-            System.out.println(e);
+                id = rs.getInt(1);
+                agencyCode = rs.getInt(2);
+                percentage = rs.getDouble(3);
+                type = rs.getInt(4);
+                date = rs.getInt(5);
+                isArchived = rs.getBoolean(6);
+                rates.add(new Backend.persistenceLayer.CommissionRate(id, agencyCode, percentage, type, date, isArchived));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
+        return rates;
     }
 
-    public void getArchivedCommissions() {
+    public ArrayList<Backend.persistenceLayer.CommissionRate> getArchivedCommissions() {
+        getConnection();
+        ArrayList<Backend.persistenceLayer.CommissionRate> rates = new ArrayList<Backend.persistenceLayer.CommissionRate>();
         try {
-            Statement stmt = config.getCon().createStatement();
+            Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM commissionRate WHERE commissionIsArchived = 1");
-            while( rs.next() )
+            int id = 0;
+            int agencyCode = 0;
+            double percentage = 0;
+            int type = 0;
+            int date = 0;
+            boolean isArchived = false;
+            while( rs.next() ) {
                 //commissionID, commissionAgencyTravelCode, commissionPercentage, commissionTicketType, commissionDate, commissionIsArchived
-                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getDouble(3)+
-                        "  "+rs.getInt(4)+"  "+rs.getInt(5)+"  "+rs.getBoolean(6)+"\n");
-        } catch (Exception e) {
-            System.out.println(e);
+                id = rs.getInt(1);
+                agencyCode = rs.getInt(2);
+                percentage = rs.getDouble(3);
+                type = rs.getInt(4);
+                date = rs.getInt(5);
+                isArchived = rs.getBoolean(6);
+                rates.add(new Backend.persistenceLayer.CommissionRate(id, agencyCode, percentage, type, date, isArchived));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
+        return rates;
     }
 
-    public void getAllCommissions() {
+    public ArrayList<Backend.persistenceLayer.CommissionRate> getAllCommissions() {
+        getConnection();
+        ArrayList<Backend.persistenceLayer.CommissionRate> rates = new ArrayList<Backend.persistenceLayer.CommissionRate>();
         try {
-            Statement stmt = config.getCon().createStatement();
+            Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM commissionRate");
-            while( rs.next() )
+            int id = 0;
+            int agencyCode = 0;
+            double percentage = 0;
+            int type = 0;
+            int date = 0;
+            boolean isArchived = false;
+            while( rs.next() ) {
                 //commissionID, commissionAgencyTravelCode, commissionPercentage, commissionTicketType, commissionDate, commissionIsArchived
-                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getDouble(3)+
-                        "  "+rs.getInt(4)+"  "+rs.getInt(5)+"  "+rs.getBoolean(6)+"\n");
-        } catch (Exception e) {
-            System.out.println(e);
+                id = rs.getInt(1);
+                agencyCode = rs.getInt(2);
+                percentage = rs.getDouble(3);
+                type = rs.getInt(4);
+                date = rs.getInt(5);
+                isArchived = rs.getBoolean(6);
+                rates.add(new Backend.persistenceLayer.CommissionRate(id, agencyCode, percentage, type, date, isArchived));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
+        return rates;
     }
 
-    public void getCommissionById(int id) {
+    public Backend.persistenceLayer.CommissionRate getCommissionById(int commissionId) {
+        getConnection();
+        Backend.persistenceLayer.CommissionRate rate = new Backend.persistenceLayer.CommissionRate(0,0,0,0,false);
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM commissionRate WHERE commissionID = ?");
-            stmt.setInt(1, id);
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM commissionRate WHERE commissionId = ?");
+            stmt.setInt(1, commissionId);
             ResultSet rs = stmt.executeQuery();
-            while( rs.next() )
+
+            int agencyCode = 0;
+            double percentage = 0;
+            int type = 0;
+            int date = 0;
+            boolean isArchived = false;
+            while( rs.next() ) {
                 //commissionID, commissionAgencyTravelCode, commissionPercentage, commissionTicketType, commissionDate, commissionIsArchived
-                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getDouble(3)+
-                        "  "+rs.getInt(4)+"  "+rs.getInt(5)+"  "+rs.getBoolean(6)+"\n");
-        } catch (Exception e) {
-            System.out.println(e);
+                agencyCode = rs.getInt(2);
+                percentage = rs.getDouble(3);
+                type = rs.getInt(4);
+                date = rs.getInt(5);
+                isArchived = rs.getBoolean(6);
+                rate = new Backend.persistenceLayer.CommissionRate(commissionId, agencyCode, percentage, type, date, isArchived);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
+        return rate;
     }
 
-    public void getActiveCommissionByTicketType(int type) {
+    public Backend.persistenceLayer.CommissionRate getActiveCommissionsByTicketType(int type) {
+        getConnection();
+        Backend.persistenceLayer.CommissionRate rate = new Backend.persistenceLayer.CommissionRate(0,0,type,0,false);
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM commissionRate WHERE commissionTicketType = ? " +
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM commissionRate WHERE commissionTicketType = ? " +
                     "AND commissionIsArchived = 0");
             stmt.setInt(1, type);
             ResultSet rs = stmt.executeQuery();
-            while( rs.next() )
+
+            int id = 0;
+            int agencyCode = 0;
+            double percentage = 0;
+            int date = 0;
+            boolean isArchived = false;
+            while( rs.next() ) {
                 //commissionID, commissionAgencyTravelCode, commissionPercentage, commissionTicketType, commissionDate, commissionIsArchived
-                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getDouble(3)+
-                        "  "+rs.getInt(4)+"  "+rs.getInt(5)+"  "+rs.getBoolean(6)+"\n");
-        } catch (Exception e) {
-            System.out.println(e);
+                agencyCode = rs.getInt(2);
+                percentage = rs.getDouble(3);
+                //type = rs.getInt(4);
+                date = rs.getInt(5);
+                isArchived = rs.getBoolean(6);
+                rate = new Backend.persistenceLayer.CommissionRate(id, agencyCode, percentage, type, date, isArchived);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
+        return rate;
     }
 
     public void updateCommissionById(Backend.persistenceLayer.CommissionRate commissionRate) {
+        getConnection();
         //int date = year*10000 + month*100 + day;
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement(
+            PreparedStatement stmt = con.prepareStatement(
                     "UPDATE commissionRate SET commissionPercentage=?, commissionTicketType=?, " +
-                            "commissionDate=? WHERE commissionID = ?");
+                            "commissionDate=? WHERE commissionId = ?");
             stmt.setDouble(1, commissionRate.getCommissionPercentage());
             stmt.setInt(2, commissionRate.getCommissionTicketType());
             stmt.setInt(3, commissionRate.getCommissionDate());
             stmt.setInt(4, commissionRate.getCommissionId());
 
-            config.getCon().setAutoCommit(false);
+            con.setAutoCommit(false);
             stmt.executeUpdate();
-            config.getCon().commit();
-            config.getCon().setAutoCommit(true);
-        } catch (Exception e) {
-            System.out.println(e);
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
     public void archiveCommission(int id) {
+        Boolean isArchived = getCommissionById(id).getCommissionIsArchived();
+        String sql;
+        String message;
+        getConnection();
         try {
-            PreparedStatement isArchived = config.getCon().prepareStatement(
-                    "SELECT commissionIsArchived FROM commissionRate WHERE commissionID = ?");
-            isArchived.setInt(1, id);
-            ResultSet rsArchived = isArchived.executeQuery();
-            while (rsArchived.next()) {
-                if (rsArchived.getInt(1) == 0) {
-                    PreparedStatement stmt = config.getCon().prepareStatement(
-                            "UPDATE commissionRate SET commissionIsArchived = 1 WHERE commissionID = ?");
-                    stmt.setInt(1, id);
-                    config.getCon().setAutoCommit(false);
-                    stmt.executeUpdate();
-                    config.getCon().commit();
-                    config.getCon().setAutoCommit(true);
-                    System.out.println("Commission is now archived.");
-                } else {
-                    PreparedStatement stmt = config.getCon().prepareStatement(
-                            "UPDATE commissionRate SET commissionIsArchived = 0 WHERE commissionID = ?");
-                    stmt.setInt(1, id);
-                    config.getCon().setAutoCommit(false);
-                    stmt.executeUpdate();
-                    config.getCon().commit();
-                    config.getCon().setAutoCommit(true);
-                    System.out.println("Commission is no longer archived.");
-                }
+            if (!isArchived) {
+                sql = "UPDATE commissionRate SET commissionIsArchived = 1 WHERE commissionId = ?";
+                message = "Commission is now archived.";
+            } else {
+                sql = "UPDATE commissionRate SET commissionIsArchived = 0 WHERE commissionId = ?";
+                message = "Commission is no longer archived.";
             }
-
-        } catch (Exception e) {
-            System.out.println(e);
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, id);
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+            con.commit();
+            con.setAutoCommit(true);
+            System.out.println(message);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
     /*-------------------------COMMISSION RATE QUERIES END-------------------------*/
+
+    public static void main(String[] args) {
+        CommissionRate cr = new CommissionRate();
+        //cr.archiveCommission(1);
+    }
 }

@@ -7,21 +7,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class AdvisorStock extends ConfigurationMySQL {
-    //ConfigurationMySQL config;
 
-    public AdvisorStock() {
-        //this.config = new ConfigurationMySQL();
-    }
+    public AdvisorStock() { }
 
     /*-------------------------ADVISOR STOCK QUERIES START-------------------------*/
     public void createStock(Backend.persistenceLayer.AdvisorStock advisorStock) {
+        getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement(
                     "INSERT INTO advisorStock " +
                             "(stockAdvisorUserId)" +
                             "VALUES (?)", Statement.RETURN_GENERATED_KEYS);
             //Statement.RETURN_GENERATED_KEYS for auto generated keys
-            stmt.setInt(1, advisorStock.getStockAdvisorUserId()); //when do we set the id in the object?
+            stmt.setInt(1, advisorStock.getStockAdvisorUserId());
 
             con.setAutoCommit(false);
             stmt.executeUpdate();
@@ -37,19 +35,21 @@ public class AdvisorStock extends ConfigurationMySQL {
     }
 
     public ArrayList<Backend.persistenceLayer.AdvisorStock> getStocks() {
-        ArrayList<Backend.persistenceLayer.AdvisorStock> stocks = new ArrayList<Backend.persistenceLayer.AdvisorStock>();
+        getConnection();
+        ArrayList<Backend.persistenceLayer.AdvisorStock> stocks = new ArrayList<>();
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM advisorStock");
 
-            int stockId = 0;
-            int stockAdvisorUserId = 0;
-            while( rs.next() )
+            int stockId;
+            int stockAdvisorUserId;
+            while( rs.next() ) {
                 stockId = rs.getInt(1);
                 stockAdvisorUserId = rs.getInt(2);
-                stocks.add(new Backend.persistenceLayer.AdvisorStock(stockId, stockAdvisorUserId)); //id where aaa
                 //stockID, stockAdvisorUserID
-                //System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"\n");
+                stocks.add(new Backend.persistenceLayer.AdvisorStock(stockId, stockAdvisorUserId)); //id where aaa
+
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -59,16 +59,17 @@ public class AdvisorStock extends ConfigurationMySQL {
     }
 
     public Backend.persistenceLayer.AdvisorStock getStockById(int stockId) {
+        getConnection();
         Backend.persistenceLayer.AdvisorStock stock = new Backend.persistenceLayer.AdvisorStock(0);
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM advisorStock WHERE stockId = ?");
             stmt.setInt(1, stockId);
             ResultSet rs = stmt.executeQuery();
-            int stockAdvisorUserId = 0;
+            int stockAdvisorUserId;
             while( rs.next() ) {
                 //stockID, stockAdvisorUserID
                 stockAdvisorUserId = rs.getInt(2);
-                stock.setStockAdvisorUserId(stockAdvisorUserId);
+                stock = new Backend.persistenceLayer.AdvisorStock(stockId, stockAdvisorUserId);
                 //stock = new persistenceLayer.AdvisorStock(stockAdvisorUserId); //id where aaa
                 //System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"\n");
             }
@@ -81,21 +82,20 @@ public class AdvisorStock extends ConfigurationMySQL {
     }
 
     public Backend.persistenceLayer.AdvisorStock getStockByAdvisorId(int advisorId) {
+        getConnection();
         Backend.persistenceLayer.AdvisorStock stock = new Backend.persistenceLayer.AdvisorStock(0);
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM advisorStock WHERE stockAdvisorUserId = ?");
             stmt.setInt(1, advisorId);
             ResultSet rs = stmt.executeQuery();
-            ArrayList<Backend.persistenceLayer.AdvisorStock> stocks = new ArrayList<Backend.persistenceLayer.AdvisorStock>();
-            int stockId = 0;
+            int stockId;
             while( rs.next() ) {
                 //stockID, stockAdvisorUserID
                 stockId = rs.getInt(1);
-                stocks.add(new Backend.persistenceLayer.AdvisorStock(advisorId)); //id where aaa
-                //System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"\n");
+                stock = new Backend.persistenceLayer.AdvisorStock(stockId, advisorId);
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
             closeConnection();
         }
@@ -107,9 +107,12 @@ public class AdvisorStock extends ConfigurationMySQL {
     public static void main(String[] args) {
         AdvisorStock a = new AdvisorStock();
         try {
-            a.getStocks();
+            ArrayList<Backend.persistenceLayer.AdvisorStock> stocks = a.getStocks();
+            System.out.println(stocks);
+            Backend.persistenceLayer.AdvisorStock one = a.getStockById(4);
+            System.out.println(one);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         } finally {
             a.closeConnection();
         }
