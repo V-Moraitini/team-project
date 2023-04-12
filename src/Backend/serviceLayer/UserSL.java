@@ -1,5 +1,5 @@
 package Backend.serviceLayer;
-
+import MySQL.ConfigurationMySQL;
 
 
 import Backend.persistenceLayer.UserType;
@@ -14,7 +14,9 @@ import java.sql.*;
 public class UserSL extends ConfigurationMySQL {
 
     public boolean login(String email, String password, UserType userType) {
+        boolean success = false;
         getConnection();
+        ConfigurationMySQL config = new ConfigurationMySQL();
 
         try {
             PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM userAccount WHERE userEmail = ? and userPassword = ? and userType = ?");
@@ -34,6 +36,7 @@ public class UserSL extends ConfigurationMySQL {
         } catch (Exception e) {
             System.out.println(e);
         }
+        return success;
     }
 }
 
