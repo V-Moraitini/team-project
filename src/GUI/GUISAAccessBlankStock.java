@@ -88,7 +88,7 @@ public class GUISAAccessBlankStock extends JDialog {
                 DefaultTableModel model = (DefaultTableModel) table1.getModel();
                 BlankController blankController = new BlankController();
                 if (table1.getSelectedRow() != -1) {
-                    String idString = (String) model.getValueAt(table1.getSelectedRow(), 0);
+                    String idString = model.getValueAt(table1.getSelectedRow(), 0).toString();
                     int id = Integer.parseInt(idString);
                     blankController.archiveBlank(id);
                     model.removeRow(table1.getSelectedRow());
