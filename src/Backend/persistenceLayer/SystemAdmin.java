@@ -1,4 +1,4 @@
-package Backend.persistenceLayer;
+/*package Backend.persistenceLayer;
 
 public class SystemAdmin extends User {
 
@@ -8,3 +8,4 @@ public class SystemAdmin extends User {
     }
 
 }
+*/

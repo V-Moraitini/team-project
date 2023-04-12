@@ -13,7 +13,8 @@ public class Blank {
     private int blankIsInterline;
     private int blankIsArchived;
 
-    public Blank(int blankBatchId, int blankStockId, int blankStockAdvisorUserId, int blankType, int blankDateReceived, int blankIsValid, int blankIsSold, int blankIsInterline, int blankIsArchived) {
+    public Blank(int blankId,int blankBatchId, int blankStockId, int blankStockAdvisorUserId, int blankType, int blankDateReceived, int blankIsValid, int blankIsSold, int blankIsInterline, int blankIsArchived) {
+       this.blankId = blankId;
         this.blankBatchId = blankBatchId;
         this.blankStockId = blankStockId;
         this.blankStockAdvisorUserId = blankStockAdvisorUserId;
@@ -25,22 +26,11 @@ public class Blank {
         this.blankIsArchived = blankIsArchived;
     }
 
-    public Blank(int blankId, int blankBatchId, int blankStockId, int blankStockAdvisorUserId, int blankType, int blankDateReceived, int blankIsValid, int blankIsSold, int blankIsInterline, int blankIsArchived) {
-        this.blankId = blankId;
-        this.blankBatchId = blankBatchId;
-        this.blankStockId = blankStockId;
-        this.blankStockAdvisorUserId = blankStockAdvisorUserId;
-        this.blankType = blankType;
-        this.blankDateReceived = blankDateReceived;
-        this.blankIsValid = blankIsValid;
-        this.blankIsSold = blankIsSold;
-        this.blankIsInterline = blankIsInterline;
-        this.blankIsArchived = blankIsArchived;
-    }
 
     public int getBlankBatchId() {
         return blankBatchId;
     }
+
 
     public void setBlankBatchId(int blankBatchId) {
         this.blankBatchId = blankBatchId;
@@ -104,6 +94,10 @@ public class Blank {
 
     public int getBlankId() {
         return blankId;
+    }
+
+    public void setBlankId(int blankId){
+        this.blankId=blankId;
     }
 
     @Override

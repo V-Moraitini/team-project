@@ -9,7 +9,6 @@ public class GUITravelAdvisor extends JDialog{
     private JPanel panel1;
     private JButton logOutButton;
     private JButton createCustomerButton;
-    private JButton editCustomerAccountButton;
     private JButton createSaleButton;
     private JButton issueRefundButton;
 
@@ -31,6 +30,50 @@ public class GUITravelAdvisor extends JDialog{
 
             }
         });
+
+
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource()==logOutButton){ //when you click on the button another frame appears
+                    dispose();
+                    GUILogin gc = new GUILogin(null);
+                    gc.setVisible(false);
+                    //close();
+                    panel1.setVisible(false);
+                }
+            }
+        });
+
+
+        createSaleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource()==createSaleButton){ //when you click on the button another frame appears
+                    dispose();
+                    GUITASale gc = new GUITASale(null);
+                    gc.setVisible(false);
+                    //close();
+                    panel1.setVisible(false);
+                }
+            }
+        });
+
+        issueRefundButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource()==issueRefundButton){ //when you click on the button another frame appears
+                    dispose();
+                    GUITAIssueRefund gc = new GUITAIssueRefund(null);
+                    gc.setVisible(false);
+                    //close();
+                    panel1.setVisible(false);
+                }
+            }
+        });
+
+
+
         setTitle("Travel Advisor");
         setContentPane(panel1);
         setMinimumSize(new Dimension(450, 400));

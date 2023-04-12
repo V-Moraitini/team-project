@@ -1,6 +1,7 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,8 +21,7 @@ public class GUITACreateCustomer extends JDialog {
     private JButton archiveButton;
     private JButton backButton;
     private JTextField idtf;
-    private JTextField cusTypetf;
-    private JTable table1;
+    private JTable table2;
 
     public GUITACreateCustomer(JFrame parent) {
 
@@ -37,14 +37,17 @@ public class GUITACreateCustomer extends JDialog {
                     gc.setVisible(false);
                     //close();
                     panel1.setVisible(false);
-
-
-
                 }
-
-
             }
         });
+
+        setTitle("Create Customer");
+        setContentPane(panel1);
+        createTable();
+        setMinimumSize(new Dimension(450, 450));
+        setModal(true);
+        setLocationRelativeTo(parent);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         logOutButton.addActionListener(new ActionListener() {
             @Override
@@ -55,40 +58,37 @@ public class GUITACreateCustomer extends JDialog {
                     gc.setVisible(false);
                     //close();
                     panel1.setVisible(false);
-
-
-
                 }
-
             }
         });
 
-        backButton.addActionListener(new ActionListener() {
+
+        createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource()==backButton){ //when you click on the button another frame appears
-                    dispose();
-                    GUITravelAdvisor gc = new GUITravelAdvisor(null);
-                    gc.setVisible(false);
-                    //close();
-                    panel1.setVisible(false);
-
-
-
-                }
-
-            }
+                if (idtf.getText().equals("") ||fNametf.getText().equals("")||lNametf.getText().equals("") || aliastf.getText().equals("") ||
+                phonetf.getText().equals("") || emailtf.getText().equals("") || (!regularRadioButton.isSelected() && !valuedRadioButton.isSelected())) {
+                    JOptionPane.showMessageDialog(GUITACreateCustomer.this,"Enter all fields!");
+                }else{
+                    DefaultTableModel model = (DefaultTableModel) table2.getModel();
+                    model.addRow(new Object[]{idtf.getText(),fNametf.getText(),lNametf.getText(), aliastf.getText(),
+                            phonetf.getText(), emailtf.getText(), valuedRadioButton.isSelected(),regularRadioButton.isSelected()});
+                } }
         });
-        setTitle("Create Customer");
-        setContentPane(panel1);
-        setMinimumSize(new Dimension(450, 450));
-        setModal(true);
-        setLocationRelativeTo(parent);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+
+
         setVisible(true);
 
+    }
+
+    private void createTable() {
+        table2.setModel(new DefaultTableModel(
+                null,
+                new String[]{"ID", "Name", "Last Name","Alias", "Phone Number", "Email Address", "isValued", "isRegular"     }
 
 
+        ));
     }
 
     public static void main(String[] args) {

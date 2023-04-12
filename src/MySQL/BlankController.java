@@ -88,6 +88,7 @@ public class BlankController extends ConfigurationMySQL {
         }
     }
 
+
     private ArrayList<Blank> getSomeBlanks(String sql) {
         ArrayList<Blank> blanks = new ArrayList<>();
 
@@ -170,7 +171,7 @@ public class BlankController extends ConfigurationMySQL {
     }
 
     public Blank getBlankById(int id) {
-        Blank blank = new Blank(0,0,0,0,0,0,0,0,0,0);
+        Blank blank = null;
         getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM blank WHERE blankID = ?");
@@ -178,7 +179,7 @@ public class BlankController extends ConfigurationMySQL {
             ResultSet rs = stmt.executeQuery();
 
             int batchId, stockId, advisorId, type, date, isValid, isSold, isInterline, isArchived;
-            while( rs.next() ) {
+            while (rs.next()) {
                 //blankID, blankBatchID, blankStockID, blankStockAdvisorID, blankType, blankDateReceived, blankIsValid, blankIsSold, blankIsInterline, blankIsArchived
                 batchId = rs.getInt(2);
                 stockId = rs.getInt(3);
@@ -189,14 +190,14 @@ public class BlankController extends ConfigurationMySQL {
                 isSold = rs.getInt(8);
                 isInterline = rs.getInt(9);
                 isArchived = rs.getInt(10);
-                blank = new Blank(id, batchId, stockId, advisorId, type, date, isValid, isSold, isInterline, isArchived);
+                blank = new Blank(id, batchId,stockId, advisorId, type, date, isValid, isSold, isInterline, isArchived);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeConnection();
         }
-        return blank;
+        return  blank;
     }
 
     private void updateColumnInBlankById(String sql, Blank blank, String column) {
