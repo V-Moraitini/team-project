@@ -60,11 +60,9 @@ public class UserController extends ConfigurationMySQL {
 
             int id;
             int agencyTravelCode = 1;
-            String name;
-            String email;
-            String password;
+            String name, email, password;
             UserType type;
-            int isArchived;
+            Boolean isArchived;
             while (rs.next()) {
                 //userId userAgencyTravelCode, username, email, password, type, isArchived
                 id = rs.getInt(1);
@@ -73,7 +71,7 @@ public class UserController extends ConfigurationMySQL {
                 email = rs.getString(4);
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
-                isArchived = rs.getInt(7);
+                isArchived = rs.getBoolean(7);
                 users.add(new User(id, name, password, email, agencyTravelCode, type, isArchived));
 
             }
@@ -98,7 +96,7 @@ public class UserController extends ConfigurationMySQL {
             String email;
             String password;
             UserType type;
-            int isArchived;
+            Boolean isArchived;
             while (rs.next()) {
                 //userId userAgencyTravelCode, username, email, password, type, isArchived
                 id = rs.getInt(1);
@@ -107,7 +105,7 @@ public class UserController extends ConfigurationMySQL {
                 email = rs.getString(4);
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
-                isArchived = rs.getInt(7);
+                isArchived = rs.getBoolean(7);
                 users.add(new User(id, name, password, email, agencyTravelCode, type, isArchived));
 
             }
@@ -133,7 +131,7 @@ public class UserController extends ConfigurationMySQL {
             String email;
             String password;
             UserType type;
-            int isArchived;
+            Boolean isArchived;
             while (rs.next()) {
                 //userId userAgencyTravelCode, username, email, password, type, isArchived
                 id = rs.getInt(1);
@@ -142,7 +140,7 @@ public class UserController extends ConfigurationMySQL {
                 email = rs.getString(4);
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
-                isArchived = rs.getInt(7);
+                isArchived = rs.getBoolean(7);
                 users.add(new User(id, name, password, email, agencyTravelCode, type, isArchived));
 
             }
@@ -167,7 +165,7 @@ public class UserController extends ConfigurationMySQL {
             String email;
             String password;
             UserType type;
-            int isArchived; //change into Boolean later
+            Boolean isArchived; //change into Boolean later
             while (rs.next()) {
                 //userId userAgencyTravelCode, username, email, password, type, isArchived
                 agencyTravelCode = rs.getInt(2);
@@ -175,7 +173,7 @@ public class UserController extends ConfigurationMySQL {
                 email = rs.getString(4);
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
-                isArchived = rs.getInt(7);
+                isArchived = rs.getBoolean(7);
                 user = new User(id, name, password, email, agencyTravelCode, type, isArchived);
             }
         } catch (SQLException e) {
@@ -199,7 +197,7 @@ public class UserController extends ConfigurationMySQL {
             String name;
             String password;
             UserType type;
-            int isArchived; //change into Boolean later
+            Boolean isArchived; //change into Boolean later
             while (rs.next()) {
                 //userId userAgencyTravelCode, username, email, password, type, isArchived
                 id = rs.getInt(1);
@@ -207,7 +205,7 @@ public class UserController extends ConfigurationMySQL {
                 name = rs.getString(3);
                 password = rs.getString(5);
                 type = UserType.valueOf(rs.getString(6));
-                isArchived = rs.getInt(7);
+                isArchived = rs.getBoolean(7);
                 user = new User(id, name, password, email, agencyTravelCode, type, isArchived);
             }
         } catch (SQLException e) {
@@ -240,10 +238,9 @@ public class UserController extends ConfigurationMySQL {
         }
     }
 
-    public void archiveUser(int id) {
+    private void updateUserSomethingById(String sql, int id) {
         getConnection();
         try {
-            String sql = "UPDATE userAccount SET isArchived = 1 WHERE userId = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -252,4 +249,15 @@ public class UserController extends ConfigurationMySQL {
         } finally {
             closeConnection();
         }
-    }}
+    }
+
+    public void archiveUser(int id) {
+        updateUserSomethingById("UPDATE userAccount SET isArchived = 1 WHERE userId = ?", id);
+    }
+
+    public void unarchiveUser(int id) {
+        updateUserSomethingById("UPDATE userAccount SET isArchived = 0 WHERE userId = ?", id);
+    }
+
+}
+

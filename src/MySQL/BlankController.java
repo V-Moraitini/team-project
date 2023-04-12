@@ -127,6 +127,10 @@ public class BlankController extends ConfigurationMySQL {
         return getSomeBlanks("SELECT * FROM blank WHERE blankIsArchived = 1");
     }
 
+    public ArrayList<Blank> getAllBlanks() {
+        return getSomeBlanks("SELECT * FROM blank");
+    }
+
     private ArrayList<Blank> getSomeBlanksByAdvisor(String sql, int advisorId) {
         ArrayList<Blank> blanks = new ArrayList<>();
         getConnection();
@@ -163,10 +167,6 @@ public class BlankController extends ConfigurationMySQL {
 
     public ArrayList<Blank> getAvailableBlanksByAdvisor(int advisorId) {
         return getSomeBlanksByAdvisor("SELECT * FROM blank WHERE blankIsArchived = 0 AND blankIsSold = 0 AND blankStockAdvisorID = ?", advisorId);
-    }
-
-    public ArrayList<Blank> getAllBlanks() {
-        return getSomeBlanks("SELECT * FROM blank");
     }
 
     public Blank getBlankById(int id) {
