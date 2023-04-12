@@ -9,7 +9,6 @@ public class User {
     private int userAgencyTravelCode;
     private UserType userType;
     private boolean isArchived;
-    private int agencyCode;
 
 
     public User(String username, String password, String email, int userAgencyTravelCode, UserType userType, boolean isArchived) {
@@ -20,7 +19,8 @@ public class User {
         this.userType = userType;
         this.isArchived = isArchived;
     }
-    public User(int id, String username, String password, String email, int userAgencyTravelCode, UserType userType, int userArchived) {
+
+    public User(int id, String username, String password, String email, int userAgencyTravelCode, UserType userType, boolean isArchived) {
         this.id = id;
         this.username = username;
         this.password = password;

@@ -24,17 +24,17 @@ public class AgencyBatchController extends ConfigurationMySQL {
             stmt.setInt(1, agencyBatch.getBatchAgencyTravelCode()); //"Terrific Travel" Travel Agent id:1
             stmt.setInt(2, agencyBatch.getBatchDate());
 
-            con.setAutoCommit(false);
+            //con.setAutoCommit(false);
             stmt.executeUpdate();
+
+            //con.commit();
+            //con.setAutoCommit(true);
 
             //getting auto-generated key back and inserting it into the object
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next()) {
                 agencyBatch.setBatchId(rs.getInt(1));
             }
-
-            con.commit();
-            con.setAutoCommit(true);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

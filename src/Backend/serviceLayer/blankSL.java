@@ -56,7 +56,7 @@ public class blankSL {
         statement.executeUpdate();
     }
 
-    public Blank getBlankById(int blankId) throws SQLException {
+    /*public Blank getBlankById(int blankId) throws SQLException {
         String query = "SELECT * FROM Blanks WHERE BlankID=?";
 
         PreparedStatement statement = connection.prepareStatement(query);
@@ -79,6 +79,6 @@ public class blankSL {
         }
 
         return null;
-    }
+    }*/
 }
 

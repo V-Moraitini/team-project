@@ -41,7 +41,6 @@ public class UserSL extends ConfigurationMySQL {
 }
 
 
-
 //        private static final String INSERT_USER_SQL = "INSERT INTO users" +
 //                " (username, password, email, address, agency_code, user_type)" +
 //                " VALUES (?, ?, ?, ?, ?, ?)";
