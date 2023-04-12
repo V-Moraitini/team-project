@@ -21,7 +21,7 @@ public class BlankController extends ConfigurationMySQL {
         try {
             PreparedStatement stmt = con.prepareStatement(
                     "INSERT INTO blank " +
-                            "(blankBatchID, blankType, blankDateReceived, " +
+                            "(blankBatchId, blankType, blankDateReceived, " +
                             "blankIsValid, blankIsSold, blankIsInterline)" +
                             "VALUES (?, ?, ?, 1, 0, ?)");
             //Statement.RETURN_GENERATED_KEYS for auto generated keys
@@ -68,7 +68,7 @@ public class BlankController extends ConfigurationMySQL {
         //createBatch(day, month, year);
         //then probably retrieve the id of the object class?
         String SQL = "INSERT INTO blank " +
-                "(blankBatchID, blankType, blankDateReceived, " +
+                "(blankBatchId, blankType, blankDateReceived, " +
                 "blankIsValid, blankIsSold, blankIsInterline, blankIsArchived)" +
                 "VALUES (" +batchId+", "+blank.getBlankType()+","+blank.getBlankDateReceived()+", 1, 0,"+isInterline+",0)";
         try {
@@ -118,6 +118,14 @@ public class BlankController extends ConfigurationMySQL {
             closeConnection();
         }
         return blanks;
+    }
+
+    public ArrayList<Blank> getDomesticBlanks() {
+        return getSomeBlanks("SELECT * FROM blank WHERE blankIsArchived = 0 AND blankIsInterline = 0");
+    }
+
+    public ArrayList<Blank> getInterlineBlanks() {
+        return getSomeBlanks("SELECT * FROM blank WHERE blankIsArchived = 0 AND blankIsInterline = 1");
     }
 
     public ArrayList<Blank> getActiveBlanks() {
@@ -174,7 +182,7 @@ public class BlankController extends ConfigurationMySQL {
         Blank blank = null;
         getConnection();
         try {
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM blank WHERE blankID = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM blank WHERE blankId = ?");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
 

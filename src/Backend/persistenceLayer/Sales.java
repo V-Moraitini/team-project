@@ -12,15 +12,16 @@ public class Sales {
     private double saleConversionAmount;
     private double saleDiscountAmount;
     private double saleTaxAmount;
+    private double saleOtherTaxAmount;
     private double saleFlatPrice;
     private SaleMethod saleMethod;
     private int saleCardNumber;
     private String saleOrigin;
     private String saleDestination;
     private int saleDate;
-    private int saleIsInterline;
+    private Boolean saleIsInterline;
 
-    public Sales(int saleBlankId, int saleAdvisorUserId, int saleCustomerId, int saleCommissionId, int saleCommissionAmount, int saleConversionId, int saleConversionAmount, int saleDiscountAmount, int saleTaxAmount, int saleFlatPrice, SaleMethod saleMethod, int saleCardNumber, String saleOrigin, String saleDestination, int saleDate, int saleIsInterline) {
+    public Sales(int saleBlankId, int saleAdvisorUserId, int saleCustomerId, int saleCommissionId, double saleCommissionAmount, int saleConversionId, double saleConversionAmount, double saleDiscountAmount, double saleTaxAmount, double saleOtherTaxAmount, double saleFlatPrice, SaleMethod saleMethod, int saleCardNumber, String saleOrigin, String saleDestination, int saleDate, Boolean saleIsInterline) {
         this.saleBlankId = saleBlankId;
         this.saleAdvisorUserId = saleAdvisorUserId;
         this.saleCustomerId = saleCustomerId;
@@ -30,6 +31,7 @@ public class Sales {
         this.saleConversionAmount = saleConversionAmount;
         this.saleDiscountAmount = saleDiscountAmount;
         this.saleTaxAmount = saleTaxAmount;
+        this.saleOtherTaxAmount = saleOtherTaxAmount;
         this.saleFlatPrice = saleFlatPrice;
         this.saleMethod = saleMethod;
         this.saleCardNumber = saleCardNumber;
@@ -38,6 +40,63 @@ public class Sales {
         this.saleDate = saleDate;
         this.saleIsInterline = saleIsInterline;
     }
+
+    public Sales(int saleId, int saleBlankId, int saleAdvisorUserId, int saleCustomerId, int saleCommissionId, double saleCommissionAmount, int saleConversionId, double saleConversionAmount, double saleDiscountAmount, double saleTaxAmount, double saleOtherTaxAmount, double saleFlatPrice, SaleMethod saleMethod, int saleCardNumber, String saleOrigin, String saleDestination, int saleDate, Boolean saleIsInterline) {
+        this.saleId = saleId;
+        this.saleBlankId = saleBlankId;
+        this.saleAdvisorUserId = saleAdvisorUserId;
+        this.saleCustomerId = saleCustomerId;
+        this.saleCommissionId = saleCommissionId;
+        this.saleCommissionAmount = saleCommissionAmount;
+        this.saleConversionId = saleConversionId;
+        this.saleConversionAmount = saleConversionAmount;
+        this.saleDiscountAmount = saleDiscountAmount;
+        this.saleTaxAmount = saleTaxAmount;
+        this.saleOtherTaxAmount = saleOtherTaxAmount;
+        this.saleFlatPrice = saleFlatPrice;
+        this.saleMethod = saleMethod;
+        this.saleCardNumber = saleCardNumber;
+        this.saleOrigin = saleOrigin;
+        this.saleDestination = saleDestination;
+        this.saleDate = saleDate;
+        this.saleIsInterline = saleIsInterline;
+    }
+
+    //Domestic Sales: missing conversionId, conversionAmount, otherTaxAmount
+    /*public Sales(int saleBlankId, int saleAdvisorUserId, int saleCustomerId, int saleCommissionId, double saleCommissionAmount, double saleDiscountAmount, double saleTaxAmount, double saleFlatPrice, SaleMethod saleMethod, int saleCardNumber, String saleOrigin, String saleDestination, int saleDate, Boolean saleIsInterline) {
+        this.saleBlankId = saleBlankId;
+        this.saleAdvisorUserId = saleAdvisorUserId;
+        this.saleCustomerId = saleCustomerId;
+        this.saleCommissionId = saleCommissionId;
+        this.saleCommissionAmount = saleCommissionAmount;
+        this.saleDiscountAmount = saleDiscountAmount;
+        this.saleTaxAmount = saleTaxAmount;
+        this.saleFlatPrice = saleFlatPrice;
+        this.saleMethod = saleMethod;
+        this.saleCardNumber = saleCardNumber;
+        this.saleOrigin = saleOrigin;
+        this.saleDestination = saleDestination;
+        this.saleDate = saleDate;
+        this.saleIsInterline = saleIsInterline;
+    }*/
+
+    /*public Sales(int saleId, int saleBlankId, int saleAdvisorUserId, int saleCustomerId, int saleCommissionId, double saleCommissionAmount, double saleDiscountAmount, double saleTaxAmount, double saleFlatPrice, SaleMethod saleMethod, int saleCardNumber, String saleOrigin, String saleDestination, int saleDate, Boolean saleIsInterline) {
+        this.saleId = saleId;
+        this.saleBlankId = saleBlankId;
+        this.saleAdvisorUserId = saleAdvisorUserId;
+        this.saleCustomerId = saleCustomerId;
+        this.saleCommissionId = saleCommissionId;
+        this.saleCommissionAmount = saleCommissionAmount;
+        this.saleDiscountAmount = saleDiscountAmount;
+        this.saleTaxAmount = saleTaxAmount;
+        this.saleFlatPrice = saleFlatPrice;
+        this.saleMethod = saleMethod;
+        this.saleCardNumber = saleCardNumber;
+        this.saleOrigin = saleOrigin;
+        this.saleDestination = saleDestination;
+        this.saleDate = saleDate;
+        this.saleIsInterline = saleIsInterline;
+    }*/
 
     public int getSaleId() {
         return saleId;
@@ -117,6 +176,14 @@ public class Sales {
         this.saleTaxAmount = saleTaxAmount;
     }
 
+    public double getSaleOtherTaxAmount() {
+        return saleOtherTaxAmount;
+    }
+
+    public void setSaleOtherTaxAmount(double saleOtherTaxAmount) {
+        this.saleTaxAmount = saleOtherTaxAmount;
+    }
+
     public double getSaleFlatPrice() {
         return saleFlatPrice;
     }
@@ -153,11 +220,11 @@ public class Sales {
         this.saleDate = saleDate;
     }
 
-    public int getSaleIsInterline() {
+    public Boolean getSaleIsInterline() {
         return saleIsInterline;
     }
 
-    public void setSaleIsInterline(int saleIsInterline) {
+    public void setSaleIsInterline(Boolean saleIsInterline) {
         this.saleIsInterline = saleIsInterline;
     }
 

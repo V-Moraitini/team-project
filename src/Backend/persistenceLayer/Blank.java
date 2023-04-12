@@ -26,11 +26,17 @@ public class Blank {
         this.blankIsArchived = blankIsArchived;
     }
 
+    public int getBlankId() {
+        return blankId;
+    }
+
+    public void setBlankId(int blankId){
+        this.blankId=blankId;
+    }
 
     public int getBlankBatchId() {
         return blankBatchId;
     }
-
 
     public void setBlankBatchId(int blankBatchId) {
         this.blankBatchId = blankBatchId;
@@ -84,20 +90,20 @@ public class Blank {
         this.blankIsSold = blankIsSold;
     }
 
+    public int getBlankIsInterline() {
+        return blankIsInterline;
+    }
+
+    public void setBlankIsInterline(int blankIsInterline) {
+        this.blankIsInterline = blankIsInterline;
+    }
+
     public int getBlankIsArchived() {
         return blankIsArchived;
     }
 
     public void setBlankIsArchived(int blankIsArchived) {
         this.blankIsArchived = blankIsArchived;
-    }
-
-    public int getBlankId() {
-        return blankId;
-    }
-
-    public void setBlankId(int blankId){
-        this.blankId=blankId;
     }
 
     @Override
