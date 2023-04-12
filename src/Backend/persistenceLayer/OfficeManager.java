@@ -7,8 +7,4 @@ public class OfficeManager extends User {
         super(id, username, password, email, userAgencyTravelCode, userType, userArchived);
     }
 
-    @Override
-    public String toString() {
-        return "OfficeManger{}";
-    }
 }
