@@ -15,28 +15,34 @@ public class BlankController extends ConfigurationMySQL {
     public BlankController() { }
 
     /*-------------------------BLANK QUERIES START-------------------------*/
-    public void createBlank(Blank blank) {
+    public int createBlank(Blank blank, int blankId) {
         getConnection();
-        //int date = year*10000 + month*100 + day;
+        int id = -1;
         try {
             PreparedStatement stmt = con.prepareStatement(
                     "INSERT INTO blank " +
-                            "(blankBatchID, blankType, blankDateReceived, " +
+                            "(blankId, blankBatchID, blankType, blankDateReceived, " +
                             "blankIsValid, blankIsSold, blankIsInterline)" +
-                            "VALUES (?, ?, ?, 1, 0, ?)");
-            //Statement.RETURN_GENERATED_KEYS for auto generated keys
-            stmt.setInt(1, blank.getBlankBatchId());
-            stmt.setInt(2, blank.getBlankType());
-            stmt.setInt(3, blank.getBlankDateReceived());
+                            "VALUES (?, ?, ?, ?, 1, 0, ?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, blankId);
+            stmt.setInt(2, blank.getBlankBatchId());
+            stmt.setInt(3, blank.getBlankType());
+            stmt.setInt(4, blank.getBlankDateReceived());
             if (blank.getBlankType() == 444 || blank.getBlankType() == 440 || blank.getBlankType() == 420) {
-                stmt.setBoolean(4, true);
-            } else if (blank.getBlankType() == 201 || blank.getBlankType() == 101)
-                stmt.setBoolean(4,false);
-            else {
-                stmt.setBoolean(4, false);
+                stmt.setBoolean(5, true);
+            } else if (blank.getBlankType() == 201 || blank.getBlankType() == 101) {
+                stmt.setBoolean(5, false);
+            } else {
+                stmt.setBoolean(5, false);
             }
             con.setAutoCommit(false);
             stmt.executeUpdate();
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                id = generatedKeys.getInt(1);
+            }
 
             con.commit();
             con.setAutoCommit(true);
@@ -45,6 +51,7 @@ public class BlankController extends ConfigurationMySQL {
         } finally {
             closeConnection();
         }
+        return id;
     }
 
     public void createBlankBatch(int count, Blank blank) {

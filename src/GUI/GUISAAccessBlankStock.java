@@ -77,7 +77,7 @@ public class GUISAAccessBlankStock extends JDialog {
 
                     DefaultTableModel model = (DefaultTableModel) table1.getModel();
                     BlankController blankController = new BlankController();
-                    blankController.createBlank(blank);
+                    blankController.createBlank(blank, blankID);
                     model.addRow(new Object[]{blankIDtf.getText(),blankTypetf.getText(),datetf.getText()});
                 }}
         });
@@ -88,7 +88,8 @@ public class GUISAAccessBlankStock extends JDialog {
                 DefaultTableModel model = (DefaultTableModel) table1.getModel();
                 BlankController blankController = new BlankController();
                 if (table1.getSelectedRow() != -1) {
-                    int id = (int) model.getValueAt(table1.getSelectedRow(), 0);
+                    String idString = (String) model.getValueAt(table1.getSelectedRow(), 0);
+                    int id = Integer.parseInt(idString);
                     blankController.archiveBlank(id);
                     model.removeRow(table1.getSelectedRow());
                 } else if (table1.getRowCount() == 0) {
