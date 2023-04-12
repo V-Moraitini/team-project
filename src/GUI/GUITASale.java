@@ -5,22 +5,28 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GUITACreateTicket extends JDialog{
+public class GUITASale extends JDialog{
     private JPanel panel1;
     private JButton logOutButton;
-    private JTextField textField1;
+    private JTextField advisorNametf;
     private JRadioButton domesticRadioButton;
     private JRadioButton interlineRadioButton;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField5;
-    private JTextField textField6;
-    private JTextField textField7;
+    private JTextField blankNumbertf;
+    private JTextField origintf;
+    private JTextField destinationtf;
+    private JTextField localCurrencytf;
+    private JTextField localtf;
+    private JTextField othertf;
     private JButton createTicketButton;
     private JButton backButton;
+    private JRadioButton cardRadioButton;
+    private JRadioButton cashRadioButton;
+    private JRadioButton payLaterRadioButton;
+    private JTextField textField1;
+    private JTextField comRatetf;
+    private JTextField aliastf;
 
-    public GUITACreateTicket(JFrame parent) {
+    public GUITASale(JFrame parent) {
 
         super(parent);
         setTitle("Create Ticket");
@@ -45,7 +51,7 @@ public class GUITACreateTicket extends JDialog{
     }
 
     public static void main(String[] args) {
-        GUITACreateTicket login = new GUITACreateTicket(null);
+        GUITASale login = new GUITASale(null);
     }
 }
 

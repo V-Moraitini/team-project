@@ -10,7 +10,7 @@ public class GUITravelAdvisor extends JDialog{
     private JButton logOutButton;
     private JButton createCustomerButton;
     private JButton editCustomerAccountButton;
-    private JButton createTicketButton;
+    private JButton createSaleButton;
     private JButton issueRefundButton;
 
     public GUITravelAdvisor(JFrame parent) {
