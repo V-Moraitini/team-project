@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.*;
 
-public class UserSL extends ConfigurationMySQL {
+/*public class UserSL extends ConfigurationMySQL {
 
     public boolean login(String email, String password, UserType userType) {
         getConnection();
@@ -36,7 +36,7 @@ public class UserSL extends ConfigurationMySQL {
         }
     }
 }
-
+*/
 
 
 //        private static final String INSERT_USER_SQL = "INSERT INTO users" +
