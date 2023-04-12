@@ -25,8 +25,8 @@ public class UserController extends ConfigurationMySQL {
                     "INSERT INTO userAccount (userId, userAgencyTravelCode, username, email, password, type, isArchived)" +
                             "VALUES (?, ?, ?, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
-            stmt.setInt(1, user.getId()); // assuming this is the userId
-            stmt.setInt(2, user.getUserAgencyTravelCode()); // assuming this is the userAgencyTravelCode
+            stmt.setInt(1, user.getId());
+            stmt.setInt(2, user.getUserAgencyTravelCode());
             stmt.setString(3, user.getUsername());
             stmt.setString(4, user.getEmail());
             stmt.setString(5, user.getPassword());
