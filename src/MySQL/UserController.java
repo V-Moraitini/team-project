@@ -219,6 +219,7 @@ public class UserController extends ConfigurationMySQL {
     public void updateUser(User user) {
         getConnection();
         try {
+            System.out.println("Updating user: " + user);
             PreparedStatement stmt = con.prepareStatement(
                     "UPDATE userAccount SET username=?, email=?, password=?, type=? " +
                             "WHERE userId = ?");
@@ -228,7 +229,8 @@ public class UserController extends ConfigurationMySQL {
             stmt.setString(4, user.getUserType().toString());
             stmt.setInt(5, user.getId());
             con.setAutoCommit(false);
-            stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate();
+            System.out.println(rowsAffected + " rows affected.");
             con.commit();
             con.setAutoCommit(true);
         } catch (SQLException e) {
@@ -237,7 +239,6 @@ public class UserController extends ConfigurationMySQL {
             closeConnection();
         }
     }
-
     private void updateUserSomethingById(String sql, int id) {
         getConnection();
         try {
@@ -254,6 +255,7 @@ public class UserController extends ConfigurationMySQL {
     public void archiveUser(int id) {
         updateUserSomethingById("UPDATE userAccount SET isArchived = 1 WHERE userId = ?", id);
     }
+
 
     public void unarchiveUser(int id) {
         updateUserSomethingById("UPDATE userAccount SET isArchived = 0 WHERE userId = ?", id);

@@ -31,7 +31,7 @@ public class GUITASale extends JDialog{
         super(parent);
         setTitle("Create Ticket");
         setContentPane(panel1);
-        setMinimumSize(new Dimension(450, 500));
+        setMinimumSize(new Dimension(450, 600));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

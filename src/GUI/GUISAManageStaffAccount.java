@@ -57,21 +57,21 @@ public class GUISAManageStaffAccount extends JDialog {
         createStaffAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (userNametf.getText().equals("") || emailtf.getText().equals("")
+                if ( userNametf.getText().equals("") || emailtf.getText().equals("")
                         || passWordtf.getText().equals("") || userTypetf.getText().equals("")) {
                     error();
                 } else if (!userTypetf.getText().equals("SystemAdmin") && !userTypetf.getText().equals("OfficeManager")
                         && !userTypetf.getText().equals("TravelAdvisor")) {
                     JOptionPane.showMessageDialog(GUISAManageStaffAccount.this, "User type not recognised");
                 } else {
-                    User user = new User( userNametf.getText(), passWordtf.getText(), emailtf.getText(), 1,
+                    User user = new User(userNametf.getText(), passWordtf.getText(), emailtf.getText(), 1,
                             UserType.valueOf(userTypetf.getText().replace(" ", "")), false);
 
                     //adding to table
                     DefaultTableModel model = (DefaultTableModel) table1.getModel();
                     UserController userController = new UserController();
-                    model.addRow(new Object[]{user.getId(), userNametf.getText(), emailtf.getText(), passWordtf.getText(), user.getUserType().toString()});
                     userController.createUser(user);
+                    model.addRow(new Object[]{user.getId(), userNametf.getText(), emailtf.getText(), passWordtf.getText(), user.getUserType().toString()});
                     System.out.println("hello");
                     JOptionPane.showMessageDialog(GUISAManageStaffAccount.this, "Staff account added!");
                 }
@@ -98,6 +98,9 @@ public class GUISAManageStaffAccount extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Get table model
+                User user = new User(userNametf.getText(), passWordtf.getText(), emailtf.getText(), 1,
+                        UserType.valueOf(userTypetf.getText().replace(" ", "")), false);
+
                 DefaultTableModel model = (DefaultTableModel) table1.getModel();
                 // if a row is selected then update
 
@@ -122,13 +125,9 @@ public class GUISAManageStaffAccount extends JDialog {
                     table1.setValueAt(passWord, table1.getSelectedRow(), 3);
                     table1.setValueAt(userType, table1.getSelectedRow(), 4);
 
-                    // Create a new User object
-                    User user = new User(IDtf.getText() + " " + userNametf.getText(), passWordtf.getText(), emailtf.getText(), 1,
-                            UserType.valueOf(userTypetf.getText().replace(" ", "")), false);
-
-                    // Update user information in the database
                     UserController userController = new UserController();
                     userController.updateUser(user);
+                      System.out.println("hello");
 
 
                     // Update message pop up
@@ -149,8 +148,6 @@ public class GUISAManageStaffAccount extends JDialog {
         table1.setModel(new DefaultTableModel(
                 null,
                 new String [] {"ID", "Username", "Email", "Password", "User Type"}
-
-
 
         ));
         DefaultTableModel model = (DefaultTableModel) table1.getModel();
