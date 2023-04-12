@@ -5,7 +5,7 @@ import java.sql.*;
 
 
 public class ConfigurationMySQL {
-    Connection con;
+    public Connection con;
 
     public ConfigurationMySQL() {
 
@@ -22,7 +22,7 @@ public class ConfigurationMySQL {
 
     public void closeConnection() {
         try {
-            con.close();
+            this.con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -34,20 +34,20 @@ public class ConfigurationMySQL {
 
     /*-------------------------MAIN START-------------------------*/
     public static void main(String args[]) throws SQLException {
-        ConfigurationMySQL a = new ConfigurationMySQL();
-        UserController userController = new UserController();
-        try {
-            userController.getUserById(1);
-            //a.getUserById(1);
-            //a.updateUserById(1, "Todd Jenkins", "tod123", "Office Manager");
-            //a.archiveUser(1);
-            //a.getStocks();
-            //a.getActiveCommissions();
-        } catch (Exception e) {
-            System.out.println(e);
-        } finally {
-            a.closeConnection();
-        }
+//        ConfigurationMySQL a = new ConfigurationMySQL();
+//        UserController userController = new UserController();
+//        try {
+//          //  userController.getUserById(1);
+//            //a.getUserById(1);
+//            //a.updateUserById(1, "Todd Jenkins", "tod123", "Office Manager");
+//            //a.archiveUser(1);
+//            //a.getStocks();
+//            //a.getActiveCommissions();
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        } finally {
+//            a.closeConnection();
+//        }
 
     }
     /*-------------------------MAIN END-------------------------*/

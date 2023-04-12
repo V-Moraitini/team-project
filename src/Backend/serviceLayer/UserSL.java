@@ -4,26 +4,28 @@ package Backend.serviceLayer;
 
 import Backend.persistenceLayer.UserType;
 
-
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.*;
+import MySQL.ConfigurationMySQL;
 
 public class UserSL extends ConfigurationMySQL {
 
-    public boolean login(String email, String password, UserType userType) {
+    public void login(String email, String password, UserType userType) {
         getConnection();
 
         try {
-            PreparedStatement stmt = config.getCon().prepareStatement("SELECT * FROM userAccount WHERE userEmail = ? and userPassword = ? and userType = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM userAccount WHERE email = ? and password = ? and type = ?");
 
             stmt.setString(1, email);
             stmt.setString(2, password);
             stmt.setString(3, String.valueOf(userType));
 
+
+
+            con.setAutoCommit(false);
             ResultSet rs = stmt.executeQuery();
+            con.commit();
+            con.setAutoCommit(true);
 
             while (rs.next())
                 //userID, userAgencyTravelCode, userName, userEmail, userPassword, userType, userIsArchived
@@ -33,7 +35,15 @@ public class UserSL extends ConfigurationMySQL {
 
         } catch (Exception e) {
             System.out.println(e);
+        } finally {
+            closeConnection();
         }
+
+    }
+
+    public static void main(String args[]) throws SQLException {
+        UserSL userSl = new UserSL();
+        userSl.login("todd.jenkins@AirVia.com", "tod123", UserType.OfficeManager);
     }
 }
 
