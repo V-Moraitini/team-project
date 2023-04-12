@@ -2,11 +2,13 @@ package MySQL;
 
 import Backend.persistenceLayer.AgencyBatch;
 import Backend.persistenceLayer.Blank;
+import Backend.persistenceLayer.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class BlankController extends ConfigurationMySQL {
 
@@ -72,7 +74,7 @@ public class BlankController extends ConfigurationMySQL {
         try {
             con.setAutoCommit(false);
             Statement stmt = con.createStatement();
-            for(int i = 0; i <= count; i++) {
+            for(int i = 0; i < count; i++) {
                 stmt.addBatch(SQL);
             }
             stmt.executeBatch();
@@ -86,110 +88,188 @@ public class BlankController extends ConfigurationMySQL {
         }
     }
 
-    public void getActiveBlanks() {
+    private ArrayList<Blank> getSomeBlanks(String sql) {
+        ArrayList<Blank> blanks = new ArrayList<>();
+
         getConnection();
         try {
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM blank WHERE blankIsArchived = 0");
-            while( rs.next() )
+            ResultSet rs = stmt.executeQuery(sql);
+
+            int id, batchId, stockId, advisorId, type, date, isValid, isSold, isInterline, isArchived;
+            while( rs.next() ) {
                 //blankID, blankBatchID, blankStockID, blankStockAdvisorID, blankType, blankDateReceived, blankIsValid, blankIsSold, blankIsInterline, blankIsArchived
-                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getInt(3)+"  "+rs.getInt(4)+
-                        "  "+rs.getInt(5)+"  "+rs.getInt(6)+
-                        "  "+rs.getBoolean(7)+"  "+rs.getBoolean(8)+"  "+rs.getBoolean(9)+"  "+rs.getBoolean(10)+"\n");
+                id = rs.getInt(1);
+                batchId = rs.getInt(2);
+                stockId = rs.getInt(3);
+                advisorId = rs.getInt(4);
+                type = rs.getInt(5);
+                date = rs.getInt(6);
+                isValid = rs.getInt(7);
+                isSold = rs.getInt(8);
+                isInterline = rs.getInt(9);
+                isArchived = rs.getInt(10);
+                blanks.add(new Blank(id, batchId, stockId, advisorId, type, date, isValid, isSold, isInterline, isArchived));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeConnection();
         }
+        return blanks;
     }
 
-    public void getArchivedBlanks() {
-        getConnection();
-        try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM blank WHERE blankIsArchived = 0");
-            while( rs.next() )
-                //blankID, blankBatchID, blankStockID, blankStockAdvisorID, blankType, blankDateReceived, blankIsValid, blankIsSold, blankIsInterline, blankIsArchived
-                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getInt(3)+"  "+rs.getInt(4)+
-                        "  "+rs.getInt(5)+"  "+rs.getInt(6)+
-                        "  "+rs.getBoolean(7)+"  "+rs.getBoolean(8)+"  "+rs.getBoolean(9)+"  "+rs.getBoolean(10)+"\n");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
+    public ArrayList<Blank> getActiveBlanks() {
+        return getSomeBlanks("SELECT * FROM blank WHERE blankIsArchived = 0");
     }
 
-    public void getActiveBlanksByAdvisor(int advisorId) {
+    public ArrayList<Blank> getArchivedBlanks() {
+        return getSomeBlanks("SELECT * FROM blank WHERE blankIsArchived = 1");
+    }
+
+    private ArrayList<Blank> getSomeBlanksByAdvisor(String sql, int advisorId) {
+        ArrayList<Blank> blanks = new ArrayList<>();
         getConnection();
         try {
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM blank WHERE blankIsArchived=0 AND blankStockAdvisorID = ?");
+            PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setInt(1, advisorId);
             ResultSet rs = stmt.executeQuery();
-            while( rs.next() )
+
+            int id, batchId, stockId, type, date, isValid, isSold, isInterline, isArchived;
+            while( rs.next() ) {
                 //blankID, blankBatchID, blankStockID, blankStockAdvisorID, blankType, blankDateReceived, blankIsValid, blankIsSold, blankIsInterline, blankIsArchived
-                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getInt(3)+"  "+rs.getInt(4)+
-                        "  "+rs.getInt(5)+"  "+rs.getInt(6)+
-                        "  "+rs.getBoolean(7)+"  "+rs.getBoolean(8)+"  "+rs.getBoolean(9)+"  "+rs.getBoolean(10)+"\n");
+                id = rs.getInt(1);
+                batchId = rs.getInt(2);
+                stockId = rs.getInt(3);
+                type = rs.getInt(5);
+                date = rs.getInt(6);
+                isValid = rs.getInt(7);
+                isSold = rs.getInt(8);
+                isInterline = rs.getInt(9);
+                isArchived = rs.getInt(10);
+                blanks.add(new Blank(id, batchId, stockId, advisorId, type, date, isValid, isSold, isInterline, isArchived));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeConnection();
         }
+        return blanks;
     }
 
-    public void getAvailableBlanksByAdvisor(int advisorId) {
-        getConnection();
-        try {
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM blank WHERE blankIsArchived=0 AND blankIsSold=0 AND blankStockAdvisorID = ?");
-            stmt.setInt(1, advisorId);
-            ResultSet rs = stmt.executeQuery();
-            while( rs.next() )
-                //blankID, blankBatchID, blankStockID, blankStockAdvisorID, blankType, blankDateReceived, blankIsValid, blankIsSold, blankIsInterline, blankIsArchived
-                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getInt(3)+"  "+rs.getInt(4)+
-                        "  "+rs.getInt(5)+"  "+rs.getInt(6)+
-                        "  "+rs.getBoolean(7)+"  "+rs.getBoolean(8)+"  "+rs.getBoolean(9)+"  "+rs.getBoolean(10)+"\n");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
+    public ArrayList<Blank> getActiveBlanksByAdvisor(int advisorId) {
+        return getSomeBlanksByAdvisor("SELECT * FROM blank WHERE blankIsArchived = 0 AND blankStockAdvisorID = ?", advisorId);
     }
 
-    public void getAllBlanks() {
-        getConnection();
-        try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM blank");
-            while( rs.next() )
-                //blankID, blankBatchID, blankStockID, blankStockAdvisorID, blankType, blankDateReceived, blankIsValid, blankIsSold, blankIsInterline, blankIsArchived
-                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getInt(3)+"  "+rs.getInt(4)+
-                        "  "+rs.getInt(5)+"  "+rs.getInt(6)+
-                        "  "+rs.getBoolean(7)+"  "+rs.getBoolean(8)+"  "+rs.getBoolean(9)+"  "+rs.getBoolean(10)+"\n");
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    public ArrayList<Blank> getAvailableBlanksByAdvisor(int advisorId) {
+        return getSomeBlanksByAdvisor("SELECT * FROM blank WHERE blankIsArchived = 0 AND blankIsSold = 0 AND blankStockAdvisorID = ?", advisorId);
     }
 
-    public void getBlankById(int id) {
+    public ArrayList<Blank> getAllBlanks() {
+        return getSomeBlanks("SELECT * FROM blank");
+    }
+
+    public Blank getBlankById(int id) {
+        Blank blank = new Blank(0,0,0,0,0,0,0,0,0,0);
         getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM blank WHERE blankID = ?");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            while( rs.next() )
+
+            int batchId, stockId, advisorId, type, date, isValid, isSold, isInterline, isArchived;
+            while( rs.next() ) {
                 //blankID, blankBatchID, blankStockID, blankStockAdvisorID, blankType, blankDateReceived, blankIsValid, blankIsSold, blankIsInterline, blankIsArchived
-                System.out.println(rs.getInt(1)+"  "+rs.getInt(2)+"  "+rs.getInt(3)+"  "+rs.getInt(4)+
-                        "  "+rs.getInt(5)+"  "+rs.getInt(6)+
-                        "  "+rs.getBoolean(7)+"  "+rs.getBoolean(8)+"  "+rs.getBoolean(9)+"  "+rs.getBoolean(10)+"\n");
-        } catch (Exception e) {
-            System.out.println(e);
+                batchId = rs.getInt(2);
+                stockId = rs.getInt(3);
+                advisorId = rs.getInt(4);
+                type = rs.getInt(5);
+                date = rs.getInt(6);
+                isValid = rs.getInt(7);
+                isSold = rs.getInt(8);
+                isInterline = rs.getInt(9);
+                isArchived = rs.getInt(10);
+                blank = new Blank(id, batchId, stockId, advisorId, type, date, isValid, isSold, isInterline, isArchived);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return blank;
+    }
+
+    private void updateColumnInBlankById(String sql, Blank blank, String column) {
+        //blankBatchID, blankType, blankDateReceived, " +
+        //                "blankIsValid, blankIsSold, blankIsInterline, blankIsArchived
+        getConnection();
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            switch (column) {
+                case "blankIsSold":
+                    stmt.setInt(1, blank.getBlankIsSold());
+                    stmt.setInt(2, blank.getBlankId());
+                case "blankIsValid":
+                    stmt.setInt(1, blank.getBlankIsValid());
+                    stmt.setInt(2, blank.getBlankId());
+                case "blankStockId":
+                    stmt.setInt(1, blank.getBlankStockId());
+                    stmt.setInt(2, blank.getBlankStockAdvisorUserId());
+                    stmt.setInt(3, blank.getBlankId());
+                default:
+                    stmt.setInt(1, blank.getBlankId());
+            }
+
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+            con.commit();
+            con.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
+    public void updateBlankSoldById(Blank blank) {
+        updateColumnInBlankById("UPDATE blank SET blankIsSold = ? WHERE blankId = ?", blank, "blankIsSold");
+    }
+
+    public void updateBlankValidById(Blank blank) {
+        updateColumnInBlankById("UPDATE blank SET blankIsValid = ? WHERE blankId = ?", blank, "blankIsValid");
+    }
+
+    public void updateBlankAssignedById(Blank blank) {
+        updateColumnInBlankById("UPDATE blank SET blankStockId = ? blankStockAdvisorUserId = ? WHERE blankId = ?", blank, "blankStockId");
+    }
+
+    public void archiveBlank(int id) {
+        Boolean isArchived = getBlankById(id).getBlankIsArchived() == 1;
+
+        getConnection();
+        try {
+            String sql = "UPDATE blank SET blankIsArchived = ? WHERE blankId = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setBoolean(1, !isArchived);
+            stmt.setInt(2, id);
+
+            con.setAutoCommit(false);
+            stmt.executeUpdate();
+            con.commit();
+            con.setAutoCommit(true);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
     /*-------------------------BLANK QUERIES END-------------------------*/
 
     public static void main(String[] args) {
-        BlankController b = new BlankController();
-        b.createBlankBatch(2, new Blank(0, 0, 0, 440, 20190101, 1, 0, 0));
+        //AgencyBatchController a = new AgencyBatchController();
+        //a.createBatch(new AgencyBatch(1, 20190103));
+        //BlankController b = new BlankController();
+        //b.createBlankBatch(2, new Blank(0, 0, 0, 440, 20190101, 1, 0, 0));
     }
 }

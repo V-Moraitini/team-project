@@ -10,9 +10,10 @@ public class Blank {
     private int blankDateReceived;
     private int blankIsValid;
     private int blankIsSold;
+    private int blankIsInterline;
     private int blankIsArchived;
 
-    public Blank(int blankBatchId, int blankStockId, int blankStockAdvisorUserId, int blankType, int blankDateReceived, int blankIsValid, int blankIsSold, int blankIsArchived) {
+    public Blank(int blankBatchId, int blankStockId, int blankStockAdvisorUserId, int blankType, int blankDateReceived, int blankIsValid, int blankIsSold, int blankIsInterline, int blankIsArchived) {
         this.blankBatchId = blankBatchId;
         this.blankStockId = blankStockId;
         this.blankStockAdvisorUserId = blankStockAdvisorUserId;
@@ -20,6 +21,20 @@ public class Blank {
         this.blankDateReceived = blankDateReceived;
         this.blankIsValid = blankIsValid;
         this.blankIsSold = blankIsSold;
+        this.blankIsInterline = blankIsInterline;
+        this.blankIsArchived = blankIsArchived;
+    }
+
+    public Blank(int blankId, int blankBatchId, int blankStockId, int blankStockAdvisorUserId, int blankType, int blankDateReceived, int blankIsValid, int blankIsSold, int blankIsInterline, int blankIsArchived) {
+        this.blankId = blankId;
+        this.blankBatchId = blankBatchId;
+        this.blankStockId = blankStockId;
+        this.blankStockAdvisorUserId = blankStockAdvisorUserId;
+        this.blankType = blankType;
+        this.blankDateReceived = blankDateReceived;
+        this.blankIsValid = blankIsValid;
+        this.blankIsSold = blankIsSold;
+        this.blankIsInterline = blankIsInterline;
         this.blankIsArchived = blankIsArchived;
     }
 

@@ -33,7 +33,6 @@ public class AgencyBatchController extends ConfigurationMySQL {
             //getting auto-generated key back and inserting it into the object
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next()) {
-                System.out.println(rs.getInt(1));
                 agencyBatch.setBatchId(rs.getInt(1));
             }
         } catch (SQLException e) {
