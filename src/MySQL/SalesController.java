@@ -109,11 +109,19 @@ public class SalesController extends ConfigurationMySQL {
     }
 
     public ArrayList<Sales> getInterlineSales() {
-        return getSomeSales("SELECT * FROM sale WHERE isInterline = 1");
+        return getSomeSales("SELECT * FROM sale WHERE saleIsInterline = 1");
+    }
+
+    public ArrayList<Sales> getInterlineSalesByDate(int date) {
+        return getSomeSales("SELECT * FROM sale WHERE saleIsInterline = 1 AND saleDate = "+date);
     }
 
     public ArrayList<Sales> getDomesticSales() {
-        return getSomeSales("SELECT * FROM sale WHERE isInterline = 0");
+        return getSomeSales("SELECT * FROM sale WHERE saleIsInterline = 0");
+    }
+
+    public ArrayList<Sales> getDomesticSalesByDate(int date) {
+        return getSomeSales("SELECT * FROM sale WHERE saleIsInterline = 0 AND saleDate = "+date);
     }
 
     public ArrayList<Sales> getAllSales() {
@@ -124,7 +132,7 @@ public class SalesController extends ConfigurationMySQL {
         Sales sale = null;
         getConnection();
         try {
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM blank WHERE blankId = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM sale WHERE saleId = ?");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
 

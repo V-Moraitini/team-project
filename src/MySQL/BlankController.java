@@ -127,6 +127,14 @@ public class BlankController extends ConfigurationMySQL {
         return blanks;
     }
 
+    public ArrayList<Blank> getDomesticBlanks() {
+        return getSomeBlanks("SELECT * FROM blank WHERE blankIsArchived = 0 AND blankIsInterline = 0");
+    }
+
+    public ArrayList<Blank> getInterlineBlanks() {
+        return getSomeBlanks("SELECT * FROM blank WHERE blankIsArchived = 0 AND blankIsInterline = 1");
+    }
+
     public ArrayList<Blank> getActiveBlanks() {
         return getSomeBlanks("SELECT * FROM blank WHERE blankIsArchived = 0");
     }
