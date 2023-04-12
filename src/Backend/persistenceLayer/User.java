@@ -2,55 +2,47 @@ package Backend.persistenceLayer;
 
 public class User {
 
-    private int Id;
-    private String name;
+    private int id;
+    private String username;
     private String password;
     private String email;
-    private String address;
     private int userAgencyTravelCode;
-    private enum userType{TravelAdvisor, OfficeManager, SystemAdmin};
+    private UserType userType;
     private int userArchived;
 
 
-    public User(String username, String password, String email, String address, int userAgencyTravelCode, int userArchived) {
-        this.name = username;
+    public User(int id, String username, String password, String email, int userAgencyTravelCode, UserType userType, int userArchived) {
+        this.id = id;
+        this.username = username;
         this.password = password;
         this.email = email;
-        this.address = address;
         this.userAgencyTravelCode = userAgencyTravelCode;
+        this.userType = userType;
         this.userArchived = userArchived;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getUserAgencyTravelCode() {
@@ -61,6 +53,14 @@ public class User {
         this.userAgencyTravelCode = userAgencyTravelCode;
     }
 
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
     public int getUserArchived() {
         return userArchived;
     }
@@ -69,19 +69,15 @@ public class User {
         this.userArchived = userArchived;
     }
 
-    public int getId() {
-        return Id;
-    }
-
     @Override
     public String toString() {
         return "User{" +
-                "Id=" + Id +
-                ", name='" + name + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
                 ", userAgencyTravelCode=" + userAgencyTravelCode +
+                ", userType=" + userType +
                 ", userArchived=" + userArchived +
                 '}';
     }

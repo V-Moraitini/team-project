@@ -1,5 +1,9 @@
 package GUI;
 
+import Backend.persistenceLayer.User;
+import Backend.persistenceLayer.UserType;
+import MySQL.UserController;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -61,6 +65,11 @@ public class GUISAManageStaffAccount extends JDialog {
                 }
 
                 else{
+                    //userTypetf.getText()
+                    User user = new User(fNametf.getText()+" "+lNametf.getText(),passWordtf.getText(),emailtf.getText(),1, UserType.valueOf("TravelAdvisor"), 0);
+                    UserController userController = new UserController();
+                    userController.createUser(user);
+                    //adding to table
                     DefaultTableModel model = (DefaultTableModel) table1.getModel();
                     model.addRow(new Object[]{fNametf.getText(),lNametf.getText(),emailtf.getText(),passWordtf.getText(),userTypetf.getText()});
                     JOptionPane.showMessageDialog(GUISAManageStaffAccount.this,"Staff account added!");
@@ -129,7 +138,14 @@ public class GUISAManageStaffAccount extends JDialog {
                 new String [] {"First Name", "Last Name", "Email", "Password", "User Type"}
 
 
+
         ));
+        DefaultTableModel model = (DefaultTableModel) table1.getModel();
+        UserController userController = new UserController();
+
+        for (User user : userController.getActiveUsers()) {
+            model.addRow(new Object[]{user.getId(),user.getName(),user.getEmail(),user.getPassword(),user.getUserType()});
+        }
 
     }
 

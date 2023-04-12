@@ -4,17 +4,26 @@ public class CommissionRate {
 
     private int commissionId;
     private int commissionAgencyTravelCode;
-    private int commissionPercentage;
+    private double commissionPercentage;
     private int commissionTicketType;
     private int commissionDate;
-    private int commissionIsArchived;
+    private Boolean commissionIsArchived;
 
-    public CommissionRate(int commissionAgencyTravelCode, int commissionPercentage, int commissionTicketType, int commissionDate, int commissionIsarchived) {
+    public CommissionRate(int commissionAgencyTravelCode, double commissionPercentage, int commissionTicketType, int commissionDate, Boolean commissionIsArchived) {
         this.commissionAgencyTravelCode = commissionAgencyTravelCode;
         this.commissionPercentage = commissionPercentage;
         this.commissionTicketType = commissionTicketType;
         this.commissionDate = commissionDate;
-        this.commissionIsArchived = commissionIsarchived;
+        this.commissionIsArchived = commissionIsArchived;
+    }
+
+    public CommissionRate(int commissionId, int commissionAgencyTravelCode, double commissionPercentage, int commissionTicketType, int commissionDate, Boolean commissionIsArchived) {
+        this.commissionId = commissionId;
+        this.commissionAgencyTravelCode = commissionAgencyTravelCode;
+        this.commissionPercentage = commissionPercentage;
+        this.commissionTicketType = commissionTicketType;
+        this.commissionDate = commissionDate;
+        this.commissionIsArchived = commissionIsArchived;
     }
 
     public int getCommissionAgencyTravelCode() {
@@ -25,7 +34,7 @@ public class CommissionRate {
         this.commissionAgencyTravelCode = commissionAgencyTravelCode;
     }
 
-    public int getCommissionPercentage() {
+    public double getCommissionPercentage() {
         return commissionPercentage;
     }
 
@@ -49,11 +58,11 @@ public class CommissionRate {
         this.commissionDate = commissionDate;
     }
 
-    public int getCommissionIsArchived() {
+    public Boolean getCommissionIsArchived() {
         return commissionIsArchived;
     }
 
-    public void setCommissionIsArchived(int commissionIsArchived) {
+    public void setCommissionIsArchived(Boolean commissionIsArchived) {
         this.commissionIsArchived = commissionIsArchived;
     }
 
