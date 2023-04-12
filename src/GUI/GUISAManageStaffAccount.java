@@ -144,7 +144,7 @@ public class GUISAManageStaffAccount extends JDialog {
         UserController userController = new UserController();
 
         for (User user : userController.getActiveUsers()) {
-            model.addRow(new Object[]{user.getId(),user.getName(),user.getEmail(),user.getPassword(),user.getUserType()});
+            model.addRow(new Object[]{user.getId(),user.getUsername(),user.getEmail(),user.getPassword(),user.getUserType()});
         }
 
     }
