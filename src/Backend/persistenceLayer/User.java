@@ -8,9 +8,18 @@ public class User {
     private String email;
     private int userAgencyTravelCode;
     private UserType userType;
-    private int userArchived;
+    private boolean isArchived;
+    private int agencyCode;
 
 
+    public User(String id, String password, String email, int userAgencyTravelCode, UserType userType, boolean isArchived) {
+
+        this.password = password;
+        this.email = email;
+        this.userAgencyTravelCode = userAgencyTravelCode;
+        this.userType = userType;
+        this.isArchived = isArchived;
+    }
     public User(int id, String username, String password, String email, int userAgencyTravelCode, UserType userType, int userArchived) {
         this.id = id;
         this.username = username;
@@ -18,7 +27,7 @@ public class User {
         this.email = email;
         this.userAgencyTravelCode = userAgencyTravelCode;
         this.userType = userType;
-        this.userArchived = userArchived;
+        this.isArchived = isArchived;
     }
 
     public String getUsername() {
@@ -53,6 +62,7 @@ public class User {
         this.userAgencyTravelCode = userAgencyTravelCode;
     }
 
+
     public UserType getUserType() {
         return userType;
     }
@@ -61,12 +71,20 @@ public class User {
         this.userType = userType;
     }
 
-    public int getUserArchived() {
-        return userArchived;
+    public boolean getIsArchived() {
+        return this.isArchived;
     }
 
-    public void setUserArchived(int userArchived) {
-        this.userArchived = userArchived;
+    public void setIsArchived(boolean isArchived) {
+        this.isArchived = isArchived;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -78,7 +96,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", userAgencyTravelCode=" + userAgencyTravelCode +
                 ", userType=" + userType +
-                ", userArchived=" + userArchived +
+                ", userArchived=" + isArchived +
                 '}';
     }
 }
