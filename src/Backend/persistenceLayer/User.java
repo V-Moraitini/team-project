@@ -12,8 +12,8 @@ public class User {
     private int agencyCode;
 
 
-    public User(String id, String password, String email, int userAgencyTravelCode, UserType userType, boolean isArchived) {
-
+    public User(String username, String password, String email, int userAgencyTravelCode, UserType userType, boolean isArchived) {
+        this.username = username;
         this.password = password;
         this.email = email;
         this.userAgencyTravelCode = userAgencyTravelCode;
