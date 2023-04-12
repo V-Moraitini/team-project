@@ -67,8 +67,8 @@ public class BlankController extends ConfigurationMySQL {
         //then probably retrieve the id of the object class?
         String SQL = "INSERT INTO blank " +
                 "(blankBatchID, blankType, blankDateReceived, " +
-                "blankIsValid, blankIsSold, blankIsInterline)" +
-                "VALUES (" +batchId+", "+blank.getBlankType()+","+blank.getBlankDateReceived()+", 1, 0,"+isInterline+")";
+                "blankIsValid, blankIsSold, blankIsInterline, blankIsArchived)" +
+                "VALUES (" +batchId+", "+blank.getBlankType()+","+blank.getBlankDateReceived()+", 1, 0,"+isInterline+",0)";
         try {
             con.setAutoCommit(false);
             Statement stmt = con.createStatement();
@@ -186,7 +186,10 @@ public class BlankController extends ConfigurationMySQL {
             System.out.println(e);
         }
     }
-
-
     /*-------------------------BLANK QUERIES END-------------------------*/
+
+    public static void main(String[] args) {
+        BlankController b = new BlankController();
+        b.createBlankBatch(2, new Blank(0, 0, 0, 440, 20190101, 1, 0, 0));
+    }
 }

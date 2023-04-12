@@ -11,6 +11,14 @@ public class User {
     private int userArchived;
 
 
+    public User(String username, String password, String email, int userAgencyTravelCode, UserType userType, int userArchived) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.userAgencyTravelCode = userAgencyTravelCode;
+        this.userType = userType;
+        this.userArchived = userArchived;
+    }
     public User(int id, String username, String password, String email, int userAgencyTravelCode, UserType userType, int userArchived) {
         this.id = id;
         this.username = username;
@@ -67,6 +75,14 @@ public class User {
 
     public void setUserArchived(int userArchived) {
         this.userArchived = userArchived;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

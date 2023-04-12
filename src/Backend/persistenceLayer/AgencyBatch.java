@@ -42,7 +42,7 @@ public class AgencyBatch {
     @Override
     public String toString() {
         return "AgencyBatch{" +
-                "batchID=" + batchId +
+                "batchId=" + batchId +
                 ", batchAgencyTravelCode=" + batchAgencyTravelCode +
                 ", batchDate=" + batchDate +
                 '}';

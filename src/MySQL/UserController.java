@@ -24,7 +24,7 @@ public class UserController extends ConfigurationMySQL {
                     "INSERT INTO userAccount VALUES (1, ?, ?, ?, ?, 0)");
             //Statement.RETURN_GENERATED_KEYS for auto generated keys
             //stmt.setInt(1, user.getId());
-            stmt.setString(1, user.getName());
+            stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
             stmt.setString(4, user.getUserType().toString());
@@ -220,7 +220,7 @@ public class UserController extends ConfigurationMySQL {
             PreparedStatement stmt = con.prepareStatement(
                     "UPDATE userAccount SET username=?, email=?, password=?, type=? " +
                             "WHERE userId = ?");
-            stmt.setString(1, user.getName());
+            stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
             stmt.setString(4, user.getUserType().toString());
