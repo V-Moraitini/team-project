@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SalesSL {
+/*public class SalesSL {
     private Connection connection;
 
     public SalesSL(Connection connection) {
@@ -22,7 +22,7 @@ public class SalesSL {
             stmt.setInt(3, sale.getAdvisorUserId());
             stmt.setInt(4, sale.getSaleCustomerId());
             stmt.setInt(5, sale.getSalecommissionId());
-            stmt.setInt(6, sale.getSalecommissionAmount());
+            stmt.setInt(6, sale.getSaleCommissionAmount());
             stmt.setInt(7, sale.getSaleConversionId());
 
             stmt.executeUpdate();
@@ -37,7 +37,7 @@ public class SalesSL {
             stmt.setInt(2, sale.getAdvisorUserId());
             stmt.setInt(3, sale.getSaleCustomerId());
             stmt.setInt(4, sale.getSalecommissionId());
-            stmt.setInt(5, sale.getSalecommissionAmount());
+            stmt.setInt(5, sale.getSaleCommissionAmount());
             stmt.setInt(6, sale.getSaleConversionId());
             stmt.setInt(7, sale.getSaleId());
 
@@ -54,5 +54,5 @@ public class SalesSL {
             stmt.executeUpdate();
         }
     }
-}
+}*/
 
