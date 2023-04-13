@@ -17,7 +17,7 @@ public class SalesController extends ConfigurationMySQL {
                 "saleCommissionId, saleCommissionAmount, saleConversionId, saleConversionAmount," +
                 "saleDiscountAmount, saleTaxAmount, saleFlatPrice, saleMethod, saleCardNumber, " +
                 "saleOrigin, saleDestination, saleDate, saleIsInterline)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         //A few validations
         BlankController blankController = new BlankController();
         Blank blank = blankController.getBlankById(sale.getSaleBlankId());
@@ -44,13 +44,14 @@ public class SalesController extends ConfigurationMySQL {
             stmt.setDouble(8, sale.getSaleConversionAmount());
             stmt.setDouble(9, sale.getSaleDiscountAmount());
             stmt.setDouble(10, sale.getSaleTaxAmount());
-            stmt.setDouble(11, sale.getSaleFlatPrice());
-            stmt.setString(12, sale.getSaleMethod().toString());
-            stmt.setInt(13, sale.getSaleCardNumber());
-            stmt.setString(14, sale.getSaleOrigin());
-            stmt.setString(15, sale.getSaleDestination());
-            stmt.setInt(16, sale.getSaleDate());
-            stmt.setBoolean(17, sale.getSaleIsInterline());
+            stmt.setDouble(11, sale.getSaleOtherTaxAmount());
+            stmt.setDouble(12, sale.getSaleFlatPrice());
+            stmt.setString(13, sale.getSaleMethod().toString());
+            stmt.setInt(14, sale.getSaleCardNumber());
+            stmt.setString(15, sale.getSaleOrigin());
+            stmt.setString(16, sale.getSaleDestination());
+            stmt.setInt(17, sale.getSaleDate());
+            stmt.setBoolean(18, sale.getSaleIsInterline());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -68,7 +69,7 @@ public class SalesController extends ConfigurationMySQL {
             ResultSet rs = stmt.executeQuery(sql);
 
             int id, blankId, advisorId, customerId, commissionId, conversionId;
-            double commissionAmount, conversionAmount, discountAmount, taxAmount, flatPrice;
+            double commissionAmount, conversionAmount, discountAmount, taxAmount, otherTaxAmount, flatPrice;
             SaleMethod saleMethod;
             int cardNumber;
             String origin, destination;
@@ -77,7 +78,7 @@ public class SalesController extends ConfigurationMySQL {
             while (rs.next()) {
                 //saleId, saleBlankId, AdvisorUserId, saleCustomerId,
                 //saleCommissionId, saleCommissionAmount, saleConversionId, saleConversionAmount,
-                //saleDiscountAmount, saleTaxAmount, saleFlatPrice, saleMethod, saleCardNumber,
+                //saleDiscountAmount, saleTaxAmount, saleOtherTaxAmount, saleFlatPrice, saleMethod, saleCardNumber,
                 //saleOrigin, saleDestination, saleDate, saleIsInterline
                 id = rs.getInt(1);
                 blankId = rs.getInt(2);
@@ -89,15 +90,16 @@ public class SalesController extends ConfigurationMySQL {
                 conversionAmount = rs.getDouble(8);
                 discountAmount = rs.getDouble(9);
                 taxAmount = rs.getDouble(10);
-                flatPrice = rs.getDouble(11);
-                cardNumber = rs.getInt(12);
-                origin = rs.getString(13);
-                destination = rs.getString(14);
-                date = rs.getInt(15);
-                saleMethod = SaleMethod.valueOf(rs.getString(16));
-                isInterline = rs.getBoolean(17);
+                otherTaxAmount = rs.getDouble(11);
+                flatPrice = rs.getDouble(12);
+                cardNumber = rs.getInt(13);
+                origin = rs.getString(14);
+                destination = rs.getString(15);
+                date = rs.getInt(16);
+                saleMethod = SaleMethod.valueOf(rs.getString(17));
+                isInterline = rs.getBoolean(18);
                 sales.add(new Sales(id, blankId, advisorId, customerId, commissionId, commissionAmount, conversionId, conversionAmount,
-                        discountAmount, taxAmount, flatPrice, saleMethod, cardNumber, origin, destination, date, isInterline));
+                        discountAmount, taxAmount, otherTaxAmount, flatPrice, saleMethod, cardNumber, origin, destination, date, isInterline));
 
             }
         } catch (SQLException e) {
@@ -137,7 +139,7 @@ public class SalesController extends ConfigurationMySQL {
             ResultSet rs = stmt.executeQuery();
 
             int blankId, advisorId, customerId, commissionId, conversionId;
-            double commissionAmount, conversionAmount, discountAmount, taxAmount, flatPrice;
+            double commissionAmount, conversionAmount, discountAmount, taxAmount, otherTaxAmount, flatPrice;
             SaleMethod saleMethod;
             int cardNumber;
             String origin, destination;
@@ -146,7 +148,7 @@ public class SalesController extends ConfigurationMySQL {
             while (rs.next()) {
                 //saleId, saleBlankId, AdvisorUserId, saleCustomerId,
                 //saleCommissionId, saleCommissionAmount, saleConversionId, saleConversionAmount,
-                //saleDiscountAmount, saleTaxAmount, saleFlatPrice, saleMethod, saleCardNumber,
+                //saleDiscountAmount, saleTaxAmount, saleOtherTaxAmount saleFlatPrice, saleMethod, saleCardNumber,
                 //saleOrigin, saleDestination, saleDate, saleIsInterline
                 blankId = rs.getInt(2);
                 advisorId = rs.getInt(3);
@@ -157,15 +159,16 @@ public class SalesController extends ConfigurationMySQL {
                 conversionAmount = rs.getDouble(8);
                 discountAmount = rs.getDouble(9);
                 taxAmount = rs.getDouble(10);
-                flatPrice = rs.getDouble(11);
-                cardNumber = rs.getInt(12);
-                origin = rs.getString(13);
-                destination = rs.getString(14);
-                date = rs.getInt(15);
-                saleMethod = SaleMethod.valueOf(rs.getString(16));
-                isInterline = rs.getBoolean(17);
+                otherTaxAmount = rs.getDouble(11);
+                flatPrice = rs.getDouble(12);
+                cardNumber = rs.getInt(13);
+                origin = rs.getString(14);
+                destination = rs.getString(15);
+                date = rs.getInt(16);
+                saleMethod = SaleMethod.valueOf(rs.getString(17));
+                isInterline = rs.getBoolean(18);
                 sale = new Sales(id, blankId, advisorId, customerId, commissionId, commissionAmount, conversionId, conversionAmount,
-                        discountAmount, taxAmount, flatPrice, saleMethod, cardNumber, origin, destination, date, isInterline);
+                        discountAmount, taxAmount, otherTaxAmount, flatPrice, saleMethod, cardNumber, origin, destination, date, isInterline);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -180,7 +183,7 @@ public class SalesController extends ConfigurationMySQL {
         String sql = "UPDATE Sales SET " +
                 "saleBlankId = ?, saleAdvisorUserId = ?, saleCustomerId = ?, " +
                 "saleCommissionId = ?, saleCommissionAmount = ?, saleConversionId = ?, saleConversionAmount = ?, " +
-                "saleDiscountAmount = ?, saleTaxAmount = ?, saleFlatPrice = ?, saleMethod = ?, saleCardNumber = ?, " +
+                "saleDiscountAmount = ?, saleTaxAmount = ?, saleOtherTaxAmount = ?, saleFlatPrice = ?, saleMethod = ?, saleCardNumber = ?, " +
                 "saleOrigin = ?, saleDestination = ?, saleDate = ?, saleIsInterline = ?" +
                 "WHERE saleId = ?";
 
@@ -194,14 +197,15 @@ public class SalesController extends ConfigurationMySQL {
             stmt.setDouble(7, sale.getSaleConversionAmount());
             stmt.setDouble(8, sale.getSaleDiscountAmount());
             stmt.setDouble(9, sale.getSaleTaxAmount());
-            stmt.setDouble(10, sale.getSaleFlatPrice());
-            stmt.setString(11, sale.getSaleMethod().toString());
-            stmt.setInt(12, sale.getSaleCardNumber());
-            stmt.setString(13, sale.getSaleOrigin());
-            stmt.setString(14, sale.getSaleDestination());
-            stmt.setInt(15, sale.getSaleDate());
-            stmt.setBoolean(16, sale.getSaleIsInterline());
-            stmt.setInt(17, sale.getSaleId());
+            stmt.setDouble(10, sale.getSaleOtherTaxAmount());
+            stmt.setDouble(11, sale.getSaleFlatPrice());
+            stmt.setString(12, sale.getSaleMethod().toString());
+            stmt.setInt(13, sale.getSaleCardNumber());
+            stmt.setString(14, sale.getSaleOrigin());
+            stmt.setString(15, sale.getSaleDestination());
+            stmt.setInt(16, sale.getSaleDate());
+            stmt.setBoolean(17, sale.getSaleIsInterline());
+            stmt.setInt(18, sale.getSaleId());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
