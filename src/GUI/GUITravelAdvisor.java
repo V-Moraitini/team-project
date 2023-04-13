@@ -11,6 +11,7 @@ public class GUITravelAdvisor extends JDialog{
     private JButton createCustomerButton;
     private JButton createSaleButton;
     private JButton issueRefundButton;
+    private JButton createReportButton;
 
     public GUITravelAdvisor(JFrame parent) {
 
@@ -19,7 +20,7 @@ public class GUITravelAdvisor extends JDialog{
         createCustomerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource()==createCustomerButton){ //when you click on the create customer button it goes to the discount page
+                if (e.getSource() == createCustomerButton) { //when you click on the create customer button it goes to the discount page
                     dispose(); // get rids of current frame to go to the new frame
                     GUITACreateCustomer cc = new GUITACreateCustomer(null);
                     cc.setVisible(false);
@@ -35,7 +36,7 @@ public class GUITravelAdvisor extends JDialog{
         logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource()==logOutButton){ //when you click on the button another frame appears
+                if (e.getSource() == logOutButton) { //when you click on the button another frame appears
                     dispose();
                     GUILogin gc = new GUILogin(null);
                     gc.setVisible(false);
@@ -49,7 +50,7 @@ public class GUITravelAdvisor extends JDialog{
         createSaleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource()==createSaleButton){ //when you click on the button another frame appears
+                if (e.getSource() == createSaleButton) { //when you click on the button another frame appears
                     dispose();
                     GUITASale gc = new GUITASale(null);
                     gc.setVisible(false);
@@ -62,7 +63,7 @@ public class GUITravelAdvisor extends JDialog{
         issueRefundButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource()==issueRefundButton){ //when you click on the button another frame appears
+                if (e.getSource() == issueRefundButton) { //when you click on the button another frame appears
                     dispose();
                     GUITAIssueRefund gc = new GUITAIssueRefund(null);
                     gc.setVisible(false);
@@ -72,6 +73,15 @@ public class GUITravelAdvisor extends JDialog{
             }
         });
 
+
+        createReportButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new GUITACreateReport(null).setVisible(false);
+                panel1.setVisible(false);
+            }
+        });
 
 
         setTitle("Travel Advisor");

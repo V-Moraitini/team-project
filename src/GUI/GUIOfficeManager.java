@@ -46,18 +46,7 @@ public class GUIOfficeManager extends JDialog {
             }
         });
 
-        btnAssBStock.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource()==btnAssBStock){ //when you click on the set discount button it goes to the discount page
-                    dispose(); // get rids of current frame to go to the new frame
-                    GUIOMAssignBlankStock ab = new GUIOMAssignBlankStock(null);
-                    ab.setVisible(false);
-                    //close();
-                    mainPanel.setVisible(false);
-                }
-            }
-        });
+
 
         btnLogOut.addActionListener(new ActionListener() { // log out button
             @Override
@@ -89,7 +78,7 @@ public class GUIOfficeManager extends JDialog {
 
         setTitle("Office Manager");
         setContentPane(mainPanel);
-        setMinimumSize(new Dimension(700, 600));
+        setMinimumSize(new Dimension(420, 400));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

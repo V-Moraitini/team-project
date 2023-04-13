@@ -36,6 +36,14 @@ public class GUITASale extends JDialog{
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new GUILogin(null).setVisible(false);
+                panel1.setVisible(false);
+            }
+        });
 
         backButton.addActionListener(new ActionListener() {
             @Override

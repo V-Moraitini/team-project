@@ -24,7 +24,6 @@ public class GUITACreateCustomer extends JDialog {
     private JRadioButton valuedRadioButton;
     private JButton createButton;
     private JButton updateButton;
-    private JButton archiveButton;
     private JButton backButton;
     private JTextField idtf;
     private JTable table2;

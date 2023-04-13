@@ -32,6 +32,15 @@ public class GUITACreateReport extends JDialog {
             }
         });
 
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new GUILogin(null).setVisible(false);
+                panel.setVisible(false);
+            }
+        });
+
         setVisible(true);
 
     }
