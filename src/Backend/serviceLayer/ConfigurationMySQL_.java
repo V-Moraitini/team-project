@@ -2,10 +2,10 @@ package Backend.serviceLayer;
 
 import java.sql.*;
 
-public class ConfigurationMySQL {
+public class ConfigurationMySQL_ {
     Connection con;
 
-    public ConfigurationMySQL() {
+    public ConfigurationMySQL_() {
         try {
             this.con = DriverManager.getConnection(
                     "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2018g07", "in2018g07_d", "6KV8dzpF");
@@ -741,7 +741,7 @@ public class ConfigurationMySQL {
 
     /*-------------------------MAIN START-------------------------*/
     public static void main(String args[]) throws SQLException {
-        ConfigurationMySQL a = new ConfigurationMySQL();
+        ConfigurationMySQL_ a = new ConfigurationMySQL_();
         try {
             //a.getUsers();
             //a.getUserById(1);
