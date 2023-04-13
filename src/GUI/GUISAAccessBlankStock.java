@@ -67,21 +67,21 @@ public class GUISAAccessBlankStock extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 if (blankIDtf.getText().equals("") || blankTypetf.getText().equals("") || datetf.getText().equals("")) {
                     error();
-                }else{
+                } else {
                     // change the text field from int to string
                     int blankID = Integer.parseInt(blankIDtf.getText());
                     int blankType = Integer.parseInt(blankTypetf.getText());
                     int blankDateReceived = Integer.parseInt(datetf.getText());
                     //call constructor
-                    Blank blank = new Blank(blankID, 2, 0, 1,blankType, blankDateReceived,1, 1, 1, 1);
+                    Blank blank = new Blank(blankID, 2, 0, 1, blankType, blankDateReceived, 1, 1, 1, 1);
 
                     DefaultTableModel model = (DefaultTableModel) table1.getModel();
                     BlankController blankController = new BlankController();
                     blankController.createBlank(blank, blankID);
-                    model.addRow(new Object[]{blankIDtf.getText(),blankTypetf.getText(),datetf.getText()});
-                }}
+                    model.addRow(new Object[]{blankIDtf.getText(), blankTypetf.getText(), datetf.getText()});
+                }
+            }
         });
-
         archiveBlankButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -100,11 +100,7 @@ public class GUISAAccessBlankStock extends JDialog {
                 }
             }
         });
-
         setVisible(true);
-
-
-
     }
 
     private void createTable() {

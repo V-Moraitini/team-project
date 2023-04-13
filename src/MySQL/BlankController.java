@@ -4,10 +4,7 @@ import Backend.persistenceLayer.AgencyBatch;
 import Backend.persistenceLayer.Blank;
 import Backend.persistenceLayer.User;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class BlankController extends ConfigurationMySQL {
@@ -207,6 +204,8 @@ public class BlankController extends ConfigurationMySQL {
         return  blank;
     }
 
+
+
     private void updateColumnInBlankById(String sql, Blank blank, String column) {
         //blankBatchID, blankType, blankDateReceived, " +
         //                "blankIsValid, blankIsSold, blankIsInterline, blankIsArchived
@@ -238,6 +237,22 @@ public class BlankController extends ConfigurationMySQL {
             closeConnection();
         }
     }
+
+    public void updateBlankStockAdvisorId(int blankId, int advisorId) {
+        getConnection();
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "UPDATE blank SET blankStockAdvisorUserID = ? WHERE blankID = ?");
+            stmt.setInt(1, advisorId);
+            stmt.setInt(2, blankId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
 
     public void updateBlankSoldById(Blank blank) {
         updateColumnInBlankById("UPDATE blank SET blankIsSold = ? WHERE blankId = ?", blank, "blankIsSold");

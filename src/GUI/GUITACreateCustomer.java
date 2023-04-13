@@ -27,7 +27,6 @@ public class GUITACreateCustomer extends JDialog {
 
         super(parent);
 
-
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,22 +76,66 @@ public class GUITACreateCustomer extends JDialog {
         });
 
 
+        archiveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DefaultTableModel model = (DefaultTableModel) table2.getModel();
+                if(table2.getSelectedRow()!=-1) {
+                    //if a row is selected in the table
+                    model.removeRow(table2.getSelectedRow());
+                    JOptionPane.showMessageDialog(GUITACreateCustomer.this, "Customer account archived!");
+                }else if(table2.getRowCount()==0){
+                    JOptionPane.showMessageDialog(GUITACreateCustomer.this, "Select row!");
+                    // If the table is empty with 0 rows
+                }else{
+                    JOptionPane.showMessageDialog(GUITACreateCustomer.this, "Please select a row!");
+                }
+            }
 
-        setVisible(true);
+        });
 
-    }
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Get table model
+                DefaultTableModel model = (DefaultTableModel) table2.getModel();
+                // if a row is selected then update
+                if (!idtf.getText().equals("Regular") && !idtf.getText().equals("Valued")) {
+                    JOptionPane.showMessageDialog(GUITACreateCustomer.this, "Customer type not recognised");
+                } else if (table2.getSelectedRow() != -1) {
+                    // Update the customer's type based on the value in the "idtf" text field
+                    String type = idtf.getText();
+                    // Update the customer's other fields here
+                    String fName = fNametf.getText();
+                    String lName = lNametf.getText();
+                    String alias = aliastf.getText();
+                    String phoneNumber = phonetf.getText();
+                    String email = emailtf.getText();
+                    // Update the row in the table with the new values
+                    int selectedRowIndex = table2.getSelectedRow();
+                    model.setValueAt(type, selectedRowIndex, 0);
+                    model.setValueAt(fName, selectedRowIndex, 1);
+                    model.setValueAt(lName, selectedRowIndex, 2);
+                    model.setValueAt(alias, selectedRowIndex, 3);
+                    model.setValueAt(phoneNumber, selectedRowIndex, 4);
+                    model.setValueAt(email, selectedRowIndex, 5);
+                }
+            }
+                });
+                    setVisible(true);
 
-    private void createTable() {
-        table2.setModel(new DefaultTableModel(
-                null,
-                new String[]{"ID", "Name", "Last Name","Alias", "Phone Number", "Email Address", "isValued", "isRegular"     }
+                }
 
 
-        ));
-    }
+            private void createTable() {
+                table2.setModel(new DefaultTableModel(
+                        null,
+                        new String[]{"ID", "Name", "Last Name", "Alias", "Phone Number", "Email Address", "isValued", "isRegular"}
 
-    public static void main(String[] args) {
-        GUITACreateCustomer login = new GUITACreateCustomer(null);
-    }
-}
+                ));
+            }
 
+            public static void main(String[] args) {
+                GUITACreateCustomer login = new GUITACreateCustomer(null);
+            }
+        }

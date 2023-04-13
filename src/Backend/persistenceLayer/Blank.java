@@ -100,6 +100,10 @@ public class Blank {
         this.blankId=blankId;
     }
 
+    public int getBlankIsInterline(){
+        return blankIsInterline;
+    }
+
     @Override
     public String toString() {
         return "blank{" +
