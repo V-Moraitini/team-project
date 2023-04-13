@@ -24,10 +24,12 @@
       <root url="jar://$PROJECT_DIR$/../../../../../../Java IN1007/poi-bin-5.2.3/poi-scratchpad-5.2.3.jar!/" />
       <root url="file://$PROJECT_DIR$/../../../../../../Java IN1007/poi-bin-5.2.3/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../Java IN1007/poi-bin-5.2.3/ooxml-lib" />
+      <root url="file://$PROJECT_DIR$/../../../Desktop/Courses/Team Project/.jar files" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
     <jarDirectory url="file://$PROJECT_DIR$/../../../../../../Java IN1007/poi-bin-5.2.3/lib" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/../../../../../../Java IN1007/poi-bin-5.2.3/ooxml-lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../../Desktop/Courses/Team Project/.jar files" recursive="false" />
   </library>
 </component>

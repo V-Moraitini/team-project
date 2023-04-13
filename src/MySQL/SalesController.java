@@ -176,6 +176,7 @@ public class SalesController extends ConfigurationMySQL {
     }
 
     public void updateSale(Sales sale) {
+        getConnection();
         String sql = "UPDATE Sales SET " +
                 "saleBlankId = ?, saleAdvisorUserId = ?, saleCustomerId = ?, " +
                 "saleCommissionId = ?, saleCommissionAmount = ?, saleConversionId = ?, saleConversionAmount = ?, " +
