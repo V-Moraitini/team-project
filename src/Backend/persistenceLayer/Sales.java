@@ -21,7 +21,11 @@ public class Sales {
     private int saleDate;
     private Boolean saleIsInterline;
 
-    public Sales(int saleBlankId, int saleAdvisorUserId, int saleCustomerId, int saleCommissionId, double saleCommissionAmount, int saleConversionId, double saleConversionAmount, double saleDiscountAmount, double saleTaxAmount, double saleOtherTaxAmount, double saleFlatPrice, SaleMethod saleMethod, int saleCardNumber, String saleOrigin, String saleDestination, int saleDate, Boolean saleIsInterline) {
+    public Sales(int saleId, int saleBlankId, int saleAdvisorUserId, int saleCustomerId,
+                 int saleCommissionId, double saleCommissionAmount, int saleConversionId, double saleConversionAmount,
+                 double saleDiscountAmount, double saleTaxAmount, double saleOtherTaxAmount, double saleFlatPrice, SaleMethod saleMethod, int saleCardNumber,
+                 String saleOrigin, String saleDestination, int saleDate, Boolean saleIsInterline) {
+        this.saleId = saleId;
         this.saleBlankId = saleBlankId;
         this.saleAdvisorUserId = saleAdvisorUserId;
         this.saleCustomerId = saleCustomerId;
@@ -41,8 +45,7 @@ public class Sales {
         this.saleIsInterline = saleIsInterline;
     }
 
-    public Sales(int saleId, int saleBlankId, int saleAdvisorUserId, int saleCustomerId, int saleCommissionId, double saleCommissionAmount, int saleConversionId, double saleConversionAmount, double saleDiscountAmount, double saleTaxAmount, double saleOtherTaxAmount, double saleFlatPrice, SaleMethod saleMethod, int saleCardNumber, String saleOrigin, String saleDestination, int saleDate, Boolean saleIsInterline) {
-        this.saleId = saleId;
+    public Sales(int saleBlankId, int saleAdvisorUserId, int saleCustomerId, int saleCommissionId, double saleCommissionAmount, int saleConversionId, double saleConversionAmount, double saleDiscountAmount, double saleTaxAmount, double saleOtherTaxAmount, double saleFlatPrice, SaleMethod saleMethod, int saleCardNumber, String saleOrigin, String saleDestination, int saleDate, Boolean saleIsInterline) {
         this.saleBlankId = saleBlankId;
         this.saleAdvisorUserId = saleAdvisorUserId;
         this.saleCustomerId = saleCustomerId;
