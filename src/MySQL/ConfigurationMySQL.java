@@ -5,7 +5,7 @@ import java.sql.*;
 
 
 public class ConfigurationMySQL {
-    Connection con;
+    public Connection con;
 
     public ConfigurationMySQL() {
 
@@ -33,8 +33,8 @@ public class ConfigurationMySQL {
 
 
     /*-------------------------MAIN START-------------------------*/
-    public static void main(String args[]) throws SQLException {
-        ConfigurationMySQL a = new ConfigurationMySQL();
+    public static void main(String args[]) throws SQLException{
+        /*ConfigurationMySQL a = new ConfigurationMySQL();
         UserController userController = new UserController();
         try {
             userController.getUserById(1);
@@ -48,7 +48,7 @@ public class ConfigurationMySQL {
         } finally {
             a.closeConnection();
         }
-
+*/
     }
     /*-------------------------MAIN END-------------------------*/
 }
