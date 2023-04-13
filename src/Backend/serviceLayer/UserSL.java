@@ -2,6 +2,7 @@ package Backend.serviceLayer;
 
 
 
+import Backend.persistenceLayer.User;
 import Backend.persistenceLayer.UserType;
 
 import java.sql.PreparedStatement;
@@ -10,8 +11,12 @@ import MySQL.ConfigurationMySQL;
 
 public class UserSL extends ConfigurationMySQL {
 
-    public void login(String email, String password, UserType userType) {
+    public User login(String email, String password, UserType userType) {
         getConnection();
+
+        User user = null;
+        System.out.println(email+ " " + password + " " +userType);
+
 
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM userAccount WHERE email = ? and password = ? and type = ?");
@@ -27,16 +32,22 @@ public class UserSL extends ConfigurationMySQL {
             con.commit();
             con.setAutoCommit(true);
 
-            while (rs.next())
+
+
+            while (rs.next()) {
+                user = new User(rs.getString(3), rs.getString(5), rs.getString(4), rs.getInt(2), UserType.valueOf(rs.getString(6)), (boolean) rs.getBoolean(7) );
                 //userID, userAgencyTravelCode, userName, userEmail, userPassword, userType, userIsArchived
                 System.out.println(rs.getInt(1) + "  " + rs.getInt(2) + "  " + rs.getString(3) + "  " + rs.getString(4) + "  "
                         + rs.getString(5) + "  " + rs.getString(6) + "  " + rs.getInt(7) + "\n");
-            //when objects have been made, use object constructor to make them?
+                //when objects have been made, use object constructor to make them?
+            }
+
 
         } catch (Exception e) {
             System.out.println(e);
         } finally {
             closeConnection();
+            return user;
         }
 
     }

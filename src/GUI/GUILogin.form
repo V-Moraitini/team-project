@@ -116,14 +116,6 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="9865d" class="javax.swing.JTextField" binding="tfEmail">
-        <constraints>
-          <grid row="4" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
       <component id="5944f" class="javax.swing.JLabel">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -132,6 +124,14 @@
           <foreground color="-15722687"/>
           <text value="Email"/>
         </properties>
+      </component>
+      <component id="9865d" class="javax.swing.JTextField" binding="tfEmail">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
       </component>
     </children>
   </grid>

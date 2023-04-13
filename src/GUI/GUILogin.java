@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Backend.persistenceLayer.User;
+import Backend.persistenceLayer.UserType;
+import Backend.serviceLayer.*;
 public class GUILogin extends JDialog {
     private JPanel mainPanel;
     private JPasswordField tfPassword;
@@ -12,6 +15,8 @@ public class GUILogin extends JDialog {
     private JButton btnLogin;
     private JComboBox comboBox1;
     private JPasswordField tfpassWord;
+    private UserSL userSL;
+
 
 
     public GUILogin(JFrame parent) {
@@ -26,25 +31,49 @@ public class GUILogin extends JDialog {
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("sdfghn");
+
+                userSL = new UserSL();
+
+
+
                 if (comboBox1.getSelectedItem().equals("System Administrator")) {
                     // Direct user to System Admin screen
-                    dispose();
-                    new GUISystemAdmin(null).setVisible(false);
-                    mainPanel.setVisible(false);
+                    User user = userSL.login(tfEmail.getText(), tfPassword.getText(),UserType.SystemAdmin);
+                    if ( user != null) {
+                        dispose();
+                        new GUISystemAdmin(null).setVisible(false);
+                        mainPanel.setVisible(false);
+                    }
+                    else {  JOptionPane.showMessageDialog(GUILogin.this, "Invalid Credentials");
+
+                    }
                 } else if (comboBox1.getSelectedItem().equals("Office Manager")){
                     //Direct user to Office Manager page
-                    dispose();
-                    new GUIOfficeManager(null).setVisible(false);
-                    mainPanel.setVisible(false);
+                    User user = userSL.login(tfEmail.getText(), tfPassword.getText(),UserType.OfficeManager);
+                    if ( user != null) {
+                        dispose();
+                        new GUIOfficeManager(null).setVisible(false);
+                        mainPanel.setVisible(false);
+                    }
+                    else {  JOptionPane.showMessageDialog(GUILogin.this, "Invalid Credentials");
+
+                    }
                 } else if (comboBox1.getSelectedItem().equals("Travel Advisor")){
                     //Direct user to Travel Advisor page
-                    dispose();
-                    new GUITravelAdvisor(null).setVisible(false);
-                    mainPanel.setVisible(false);
+                    User user = userSL.login(tfEmail.getText(), tfPassword.getText(),UserType.TravelAdvisor);
+                    if ( user != null) {
+                        dispose();
+                        new GUITravelAdvisor(null).setVisible(false);
+                        mainPanel.setVisible(false);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(GUILogin.this, "Invalid Credentials");
+
+                    }
                 } else {  JOptionPane.showMessageDialog(GUILogin.this, "Invalid Credentials");
 
                 }

@@ -24,6 +24,27 @@
       <root url="jar://$PROJECT_DIR$/../../../../../../Java IN1007/poi-bin-5.2.3/poi-scratchpad-5.2.3.jar!/" />
       <root url="file://$PROJECT_DIR$/../../../../../../Java IN1007/poi-bin-5.2.3/lib" />
       <root url="file://$PROJECT_DIR$/../../../../../../Java IN1007/poi-bin-5.2.3/ooxml-lib" />
+      <root url="jar://$USER_HOME$/Downloads/jakarta.activation-2.0.1.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jakarta.xml.bind-api-3.0.1.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/commons-codec-1.15.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/commons-collections4-4.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/commons-compress-1.21.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/commons-io-2.11.0.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/commons-logging-1.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/commons-math3-3.6.1.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/slf4j-api-1.7.36.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/curvesapi-1.07.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/log4j-api-2.18.0.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/log4j-core-2.20.0.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/poi-5.2.3.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/poi-examples-5.2.3.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/poi-excelant-5.2.3.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/poi-ooxml-5.2.3.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/poi-ooxml-full-5.2.3.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/poi-ooxml-lite-5.2.3.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/poi-scratchpad-5.2.3.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/xmlbeans-5.1.1.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/SparseBitSet-1.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
