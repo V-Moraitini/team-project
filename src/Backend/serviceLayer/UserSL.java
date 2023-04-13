@@ -2,6 +2,8 @@ package Backend.serviceLayer;
 
 
 
+import Backend.persistenceLayer.Customer;
+import Backend.persistenceLayer.Sales;
 import Backend.persistenceLayer.User;
 import Backend.persistenceLayer.UserType;
 
@@ -15,7 +17,7 @@ public class UserSL extends ConfigurationMySQL {
         getConnection();
 
         User user = null;
-        System.out.println(email+ " " + password + " " +userType);
+        System.out.println(email + " " + password + " " + userType);
 
 
         try {
@@ -26,16 +28,14 @@ public class UserSL extends ConfigurationMySQL {
             stmt.setString(3, String.valueOf(userType));
 
 
-
             con.setAutoCommit(false);
             ResultSet rs = stmt.executeQuery();
             con.commit();
             con.setAutoCommit(true);
 
 
-
             while (rs.next()) {
-                user = new User(rs.getString(3), rs.getString(5), rs.getString(4), rs.getInt(2), UserType.valueOf(rs.getString(6)), (boolean) rs.getBoolean(7) );
+                user = new User(rs.getString(3), rs.getString(5), rs.getString(4), rs.getInt(2), UserType.valueOf(rs.getString(6)), (boolean) rs.getBoolean(7));
                 //userID, userAgencyTravelCode, userName, userEmail, userPassword, userType, userIsArchived
                 System.out.println(rs.getInt(1) + "  " + rs.getInt(2) + "  " + rs.getString(3) + "  " + rs.getString(4) + "  "
                         + rs.getString(5) + "  " + rs.getString(6) + "  " + rs.getInt(7) + "\n");
@@ -56,65 +56,31 @@ public class UserSL extends ConfigurationMySQL {
         UserSL userSl = new UserSL();
         userSl.login("todd.jenkins@AirVia.com", "tod123", UserType.OfficeManager);
     }
+
+    public void createCustomer(Customer customer) {
+        getConnection();
+        String sql = "INSERT INTO customer (" +
+                "customerName, customerAlias, customerEmail, " +
+                "customerPhone, customerIsValued, customerFixedDiscountPercentage)" +
+                " VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, customer.getCustomerName());
+            stmt.setString(2, customer.getCustomerAlias());
+            stmt.setString(3, customer.getCustomerEmail());
+            stmt.setInt(4, customer.getCustomerPhone());
+            stmt.setBoolean(5, customer.getCustomerIsValued());
+            stmt.setFloat(6, customer.getCustomerFixedDiscountPercentage());
+
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
 }
-
-
-//        private static final String INSERT_USER_SQL = "INSERT INTO users" +
-//                " (username, password, email, address, agency_code, user_type)" +
-//                " VALUES (?, ?, ?, ?, ?, ?)";
-//        private static final String UPDATE_USER_SQL = "UPDATE users" +
-//                " SET username = ?, password = ?, email = ?, address = ?," +
-//                " agency_code = ?, user_type = ? WHERE id = ?";
-//        private static final String DELETE_USER_SQL = "DELETE FROM users WHERE id = ?";
-//
-//        // Insert new user record
-//        public void insertUser(User user) {
-//            try (Connection conn = DriverManager.getConnection("jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2018g07","in2018g07_d","6KV8dzpF");
-//                 PreparedStatement pstmt = conn.prepareStatement(INSERT_USER_SQL)) {
-//
-//                pstmt.setString(1, user.getName());
-//                pstmt.setString(2, user.getPassword());
-//                pstmt.setString(3, user.getEmail());
-//                pstmt.setString(4, user.getAddress());
-//                pstmt.setInt(5, user.getUserAgencyTravelCode());
-//
-//
-//                pstmt.executeUpdate();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        // Update existing user record
-//        public void updateUser(User user) {
-//            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase", "root", "password");
-//                 PreparedStatement pstmt = conn.prepareStatement(UPDATE_USER_SQL)) {
-//
-//                pstmt.setString(1, user.getName());
-//                pstmt.setString(2, user.getPassword());
-//                pstmt.setString(3, user.getEmail());
-//                pstmt.setString(4, user.getAddress());
-//                pstmt.setInt(5, user.getUserAgencyTravelCode());
-//
-//                pstmt.setInt(7, user.getId());
-//
-//                pstmt.executeUpdate();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        // Delete existing user record by ID
-//        public void deleteUser(int id) {
-//            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase", "root", "password");
-//                 PreparedStatement pstmt = conn.prepareStatement(DELETE_USER_SQL)) {
-//
-//                pstmt.setInt(1, id);
-//                pstmt.executeUpdate();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
 
 
 

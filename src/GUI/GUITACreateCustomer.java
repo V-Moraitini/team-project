@@ -1,10 +1,16 @@
 package GUI;
 
+import Backend.persistenceLayer.Customer;
+import Backend.persistenceLayer.User;
+import Backend.serviceLayer.UserSL;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import static java.lang.Integer.parseInt;
 
 public class GUITACreateCustomer extends JDialog {
     private JPanel panel1;
@@ -22,10 +28,13 @@ public class GUITACreateCustomer extends JDialog {
     private JButton backButton;
     private JTextField idtf;
     private JTable table2;
+    private Customer customer;
+    private UserSL userSL;
 
     public GUITACreateCustomer(JFrame parent) {
 
         super(parent);
+
 
 
         backButton.addActionListener(new ActionListener() {
@@ -64,8 +73,16 @@ public class GUITACreateCustomer extends JDialog {
 
 
         createButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
+               boolean flag = false;
+               if (valuedRadioButton.isSelected()){
+                   flag = true;
+               }
+                customer = new Customer(fNametf.getText() + lNametf.getText(), aliastf.getText(), emailtf.getText(), parseInt(phonetf.getText()), flag,5) ;
+                userSL  = new UserSL();
+                userSL.createCustomer(customer);
                 if (idtf.getText().equals("") ||fNametf.getText().equals("")||lNametf.getText().equals("") || aliastf.getText().equals("") ||
                 phonetf.getText().equals("") || emailtf.getText().equals("") || (!regularRadioButton.isSelected() && !valuedRadioButton.isSelected())) {
                     JOptionPane.showMessageDialog(GUITACreateCustomer.this,"Enter all fields!");
