@@ -15,28 +15,34 @@ public class BlankController extends ConfigurationMySQL {
     public BlankController() { }
 
     /*-------------------------BLANK QUERIES START-------------------------*/
-    public void createBlank(Blank blank) {
+    public int createBlank(Blank blank, int blankId) {
         getConnection();
-        //int date = year*10000 + month*100 + day;
+        int id = -1;
         try {
             PreparedStatement stmt = con.prepareStatement(
                     "INSERT INTO blank " +
-                            "(blankBatchID, blankType, blankDateReceived, " +
+                            "(blankId, blankBatchID, blankType, blankDateReceived, " +
                             "blankIsValid, blankIsSold, blankIsInterline)" +
-                            "VALUES (?, ?, ?, 1, 0, ?)");
-            //Statement.RETURN_GENERATED_KEYS for auto generated keys
-            stmt.setInt(1, blank.getBlankBatchId());
-            stmt.setInt(2, blank.getBlankType());
-            stmt.setInt(3, blank.getBlankDateReceived());
+                            "VALUES (?, ?, ?, ?, 1, 0, ?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, blankId);
+            stmt.setInt(2, blank.getBlankBatchId());
+            stmt.setInt(3, blank.getBlankType());
+            stmt.setInt(4, blank.getBlankDateReceived());
             if (blank.getBlankType() == 444 || blank.getBlankType() == 440 || blank.getBlankType() == 420) {
-                stmt.setBoolean(4, true);
-            } else if (blank.getBlankType() == 201 || blank.getBlankType() == 101)
-                stmt.setBoolean(4,false);
-            else {
-                stmt.setBoolean(4, false);
+                stmt.setBoolean(5, true);
+            } else if (blank.getBlankType() == 201 || blank.getBlankType() == 101) {
+                stmt.setBoolean(5, false);
+            } else {
+                stmt.setBoolean(5, false);
             }
             con.setAutoCommit(false);
             stmt.executeUpdate();
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                id = generatedKeys.getInt(1);
+            }
 
             con.commit();
             con.setAutoCommit(true);
@@ -45,6 +51,7 @@ public class BlankController extends ConfigurationMySQL {
         } finally {
             closeConnection();
         }
+        return id;
     }
 
     public void createBlankBatch(int count, Blank blank) {
@@ -88,6 +95,7 @@ public class BlankController extends ConfigurationMySQL {
         }
     }
 
+
     private ArrayList<Blank> getSomeBlanks(String sql) {
         ArrayList<Blank> blanks = new ArrayList<>();
 
@@ -119,12 +127,24 @@ public class BlankController extends ConfigurationMySQL {
         return blanks;
     }
 
+    public ArrayList<Blank> getDomesticBlanks() {
+        return getSomeBlanks("SELECT * FROM blank WHERE blankIsArchived = 0 AND blankIsInterline = 0");
+    }
+
+    public ArrayList<Blank> getInterlineBlanks() {
+        return getSomeBlanks("SELECT * FROM blank WHERE blankIsArchived = 0 AND blankIsInterline = 1");
+    }
+
     public ArrayList<Blank> getActiveBlanks() {
         return getSomeBlanks("SELECT * FROM blank WHERE blankIsArchived = 0");
     }
 
     public ArrayList<Blank> getArchivedBlanks() {
         return getSomeBlanks("SELECT * FROM blank WHERE blankIsArchived = 1");
+    }
+
+    public ArrayList<Blank> getAllBlanks() {
+        return getSomeBlanks("SELECT * FROM blank");
     }
 
     private ArrayList<Blank> getSomeBlanksByAdvisor(String sql, int advisorId) {
@@ -165,12 +185,8 @@ public class BlankController extends ConfigurationMySQL {
         return getSomeBlanksByAdvisor("SELECT * FROM blank WHERE blankIsArchived = 0 AND blankIsSold = 0 AND blankStockAdvisorID = ?", advisorId);
     }
 
-    public ArrayList<Blank> getAllBlanks() {
-        return getSomeBlanks("SELECT * FROM blank");
-    }
-
     public Blank getBlankById(int id) {
-        Blank blank = new Blank(0,0,0,0,0,0,0,0,0,0);
+        Blank blank = null;
         getConnection();
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM blank WHERE blankID = ?");
@@ -178,7 +194,7 @@ public class BlankController extends ConfigurationMySQL {
             ResultSet rs = stmt.executeQuery();
 
             int batchId, stockId, advisorId, type, date, isValid, isSold, isInterline, isArchived;
-            while( rs.next() ) {
+            while (rs.next()) {
                 //blankID, blankBatchID, blankStockID, blankStockAdvisorID, blankType, blankDateReceived, blankIsValid, blankIsSold, blankIsInterline, blankIsArchived
                 batchId = rs.getInt(2);
                 stockId = rs.getInt(3);
@@ -189,14 +205,14 @@ public class BlankController extends ConfigurationMySQL {
                 isSold = rs.getInt(8);
                 isInterline = rs.getInt(9);
                 isArchived = rs.getInt(10);
-                blank = new Blank(id, batchId, stockId, advisorId, type, date, isValid, isSold, isInterline, isArchived);
+                blank = new Blank(id, batchId,stockId, advisorId, type, date, isValid, isSold, isInterline, isArchived);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeConnection();
         }
-        return blank;
+        return  blank;
     }
 
     private void updateColumnInBlankById(String sql, Blank blank, String column) {

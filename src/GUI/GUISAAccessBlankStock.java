@@ -1,5 +1,9 @@
 package GUI;
 
+import Backend.persistenceLayer.Blank;
+import MySQL.BlankController;
+import MySQL.UserController;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -17,7 +21,6 @@ public class GUISAAccessBlankStock extends JDialog {
     private JButton addBlankButton;
     private JButton archiveBlankButton;
     private JTextField blankIDtf;
-    private JTextField qtytf;
     private JTextField blankTypetf;
     private JTextField datetf;
     private JLabel dateLBL;
@@ -27,12 +30,12 @@ public class GUISAAccessBlankStock extends JDialog {
     Date date = new Date();
     Calendar cal = Calendar.getInstance();
 
+
     public GUISAAccessBlankStock(JFrame parent) {
 
         super(parent);
         setTitle("Access Blank Stock");
         model = (DefaultTableModel) table1.getModel();
-        datetf.setText(" " + dateFormat.format(date));
         createTable();
         setContentPane(panel1);
         setMinimumSize(new Dimension(450, 700));
@@ -62,29 +65,40 @@ public class GUISAAccessBlankStock extends JDialog {
         addBlankButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (blankIDtf.getText().equals("") ||qtytf.getText().equals("") || blankTypetf.getText().equals("")) {
+                if (blankIDtf.getText().equals("") || blankTypetf.getText().equals("") || datetf.getText().equals("")) {
                     error();
                 }else{
+                    // change the text field from int to string
+                    int blankID = Integer.parseInt(blankIDtf.getText());
+                    int blankType = Integer.parseInt(blankTypetf.getText());
+                    int blankDateReceived = Integer.parseInt(datetf.getText());
+                    //call constructor
+                    Blank blank = new Blank(blankID, 2, 0, 1,blankType, blankDateReceived,1, 1, 1, 1);
+
                     DefaultTableModel model = (DefaultTableModel) table1.getModel();
-                    model.addRow(new Object[]{blankIDtf.getText(),qtytf.getText(),blankTypetf.getText(),datetf.getText()});
-                } }
+                    BlankController blankController = new BlankController();
+                    blankController.createBlank(blank, blankID);
+                    model.addRow(new Object[]{blankIDtf.getText(),blankTypetf.getText(),datetf.getText()});
+                }}
         });
 
         archiveBlankButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DefaultTableModel model = (DefaultTableModel) table1.getModel();
-                if(table1.getSelectedRow()!=-1) {
-                //if a row is selected in the table
-                model.removeRow(table1.getSelectedRow());
-                }else if(table1.getRowCount()==0){
-                        JOptionPane.showMessageDialog(GUISAAccessBlankStock.this, "Select row");
+                BlankController blankController = new BlankController();
+                if (table1.getSelectedRow() != -1) {
+                    String idString = (String) model.getValueAt(table1.getSelectedRow(), 0);
+                    int id = Integer.parseInt(idString);
+                    blankController.archiveBlank(id);
+                    model.removeRow(table1.getSelectedRow());
+                } else if (table1.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(GUISAAccessBlankStock.this, "Select row");
                     // If the table is empty with 0 rows
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(GUISAAccessBlankStock.this, "Please select a row");
                 }
-                }
-
+            }
         });
 
         setVisible(true);
@@ -93,16 +107,23 @@ public class GUISAAccessBlankStock extends JDialog {
 
     }
 
-    private void createTable(){
+    private void createTable() {
         table1.setModel(new DefaultTableModel(
                 null,
-                new String [] {"Blank ID", "Quantity", "Blank Type", "Date"}
+                new String[]{"Blank ID", "Blank Type", "Date"}
 
 
         ));
 
-    }
+        DefaultTableModel model = (DefaultTableModel) table1.getModel();
+       BlankController blankController = new BlankController();
 
+        for (Blank blank : blankController.getActiveBlanks()) {
+            model.addRow(new Object[]{blank.getBlankId(), blank.getBlankType(),blank.getBlankDateReceived()});
+
+
+        }
+    }
 
     private void error(){
         JOptionPane.showMessageDialog(this, "Please enter all data");

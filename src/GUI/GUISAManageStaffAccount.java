@@ -17,12 +17,13 @@ public class GUISAManageStaffAccount extends JDialog {
     private JButton archiveStaffAccountButton;
     private JButton backButton;
     private JButton logOutButton;
-    private JTextField fNametf;
-    private JTextField lNametf;
+    private JTextField IDtf;
+    private JTextField userNametf;
     private JTextField emailtf;
     private JTextField passWordtf;
     private JTextField userTypetf;
     private JTable table1;
+
 
     public GUISAManageStaffAccount(JFrame parent) {
 
@@ -53,78 +54,89 @@ public class GUISAManageStaffAccount extends JDialog {
             }
         });
 
-       createStaffAccountButton.addActionListener(new ActionListener() {
+        createStaffAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (fNametf.getText().equals("") ||lNametf.getText().equals("")||emailtf.getText().equals("")
+                if ( userNametf.getText().equals("") || emailtf.getText().equals("")
                         || passWordtf.getText().equals("") || userTypetf.getText().equals("")) {
                     error();
-                }else if(!userTypetf.getText().equals("System Administrator") && !userTypetf.getText().equals("Office Manager" )&&
-                        !userTypetf.getText().equals( "Travel Advisor")){
-                    JOptionPane.showMessageDialog(GUISAManageStaffAccount.this,"User type not recognised");
-                }
+                } else if (!userTypetf.getText().equals("SystemAdmin") && !userTypetf.getText().equals("OfficeManager")
+                        && !userTypetf.getText().equals("TravelAdvisor")) {
+                    JOptionPane.showMessageDialog(GUISAManageStaffAccount.this, "User type not recognised");
+                } else {
+                    User user = new User(userNametf.getText(), passWordtf.getText(), emailtf.getText(), 1,
+                            UserType.valueOf(userTypetf.getText().replace(" ", "")), false);
 
-                else{
-                    //userTypetf.getText()
-                    User user = new User(fNametf.getText()+" "+lNametf.getText(),passWordtf.getText(),emailtf.getText(),1, UserType.valueOf("TravelAdvisor"), 0);
-                    UserController userController = new UserController();
-                    userController.createUser(user);
                     //adding to table
                     DefaultTableModel model = (DefaultTableModel) table1.getModel();
-                    model.addRow(new Object[]{fNametf.getText(),lNametf.getText(),emailtf.getText(),passWordtf.getText(),userTypetf.getText()});
-                    JOptionPane.showMessageDialog(GUISAManageStaffAccount.this,"Staff account added!");
-                } }
+                    UserController userController = new UserController();
+                    userController.createUser(user);
+                    model.addRow(new Object[]{user.getId(), userNametf.getText(), emailtf.getText(), passWordtf.getText(), user.getUserType().toString()});
+                    System.out.println("hello");
+                    JOptionPane.showMessageDialog(GUISAManageStaffAccount.this, "Staff account added!");
+                }
+            }
         });
-
         archiveStaffAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DefaultTableModel model = (DefaultTableModel) table1.getModel();
-                if(table1.getSelectedRow()!=-1) {
-                    //if a row is selected in the table
-                    model.removeRow(table1.getSelectedRow());
+                UserController userController = new UserController();
+                int selectedRow = table1.getSelectedRow();
+                if(selectedRow != -1) {
+                    int id = (int) model.getValueAt(selectedRow, 0);
+                    userController.archiveUser(id);
+                    model.removeRow(selectedRow);
                     JOptionPane.showMessageDialog(GUISAManageStaffAccount.this, "Staff account archived!");
-                }else if(table1.getRowCount()==0){
-                    JOptionPane.showMessageDialog(GUISAManageStaffAccount.this, "Select row!");
-                    // If the table is empty with 0 rows
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(GUISAManageStaffAccount.this, "Please select a row!");
                 }
             }
-
         });
 
         updateStaffAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Get table model
+                User user = new User(userNametf.getText(), passWordtf.getText(), emailtf.getText(), 1,
+                        UserType.valueOf(userTypetf.getText().replace(" ", "")), false);
+
                 DefaultTableModel model = (DefaultTableModel) table1.getModel();
-                 // if a row is selected then update
-           if(!userTypetf.getText().equals("System Administrator") && !userTypetf.getText().equals("Office Manager" )&&
-                    !userTypetf.getText().equals( "Travel Advisor")){
-                JOptionPane.showMessageDialog(GUISAManageStaffAccount.this,"User type not recognised");}
-               else if (table1.getSelectedRow() != -1) {
-                    String fName = fNametf.getText();
-                    String lName = lNametf.getText();
+                // if a row is selected then update
+
+                  if(IDtf.getText().equals("") || userNametf.getText().equals("") || emailtf.getText().equals("")
+                        || passWordtf.getText().equals("") || userTypetf.getText().equals("")) {
+                    error();}
+                else if(!userTypetf.getText().equals("SystemAdmin") && !userTypetf.getText().equals("OfficeManager" )&&
+                        !userTypetf.getText().equals( "TravelAdvisor")){
+                    JOptionPane.showMessageDialog(GUISAManageStaffAccount.this,"User type not recognised");}
+                else if (table1.getSelectedRow() != -1) {
+                    String id = IDtf.getText();
+                    String userName = userNametf.getText();
                     String email = emailtf.getText();
                     String passWord = passWordtf.getText();
                     String userType = userTypetf.getText();
 
                     // Set updated value in the table
 
-                    table1.setValueAt(fName, table1.getSelectedRow(), 0);
-                    table1.setValueAt(lName, table1.getSelectedRow(), 1);
+                    table1.setValueAt(id, table1.getSelectedRow(), 0);
+                    table1.setValueAt(userName, table1.getSelectedRow(), 1);
                     table1.setValueAt(email, table1.getSelectedRow(), 2);
                     table1.setValueAt(passWord, table1.getSelectedRow(), 3);
                     table1.setValueAt(userType, table1.getSelectedRow(), 4);
 
+                    UserController userController = new UserController();
+                    userController.updateUser(user);
+                      System.out.println("hello");
+
+
                     // Update message pop up
 
                     JOptionPane.showMessageDialog(GUISAManageStaffAccount.this, "Update Successful!");
-                         } else {
-                                if (table1.getSelectedRow() == 0) {
-                                    JOptionPane.showMessageDialog(GUISAManageStaffAccount.this, "Select Row!");
-                                }
+                } else {
+                    if (table1.getSelectedRow() == 0) {
+                        JOptionPane.showMessageDialog(GUISAManageStaffAccount.this, "Select Row!");
+                    }
                 }
             }
         });
@@ -135,9 +147,7 @@ public class GUISAManageStaffAccount extends JDialog {
     private void createTable(){
         table1.setModel(new DefaultTableModel(
                 null,
-                new String [] {"First Name", "Last Name", "Email", "Password", "User Type"}
-
-
+                new String [] {"ID", "Username", "Email", "Password", "User Type"}
 
         ));
         DefaultTableModel model = (DefaultTableModel) table1.getModel();

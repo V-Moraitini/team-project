@@ -13,7 +13,8 @@ public class Blank {
     private int blankIsInterline;
     private int blankIsArchived;
 
-    public Blank(int blankBatchId, int blankStockId, int blankStockAdvisorUserId, int blankType, int blankDateReceived, int blankIsValid, int blankIsSold, int blankIsInterline, int blankIsArchived) {
+    public Blank(int blankId,int blankBatchId, int blankStockId, int blankStockAdvisorUserId, int blankType, int blankDateReceived, int blankIsValid, int blankIsSold, int blankIsInterline, int blankIsArchived) {
+       this.blankId = blankId;
         this.blankBatchId = blankBatchId;
         this.blankStockId = blankStockId;
         this.blankStockAdvisorUserId = blankStockAdvisorUserId;
@@ -25,17 +26,12 @@ public class Blank {
         this.blankIsArchived = blankIsArchived;
     }
 
-    public Blank(int blankId, int blankBatchId, int blankStockId, int blankStockAdvisorUserId, int blankType, int blankDateReceived, int blankIsValid, int blankIsSold, int blankIsInterline, int blankIsArchived) {
-        this.blankId = blankId;
-        this.blankBatchId = blankBatchId;
-        this.blankStockId = blankStockId;
-        this.blankStockAdvisorUserId = blankStockAdvisorUserId;
-        this.blankType = blankType;
-        this.blankDateReceived = blankDateReceived;
-        this.blankIsValid = blankIsValid;
-        this.blankIsSold = blankIsSold;
-        this.blankIsInterline = blankIsInterline;
-        this.blankIsArchived = blankIsArchived;
+    public int getBlankId() {
+        return blankId;
+    }
+
+    public void setBlankId(int blankId){
+        this.blankId=blankId;
     }
 
     public int getBlankBatchId() {
@@ -94,16 +90,20 @@ public class Blank {
         this.blankIsSold = blankIsSold;
     }
 
+    public int getBlankIsInterline() {
+        return blankIsInterline;
+    }
+
+    public void setBlankIsInterline(int blankIsInterline) {
+        this.blankIsInterline = blankIsInterline;
+    }
+
     public int getBlankIsArchived() {
         return blankIsArchived;
     }
 
     public void setBlankIsArchived(int blankIsArchived) {
         this.blankIsArchived = blankIsArchived;
-    }
-
-    public int getBlankId() {
-        return blankId;
     }
 
     @Override
