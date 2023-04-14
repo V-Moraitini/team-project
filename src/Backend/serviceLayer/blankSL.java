@@ -19,14 +19,14 @@ public class blankSL {
         String query = "INSERT INTO Blanks (BlankID, BatchID, StockID, StockAdvisorUserID, Type, DateReceived, IsValid, IsSold) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, blank.getBlankId());
-        statement.setInt(2, blank.getBlankBatchId());
-        statement.setInt(3, blank.getBlankStockId());
-        statement.setInt(4, blank.getBlankStockAdvisorUserId());
-        statement.setInt(5, blank.getBlankType());
-        statement.setInt(6, blank.getBlankDateReceived());
-        statement.setInt(7, blank.getBlankIsValid());
-        statement.setInt(8, blank.getBlankIsSold());
+        statement.setLong(1, blank.getBlankId());
+        statement.setLong(2, blank.getBlankBatchId());
+        statement.setLong(3, blank.getBlankStockId());
+        statement.setLong(4, blank.getBlankStockAdvisorUserId());
+        statement.setLong(5, blank.getBlankType());
+        statement.setLong(6, blank.getBlankDateReceived());
+        statement.setLong(7, blank.getBlankIsValid());
+        statement.setLong(8, blank.getBlankIsSold());
 
         statement.executeUpdate();
     }
@@ -35,14 +35,14 @@ public class blankSL {
         String query = "UPDATE Blanks SET BatchID=?, StockID=?, StockAdvisorUserID=?, Type=?, DateReceived=?, IsValid=?, IsSold=? WHERE BlankID=?";
 
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, blank.getBlankBatchId());
-        statement.setInt(2, blank.getBlankStockId());
-        statement.setInt(3, blank.getBlankStockAdvisorUserId());
-        statement.setInt(4, blank.getBlankType());
-        statement.setInt(5, blank.getBlankDateReceived());
-        statement.setInt(6, blank.getBlankIsValid());
-        statement.setInt(7, blank.getBlankIsSold());
-        statement.setInt(8, blank.getBlankId());
+        statement.setLong(1, blank.getBlankBatchId());
+        statement.setLong(2, blank.getBlankStockId());
+        statement.setLong(3, blank.getBlankStockAdvisorUserId());
+        statement.setLong(4, blank.getBlankType());
+        statement.setLong(5, blank.getBlankDateReceived());
+        statement.setLong(6, blank.getBlankIsValid());
+        statement.setLong(7, blank.getBlankIsSold());
+        statement.setLong(8, blank.getBlankId());
 
         statement.executeUpdate();
     }

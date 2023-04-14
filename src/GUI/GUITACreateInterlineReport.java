@@ -38,9 +38,6 @@ public class GUITACreateInterlineReport extends JDialog {
     private JLabel datelbl;
     private JTable table1;
     private JButton createBtn;
-    private JTextField saleAmount;
-    private JTextField localTaxtf;
-    private JTextField otherTaxtf;
     private JScrollPane jTabletable;
 
     public GUITACreateInterlineReport(JFrame parent) {

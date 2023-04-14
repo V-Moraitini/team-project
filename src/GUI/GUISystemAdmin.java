@@ -77,7 +77,6 @@ public class GUISystemAdmin extends JDialog {
 
         setVisible(true);
 
-
     }
 
     public static void main(String[] args) {

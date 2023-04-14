@@ -31,11 +31,19 @@ public class GUITASale extends JDialog{
         super(parent);
         setTitle("Create Ticket");
         setContentPane(panel1);
-        setMinimumSize(new Dimension(450, 600));
+        setMinimumSize(new Dimension(700, 600));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new GUILogin(null).setVisible(false);
+                panel1.setVisible(false);
+            }
+        });
 
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -46,8 +54,31 @@ public class GUITASale extends JDialog{
             }
         });
 
-        setVisible(true);
+        createTicketButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Check if all required fields are filled
+                if (advisorNametf.getText().isEmpty() || blankNumbertf.getText().isEmpty() ||
+                        origintf.getText().isEmpty() || destinationtf.getText().isEmpty() ||
+                        localCurrencytf.getText().isEmpty() || localtf.getText().isEmpty() ||
+                        othertf.getText().isEmpty() || comRatetf.getText().isEmpty() ||
+                        (!domesticRadioButton.isSelected() && !interlineRadioButton.isSelected()) ||
+                        (!cardRadioButton.isSelected() && !cashRadioButton.isSelected() && !payLaterRadioButton.isSelected())) {
 
+                    // Show error message if not all required fields are filled
+                    JOptionPane.showMessageDialog(null, "Please fill all required fields", "Error", JOptionPane.ERROR_MESSAGE);
+
+                } else {
+                    // Create a sale if all required fields are filled
+                    // Code for creating a sale here
+
+                    // Show success message
+                    JOptionPane.showMessageDialog(null, "Sale created", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+
+        setVisible(true);
     }
 
     public static void main(String[] args) {

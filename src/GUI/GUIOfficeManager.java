@@ -20,9 +20,6 @@ public class GUIOfficeManager extends JDialog {
     public GUIOfficeManager(JFrame parent){
 
         super(parent);
-
-
-
         BtnGenRep.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -32,12 +29,10 @@ public class GUIOfficeManager extends JDialog {
                     gr.setVisible(false);
                     //close();
                     mainPanel.setVisible(false);
-
-
-
                 }
             }
         });
+
         BtnSeDisPlan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -47,34 +42,10 @@ public class GUIOfficeManager extends JDialog {
                     sd.setVisible(false);
                     //close();
                     mainPanel.setVisible(false);
-
                 }
-
-
             }
         });
-        btnAccessBStock.addActionListener(new ActionListener() {// access blank stock button
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-
-
-            }
-        });
-        btnAssBStock.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource()==btnAssBStock){ //when you click on the set discount button it goes to the discount page
-                    dispose(); // get rids of current frame to go to the new frame
-                    GUIOMAssignBlankStock ab = new GUIOMAssignBlankStock(null);
-                    ab.setVisible(false);
-                    //close();
-                    mainPanel.setVisible(false);
-
-                }
-
-            }
-        });
 
 
         btnLogOut.addActionListener(new ActionListener() { // log out button
@@ -87,29 +58,38 @@ public class GUIOfficeManager extends JDialog {
                     lo.setVisible(false);
                     //close();
                     mainPanel.setVisible(false);
-
                 }
+            }
+        });
 
+        btnAccessBStock.addActionListener(new ActionListener() { // log out button
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (e.getSource()==btnAccessBStock){ //when you click on the reassign button it goes to the reassign  page
+                    dispose(); // get rids of current frame to go to the new frame
+                    GUIOMAccessBlankStock lo = new GUIOMAccessBlankStock(null);
+                    lo.setVisible(false);
+                    //close();
+                    mainPanel.setVisible(false);
+                }
             }
         });
 
         setTitle("Office Manager");
         setContentPane(mainPanel);
-        setMinimumSize(new Dimension(700, 600));
+        setMinimumSize(new Dimension(420, 400));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
-
-
-
     }
 
 
-   /* public static void main(String[] args) {
+   public static void main(String[] args) {
         GUIOfficeManager panel = new GUIOfficeManager(null);
     }
 
-    */
+
 }
 

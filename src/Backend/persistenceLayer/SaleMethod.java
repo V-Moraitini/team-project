@@ -1,5 +1,5 @@
 package Backend.persistenceLayer;
 
 public enum SaleMethod {
-    Cash, Card
+    Cash, Card, payLater
 }
